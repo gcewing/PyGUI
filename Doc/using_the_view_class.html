@@ -1,0 +1,233 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+  
+
+  
+  
+  <title>PyGUI - Using the View class</title><meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"></head>
+<body>
+<h1>Using the <tt>View</tt> and <span style="font-family: monospace;">ScrollableView</span> classes</h1>
+
+Creating a user interface component for your application's data structure
+is achieved by subclassing and customising the <a href="View.html">View</a>
+class, or its subclass <a href="ScrollableView.html">ScrollableView</a>. This section describes how these classes works and what needs to
+be done to accomplish various things with them.<br>
+
+<h2>Coordinates, scrolling and the extent</h2>
+
+        
+<p>Each instance of View or ScrollableView has its own <i>local coordinate system</i> in which 
+   drawing takes place and the locations of mouse events are reported. For a plain View, the 
+ origin  of the local coordinate system is always at the top left corner 
+ of the  view. For a ScrollableView, the origin changes when the view is scrolled.<br>
+       </p>
+
+        
+<p>In addition to its bounds rectangle, a ScrollableView also as an <i>extent rectangle</i>
+defining the limits of scrolling. The local coordinate system is
+relative to this rectangle, so that its top left corner is always at
+(0, 0) in local coordinates. The size of the extent rectangle is called
+the <span style="font-style: italic;">extent</span>.</p><p>The <i>scroll 
+  offset</i> is the difference in local coordinates between the top left corner
+  of the view and the top left corner of the extent rectangle. Figure 1 illustrates 
+the  relationship between the view's bounds, the extent rectangle, and the scroll offset.<br>
+       </p>
+
+        
+<p>The part of the local coordinate system that is visible in the view is 
+   called the <i>viewed rectangle</i>. The scroll offset is constrained, as
+  far as possible, so that the viewed rectangle lies within the extent rectangle. So,
+  in order for scrolling to be possible in a given direction, the extent must
+  be larger than the view's bounds in that direction.<br>
+       </p>
+
+        
+<p>If
+the extent is smaller than the bounds in a given direction, there is
+no room for movement and the scroll offset in that direction will be
+clamped
+to zero. In that situation, the viewed rectangle will include areas
+that
+are outside the extent rectangle. These areas are filled with the <i>background color</i> of the ScrollableView before your drawing method is called.</p><p>The
+background color can be set to None to suppress automatic filling of
+the background areas. However, whether you are able to draw anything
+outside the extent rectangle yourself is platform-dependent, so for maximum portability you should either specify a background color or leave it set to the default. </p><div align="center"><img style="width: 571px; height: 324px;" src="extent.png" alt="">
+<br>
+</div>
+
+<p align="center"><small><font face="Helvetica, Arial, sans-serif">Figure
+1<br>
+Bounds, extent, viewed rect and scroll offset</font></small><br>
+       </p>
+
+        
+<h2>Drawing and invalidating</h2>
+
+       Whenever some part of the view needs to be drawn, the <tt>draw</tt>
+method   is called with a <a href="Canvas.html">Canvas</a>
+object as parameter.  The   canvas object encapsulates a drawing state and
+provides drawing methods. The draw method is also passed an <span style="font-style: italic;">update rectangle</span> that bounds the region needing to be drawn.<br>
+
+       <br>
+
+       The initial clipping region of the canvas is set to the update rectangle. In the simplest case, the <tt>draw</tt> method 
+ can   just erase and redraw everything, and the clipping will ensure that 
+ only  the parts that actually need drawing are affected. A more intelligent 
+ <tt>draw</tt>  method can make tests against the update rectangle and be more
+ selective about  what to draw.<br>
+
+       <br>
+
+       There are two ways that calls to <tt>draw</tt> can be triggered. One 
+ is  when part of a window becomes uncovered on the screen. The other is by
+ calling   the view's <tt>invalidate</tt> method, which marks the whole viewed
+ rectangle   as needing to be drawn, or <tt>invalidate_rect</tt>, which marks
+ a specified   rectangle.<br>
+
+       <br>
+
+       Note that the canvas passed to the <tt>draw</tt> method is only valid
+  for  the duration of the call, and should not be retained beyond it. To
+draw  into  the view at other times, it is necessary to call the <tt>with_canvas</tt>  method, passing it a function that accepts a canvas as parameter. However, 
+   this should be avoided if possible. It is almost always easier and more 
+ efficient  to simply invalidate the affected region and wait for the <tt>draw</tt> method  to be called.<br>
+
+<h2><a name="Mouse_tracking"></a>Mouse tracking</h2>
+
+       Mouse-down events are delivered to a view by calling its <tt>mouse_down</tt>
+method. In response, many applications will want to enter a mode in
+which the mouse is tracked and some action performed until a mouse-up
+event occurs. The <tt>track_mouse</tt> method provides a convenient way to do this. The idiom for using it goes like this:<br>
+
+        
+<blockquote><tt>def mouse_down(self, event):</tt><br>
+       &nbsp;&nbsp;&nbsp; # <i>Do something in response to the mouse click, 
+ and   then...</i><br>
+       &nbsp;&nbsp;&nbsp; <tt>for event in self.track_mouse():</tt><br>
+       &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; # <i>Do something in response
+ to  dragging</i><br>
+       &nbsp;&nbsp;&nbsp; # <i>Do something in response to release of the 
+mouse</i><br>
+       </blockquote>
+
+       The <tt>track_mouse</tt> method returns an iterator which yields a 
+series    of mouse events. All of these events will be mouse-drag events, 
+except for   the final one, which will be a mouse-up event. Thus, when the 
+above loop  is finished, <tt>event</tt> will be bound to a mouse-up event 
+representing   the location where the mouse was released.<br>
+
+       <br>
+
+       Note that the body of the loop will be executed for the final mouse-up 
+  event  as well as for the mouse-drag events. Usually it doesn't do any harm
+  to treat  them both the same way, but if it matters, you'll need to test
+ the <tt>kind</tt>  of the event in the loop.<br>
+
+<br>
+
+Also note that <tt>track_mouse</tt> only reports mouse-drag and
+mouse-up events -- any other kind of events, such as key events,
+occurring during the drag will be ignored. If you need to handle such events while dragging, you will
+have to implement mouse tracking non-modally using <span style="font-family: monospace;">mouse_drag</span> and <span style="font-family: monospace;">mouse_up</span> methods on your view.
+        
+<h2><a name="Model_observation"></a>Model observation</h2>
+
+       Since one of the primary uses of a view is to display a model, some
+ convenience   features are provided to support using it in the role of a
+model observer.   For the frequent case where the view observes a single
+model object, there   is a <tt>model</tt> property. Assigning to this property 
+has the side effect of connecting   the view to the model.<br>
+
+       <br>
+
+       If the view needs to respond to changes in more than one model object, 
+  you  can use the <tt>add_model</tt> and <tt>remove_model</tt> methods to 
+ attach  and detach models, and the <tt>models</tt> property to retrieve a
+ list of  currently attached models.<br>
+
+ <br>
+
+ An alternative way of connecting and disconnecting views and models is to 
+use the <tt>add_view</tt> and <tt>remove_view</tt> methods of the model. It
+doesn't matter whether you connect the view to the model or the model to
+the view; the end result is the same.<br>
+
+       <br>
+
+       A default <tt>model_changed</tt> method is provided which simply invalidates 
+   the whole view, causing it to be completely redrawn. If redrawing your 
+view   is fairly quick, you won't need to do anything else to respond to model
+changes  -- just call the model's <tt>notify_views</tt> method and the view
+will update  itself. <br>
+
+       <br>
+
+       If you need to be more selective about what you redraw, you'll have
+ to  pass  some information about what part of the model has changed. There
+ are  a couple  of levels at which you can customise the process. At one
+level,   you can pass  some parameters along with the <tt>model_changed</tt>
+message:<br>
+
+       <br>
+
+        
+<table align="center" border="0" cellpadding="0" cellspacing="0">
+
+        <tbody>
+           <tr>
+             <td rowspan="1" colspan="1" valign="top" width="300"><span style="font-style: italic;">In the
+model</span>                                                   
+      <hr size="2" width="100%"><small>...<tt><br>
+       self.notify_views(changed_item = 42)<br>
+             </tt>...</small><br>
+             </td>
+             <td valign="top" width="40"><br>
+             </td>
+             <td rowspan="1" colspan="1" valign="top" width="320"><span style="font-style: italic;">In the
+view</span><br>
+                                                        <hr size="2" width="100%"><small><tt>def model_changed(self, model, changed_item):</tt><br>
+       &nbsp; &nbsp; ...</small><br>
+             </td>
+           </tr>
+           <tr>
+           </tr>
+                          </tbody>  
+</table>
+
+       <br>
+
+       At another level, you can send a custom change message and define
+a  method   in the view to handle it:<br>
+
+       <br>
+
+        
+<table align="center" border="0" cellpadding="0" cellspacing="0">
+
+         <tbody>
+           <tr>
+             <td rowspan="1" colspan="1" valign="top" width="300"><span style="font-style: italic;">In the
+model</span>                                                     
+      <hr size="2" width="100%"><small>...<tt><br>
+        self.notify_views('wibble_twisted',<br>
+       &nbsp; which = w)<br>
+        </tt>...</small><br>
+        </td>
+             <td valign="top" width="40"><br>
+        </td>
+        <td rowspan="1" colspan="1" valign="top" width="320"><span style="font-style: italic;">In the view</span><br>
+                                                          <hr size="2" width="100%"><small><tt>def&nbsp;</tt></small><small><tt>wibble_twisted</tt></small><small><tt>(self, 
+   model, which):</tt><br>
+        &nbsp; &nbsp; ...</small><br>
+        </td>
+           </tr>
+                        </tbody>  
+</table>
+
+  <br>
+
+ <br>
+
+<br>
+
+</body></html>

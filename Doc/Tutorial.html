@@ -1,0 +1,203 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html><head><meta content="text/html;charset=ISO-8859-1" http-equiv="Content-Type"><title>BlobEdit</title>
+  
+                <meta name="GENERATOR" content="Mozilla/3.01Gold (X11; I; SunOS 5.6 sun4u) [Netscape]"></head>
+<body>
+   <h1>Tutorial</h1>
+   <p>Here's a quick tutorial to give you an idea of how it all fits together
+ in practice. It takes the form of an annotated listing of <span style="font-family: monospace;">blobedit.py</span>, a 
+simple example application included with the source.</p>
+   <h2>What does BlobEdit do?</h2>
+   <p>BlobEdit edits Blob Documents. Blob Documents are documents containing
+ Blobs. Blobs are red squares that you place by clicking and move around
+by dragging.</p>
+   <p>BlobEdit demonstrates how to:</p>
+   <ol>
+  <li>Define a Document class for holding a data structure, and an Application
+ class that deals with it.</li>
+   <li>Give your Documents the ability to be saved in files, and define a file type for those files.</li>
+   <li>Define a View class for displaying your data structure, and ensure
+that the View is updated whenever the data structure changes.</li>
+   <li>Write a mouse tracking loop to handle dragging within a View.</li><li>On
+MacOSX, build a stand-alone, double-clickable application with file and
+application icons and the ability to launch the application by opening
+its files.<br>
+  </li>
+
+  </ol>
+   <p>This tutorial may be extended in the future to cover more features of
+the framework.</p>
+   <h2>Imports</h2>
+   <p>We'll start by importing the modules and classes that we'll need (using
+ clairvoyance to determine what they are):</p>
+   <pre>import pickle<br>from GUI import Application, ScrollableView, Document, Window, \<br>  FileType, Cursor, rgb<br>from GUI.Geometry import pt_in_rect, offset_rect, rects_intersect<br>from GUI.StdColors import black, red</pre>
+   
+   <h2>The Application class</h2>
+   <p>Because we want to work with a custom Document, we'll have to define our 
+own subclass of Application.</p>
+   <pre>class BlobApp(Application):</pre>
+   <p>The initialisation method will first initialise Application, and then set a few things up.</p>
+   <pre>  def __init__(self):<br>    Application.__init__(self)<br></pre>
+<div style="margin-left: 40px;">Let's define a file type for our
+application's files. Doing this will allow the application to recognise
+the files it can open, and on MacOSX it will also allow us to give our
+files distinctive icons if we build an application using py2app.
+Assigning our file type to the <span style="font-family: monospace;">file_type</span> property will cause it to be used automatically by the <span style="font-weight: bold;">Open</span> and <span style="font-weight: bold;">Save</span> commands.<br>
+</div>
+<pre>    self.file_type = FileType(name = "Blob Document", suffix = "blob")<br></pre>
+<div style="margin-left: 40px;">Also, just for fun, let's create a custom cursor to use in our views. Here we're creating a cursor from the image file <span style="font-family: monospace;">"blob.tiff"</span>, which will be looked for in the <span style="font-family: monospace;">Resources</span> directory alongside our main .py file.<br>
+</div>
+<pre>    self.blob_cursor = Cursor("blob.tiff")<br></pre>
+<div style="margin-left: 40px;">We're not doing anything with the cursor yet, just storing it away for future use.<br>
+</div>
+<p>Next, we'll define what our application is to do when it's started
+up without being given any files to open. We do this by overriding the <span style="font-family: monospace;">open_app</span> method and having it invoke the <span style="font-weight: bold;">New</span> command to create a new, empty document.<br>
+</p>
+<pre>  def open_app(self):<br>&nbsp;   self.new_cmd()</pre>
+<p>The <tt>new_cmd</tt> method is the method that's invoked by the standard <span style="font-weight: bold;">New</span> menu command. There's also an <span style="font-family: monospace;">open_cmd</span> method that implements the Open... command. The default implementations of these methods know
+almost everything about what to do, but there are a few things we need
+to tell them. First, we need to define how to create a Document object of
+the appropriate kind. We do this by providing a <tt>make_document</tt>
+method:</p>
+
+   <pre>  def make_document(self, fileref):<br></pre><p>When a new document is being created, this method is called with <span style="font-style: italic;">fileref =</span> <span style="font-family: monospace;">None</span>,
+and when an existing file is being opened, it is passed a FileRef.
+Since our application only deals with one type of file, we can ignore
+the <span style="font-style: italic;">fileref</span> argument. All we have to do is create an instance of our document class
+ and return it. All further initialization will be done by <tt>new_cmd</tt> or <span style="font-family: monospace;">open_cmd</span>.<br>
+</p>
+   
+<pre>    return BlobDoc()</pre>
+
+   
+<p>Finally, we need to tell our Application how to create a window for viewing 
+our document. We do this by providing a <tt>make_window</tt> method. This
+ method is passed the document object for which a window is to be made. Since 
+our application only deals with one type of document, we know what class it
+will be. If we had defined more than one Document class, we would have to
+do some testing to find out which kind it was and construct a window accordingly.</p>
+
+   <pre>  def make_window(self, document):</pre>
+   <ul>
+      <p>First, we'll create a top-level Window object and associate it with
+the Document. The purpose of associating the Window with the Document is
+so that, when the Window is closed, the Document will get the chance to ask
+the user whether to save changes.</p>
+  </ul>
+   <pre>    win = Window(size = (400, 400), document = document)</pre>
+   <ul>
+      <p>Next, we'll create a view for displaying our data structure. We'll call
+ our view class BlobView here and define it later. We make our document the 
+view's model, so that the view will be notified of any changes that require 
+it to be redrawn.</p>
+  </ul>
+   <pre>    view = BlobView(model = document, <br>        extent = (1000, 1000), scrolling = 'hv',<br>        cursor = self.blob_cursor)</pre>
+   <ul>
+      <p>We're intending to make our view class a subclass of ScrollableView so we can scroll it. Here we establish the <span style="font-style: italic;">extent</span> of our view, which is the size of the area that the user will be able to scroll around in, and indicate with the <span style="font-style: italic;">scrolling</span> parameter that it will have both horizontal and vertical scroll bars. We also give it the cursor that we created earlier.<br>
+</p></ul>
+   
+   <ul>
+      <p>Next we place the view inside the window with options that determine 
+its position, size and resizing behaviour. Without going deeply into details, 
+we're saying that the edges of the scroll frame are to initially have offsets 
+of 0 from the corresponding edges of the window, and that when the window 
+is resized, the view is to be resized along with it.<br>
+   </p>
+ </ul>
+ <pre>    win.place(view, left = 0, top = 0, right = 0, bottom = 0, <br>         sticky = 'nsew')</pre>
+   <ul>
+      <p>(The options to the <tt>place</tt> method are very flexible, and there's 
+much more you can do with it than is demonstrated here. See the documentation 
+for it in the <a href="Container.html#place">Container</a> class for details.)<br>
+   </p>
+     <p>Finally, we make the window visible on the screen. (It's easy to forget
+ this step. If you leave it out, you won't see anything!)</p>
+  </ul>
+   <pre>    win.show()</pre>
+   <h2>The Document class</h2>
+   <p>We'll represent the data structure within our document by means of a <tt>blobs</tt> attribute which will hold a list of Blobs.</p>
+   <pre>class BlobDoc(Document):<br><br>  blobs = None</pre>
+   <p>We won't define an <tt>__init__</tt> method for the document, because
+there are two different ways that a Document object can get initialised.
+If it was created by a "New" command, it gets initialised by calling <tt>new_contents</tt>, 
+whereas if it was created by an "Open..." command, it gets initialised by 
+calling <tt>read_contents</tt>. So, we'll put our initialisation in those 
+methods. The <tt>new_contents</tt> method will create a new empty list of 
+blobs, and the <tt>read_contents</tt> method will use <tt>pickle</tt> to
+read a list of blobs from the supplied file.</p>
+   <pre>  def new_contents(self):<br>    self.blobs = []<br><br>  def read_contents(self, file):<br>    self.blobs = pickle.load(file)</pre>
+   <p>The counterpart to <tt>read_contents</tt> is <tt>write_contents</tt>, which
+gets called during the processing of a "Save" or "Save As..." command.</p>
+   <pre>  def write_contents(self, file):<br>    pickle.dump(self.blobs, file)</pre>
+   <p>We'll also define some methods for modifying our data structure. Later
+ we'll call these from our View in response to user input. After each modification,
+ we call <tt>self.changed()</tt> to mark the document as needing to be saved, 
+and <tt>self.notify_views()</tt> to notify any attached views that they need 
+to be redrawn.</p>
+   <pre>  def add_blob(self, blob):<br>    self.blobs.append(blob)<br>    self.changed()<br>    self.notify_views()<br><br>  def move_blob(self, blob, dx, dy):<br>    blob.move(dx, dy)<br>    self.changed()<br>    self.notify_views()<br><br>  def delete_blob(self, blob):<br>    self.blobs.remove(blob)<br>    self.changed()<br>    self.notify_views()<br></pre>We'll also find it useful to have a method that searches for a blob given a pair of coordinates.<br>
+<pre>  def find_blob(self, x, y):<br>    for blob in self.blobs:<br>      if blob.contains(x, y):<br>        return blob<br>    return None<br></pre>
+
+   <h2>The View class</h2>
+   <p>Our view class will have two responsibilities: (1) drawing the blobs on 
+the screen; (2) handling user input actions.</p>
+   <pre>class BlobView(ScrollableView):</pre>
+   <p>Drawing is done by the <tt>draw</tt>
+method. It is passed a Canvas object on which the drawing should be
+done. First, we'll select some colours for drawing our blobs. We're
+going to fill them with red and draw a line around them in black. Then
+we'll traverse the list of blobs and tell each one to draw itself on
+the canvas.</p>
+   <pre>  def draw(self, canvas, update_rect):<br><tt>    canvas.fillcolor = red<br>    </tt><tt>canvas.pencolor = black</tt><tt><br></tt>    for blob in self.model.blobs:<br>      if blob.intersects(update_rect):<br>        blob.draw(canvas)</pre>
+   <p>The <span style="font-style: italic;">update_rect</span>
+parameter is a rectangle that bounds the region needing to be drawn.
+Here we've shown one way in which it can be used, by only drawing blobs
+which intersect it. We don't strictly need to do this, since drawing is
+clipped to the update_rect anyway, but it can make the drawing process
+more efficient. (In this case it may actually make things worse, since
+testing for intersection in Python could be slower than letting the
+underlying graphics library do the clipping, but the technique is shown
+here for illustration purposes.)</p><p>Mouse clicks are handled by the <tt>mouse_down</tt> method. There
+are three
+things we want the user to be able to do with the mouse. If the click
+is
+in empty space, a new blob should be created; if the click is within an
+existing
+blob, it should be dragged, or if the shift key is held down, it should
+be deleted. So the first thing we will do is search the blob
+list to find out whether the clicked coordinates are within an existing
+blob.</p>
+<pre>&nbsp; def mouse_down(self, event):<br>&nbsp;&nbsp;&nbsp; x, y = event.position<br>&nbsp;&nbsp;&nbsp; blob = self.model.find_blob(x, y)<br></pre>
+If we find a blob, we either drag it around or delete it depending on the state of the shift key.<br>
+<pre>&nbsp;&nbsp;&nbsp; if blob:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if not event.shift:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; self.drag_blob(blob, x, y)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; else:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; self.model.delete_blob(blob)<br></pre>
+If not, we add a new blob to the data structure:<ul>
+  </ul>
+   <pre>&nbsp;&nbsp;&nbsp; else:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; self.model.add_blob(Blob(x, y))<br></pre><p>If we're dragging a blob, we need to track the movements of the mouse
+until the mouse button is released. To do this we use the <tt>track_mouse</tt> method of class View. <br>
+ </p>
+ <p>The <tt>track_mouse</tt> method returns an iterator which produces a series 
+of mouse events as long as the mouse is dragged around with the button held 
+down. It's designed to be used in a for-loop like this:<br>
+ </p>
+   <pre>  def drag_blob(self, blob, x0, y0):<br>    for event in self.track_mouse():<br>      x, y = event.position<br>      self.model.move_blob(blob, x - x0, y - y0)<br>      x0 = x<br>      y0 = y</pre>
+   <h2>The Blob class</h2>
+   <p>Here's the implementation of the Blob class, representing a single 
+blob.</p>
+   <pre><tt>class Blob:<br><br>  def __init__(self, x, y):<br>    self.rect = (x - 20, y - 20, x + 20, y + 20)<br><br>  def contains(self, x, y):<br>    return pt_in_rect((x, y), self.rect)</tt><br><br>  def intersects(self, rect):<br>    return rects_intersect(rect, self.rect)<br><br>  def move(self, dx, dy):<br>    self.rect = offset_rect(self.rect, (dx, dy))<br><br>  def draw(self, canvas):<tt><br>    l, t, r, b = self.rect<br>    canvas.newpath()<br>    canvas.moveto(l, t)<br>    canvas.lineto(r, t)<br>    canvas.lineto(r, b)<br>    canvas.lineto(l, b)<br>    canvas.closepath()<br></tt><tt>    canvas.fill_stroke()</tt></pre>
+   <h2>Instantiating the application</h2>
+ Finally, to start everything off, we create an instance of our application 
+class and call its <tt>run</tt> method. The run method runs the event loop, 
+and retains control until the application is quit.<br>
+ <pre>BlobApp().run()</pre>
+<h2>Using py2app<br>
+</h2>
+On MacOSX, while you can quite successfully run BlobEdit as a normal Python script, you may want to go a step further and use <a href="http://undefined.org/python/py2app.html">py2app</a> to create a stand-alone, double-clickable MacOSX application bundle, complete with all the trimmings. There is a <span style="font-family: monospace;">setup.py</span> script in the <span style="font-family: monospace;">Demos/BlobEdit</span> directory of the PyGUI distribution that shows you how to do this. You invoke it with<br>
+<div style="margin-left: 40px;">
+<pre>python setup.py py2app<br></pre>
+</div>
+and your application will appear in the <span style="font-family: monospace;">dist</span> directory.<br>
+<h2>The End<br>
+</h2>
+This tutorial will be expanded in the future, but for now, that's all, folks. Happy blobbing!<br>
+ <br>
+ <br>
+</body></html>

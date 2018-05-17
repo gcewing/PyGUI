@@ -1,0 +1,22 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><meta content="text/html; charset=ISO-8859-1" http-equiv="content-type"><title>PyGUI - ImageBase class</title></head><body>
+<h1>class <span style="font-family: monospace;">ImageBase</span></h1>
+ImageBase is an abstract base class for 2D images that can be drawn on a Canvas.<br>
+<h2>Properties</h2>
+
+  
+<blockquote>       <dl><dt><tt>width</tt></dt><dd><i>Read only.</i> The width of the image in pixels.</dd></dl>
+        <dl><dt><tt>height</tt></dt><dd><i>Read only.</i> The height of the image in pixels.</dd></dl>
+        <dl><dt><tt>size</tt></dt><dd><i>Read only.</i> The size of the image in pixels.</dd></dl>
+        <dl><dt><tt>bounds</tt></dt><dd><i>Read only.</i> The bounding rectangle of the image. The
+top left  corner will always be (0, 0).</dd></dl>
+</blockquote>
+<h2>Methods</h2>
+
+ 
+<blockquote>       <dl><dt><tt>draw(canvas,</tt> <tt>src_rect,</tt> <tt>dst_rect)</tt></dt><dd>Draws the part of the image specified by <span style="font-style: italic;">src_rect</span> in the
+ area of the given <a href="Canvas.html">Canvas</a> specified by <span style="font-style: italic;">dst_rect.</span> If <span style="font-style: italic;">src_rect</span>
+ and <span style="font-style: italic;">dst_rect</span> are different sizes, the image is scaled to fit.</dd></dl>
+  </blockquote>
+<br>
+</body></html>

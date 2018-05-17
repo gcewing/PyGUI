@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head><meta content="text/html; charset=ISO-8859-1" http-equiv="content-type"><title>PageSetup class</title></head>
+<body><h1>class <span style="font-family: monospace;">Printing.PageSetup</span></h1>An instance of the PageSetup class is used to hold the information specified by the <span style="font-style: italic;">Page Setup</span> command, such as margins, paper size and orientation.<br><br>The
+Application object maintains a default PageSetup instance in its
+page_setup property, and provides a default implementation of the Page
+Setup command which edits it. When a view prints itself in response to
+the <span style="font-style: italic;">Print</span> command, if it can't obtain a PageSetup object from its associated model, it uses the one from the Application.<br><br>There
+is no provision for saving the Application's PageSetup object; its
+settings are retained only as long as the application runs. If you want
+page setup information saved with your document, you should attach a
+PageSetup object of your own to it and save it along with your
+document's data (see below).<br><br>You can explicitly invoke a Page Setup dialog for a specific PageSetup object using the <a href="#present_page_setup_dialog"><span style="font-family: monospace;">present_page_setup_dialog()</span></a> function.<h3>Saving page setup information</h3>PageSetup
+objects are pickleable, to facilitate saving and restoring them. This
+method is recommended, rather than saving its properties individually,
+because pickled PageSetup objects retain platform-dependent information
+that may not be exposed through the generic&nbsp;properties. If you
+pickle a PageSetup object and later restore it on the same platform,
+all of the platform-specific information will be preserved.<br><br>The
+generic&nbsp;properties are also saved in a platform-independent way,
+so that if you unpickle it on a different platform, the most important
+attributes ought to come across as best they can.<br><br>There are also <span style="font-family: monospace;">from_string()</span> and <span style="font-family: monospace;">to_string()</span>
+methods which take and return a pickled representation as a string. You
+may find these more convenient if you are using a non-pickle-based file
+format.<br><h2>Constructor</h2><dl style="margin-left: 40px;"><dt style="font-family: monospace;">PageSetup()</dt><dd>Creates a PageSetup object with default settings.</dd></dl><h2>Properties</h2><dl style="margin-left: 40px;"><dt style="font-family: monospace;">paper_name</dt><dd>A string describing the paper size, such as "A4" or "Letter".<br><br></dd><dt style="font-family: monospace;">paper_size</dt><dd>A tuple (width, height) giving the size of the paper in points.<br><br></dd><dt style="font-family: monospace;">orientation</dt><dd>One of <span style="font-family: monospace;">'portrait'</span> or <span style="font-family: monospace;">'landscape'</span>.<br><br></dd><dt style="font-family: monospace;">printer_name</dt><dd>The name of the printer for which the page setup has been created.<br><br></dd><dt style="font-family: monospace;">left_margin<br>top_margin<br>right_margin<br>bottom_margin</dt><dd>Distances from the edge of the paper to the printed area.<br><br></dd><dt style="font-family: monospace;">margins</dt><dd>A tuple containing the four margin values.<br></dd><dt style="font-family: monospace;">page_width<br>page_height<br>page_size</dt><dd>The size of the printed area. &nbsp;This is equal to the paper size minus the margins.<br></dd><dt style="font-family: monospace;">page_rect</dt><dd>A
+rectangle representing the printed area. The origin of the coordinate system is at the
+top left corner of the page.</dd></dl><h2>Class Methods</h2><dl style="margin-left: 40px;"><dt><span style="font-family: monospace;">from_string(</span><span style="font-style: italic;">string</span><span style="font-family: monospace;">)</span></dt><dd>Creates a PageSetup object from a string returned by the <span style="font-family: monospace;">to_string()</span> method.</dd></dl><h2>Methods</h2><dl style="margin-left: 40px;"><dt style="font-family: monospace;">to_string()</dt><dd>Returns a string-encoded representation suitable for passing to <span style="font-family: monospace;">from_string()</span>.</dd></dl><h2>Related Functions</h2><dl><dt style="font-family: monospace;"><a name="present_page_setup_dialog"></a>Printing.present_page_setup_dialog(page_setup)</dt><dd>Presents a <span style="font-style: italic;">Page Setup</span>
+dialog box for the specifed PageSetup object and allows the user to
+edit it. If the user accepts the changes, true is returned. Otherwise,
+the PageSetup object is unaltered and false is returned.</dd></dl>---</body></html>

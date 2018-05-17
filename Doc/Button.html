@@ -1,0 +1,49 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html><head><title>PyGUI - class Button</title>
+
+<meta name="GENERATOR" content="Mozilla/3.01Gold (X11; I; SunOS 5.6 sun4u) [Netscape]"></head>
+<body>
+<h1>class <tt>Button(<a href="Control.html">Control</a>)</tt></h1>
+<p>A Button is a momentary-action pushbutton, invoking an action
+when it is
+clicked.<br>
+</p>
+<h2>Constructors</h2>
+<dl style="margin-left: 40px;">
+<dt style="font-family: monospace;">Button(title)</dt>
+<dd><br>
+Creates a generic pushbutton with the given title.<br>
+<br>
+</dd></dl><h2>Properties</h2>
+<dl style="margin-left: 40px;">
+<dt><tt>title</tt></dt>
+<dd>Title string to display inside the button.</dd>
+<dd><br>
+</dd>
+<dt><tt>style</tt></dt>
+<dd>One of <tt>'normal'</tt>, <tt>'default'</tt>
+or <tt>'cancel'</tt>. Setting this to&nbsp;<tt>'default'</tt>
+or <tt>'cancel</tt> causes the button to take on the
+appearance of a default button or a cancel button respectively,
+according to platform conventions. (This property only affects the
+appearance
+of the button, it does not automatically make the button
+respond to
+keyboard commands.)</dd>
+</dl>
+<h2>Action Properties</h2>
+<dl style="margin-left: 40px;">
+<dt style="font-family: monospace;">action</dt>
+<dd>Action to perform when the button is clicked. See <a href="actions.html">Actions</a>.</dd>
+</dl>
+<h2>Methods</h2>
+<blockquote>
+<dl>
+<dt><tt>activate()</tt></dt>
+<dd>Animates a simulation of the button being pressed
+momentarily, and then invokes its action.</dd>
+</dl>
+</blockquote>
+<br>
+<br>
+</body></html>

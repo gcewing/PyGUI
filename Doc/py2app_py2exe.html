@@ -1,0 +1,10 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head><meta content="text/html; charset=ISO-8859-1" http-equiv="content-type"><title>Py2Exe and PyGUI</title></head><body><h1>Using PyGUI with Py2App and Py2Exe</h1>As
+of PyGUI version 2.5, it is no longer necessary to explicitly tell
+Py2App or Py2Exe to include the GUI package. Just import the things
+that you use, and Py2App and Py2Exe will find them in the usual way.<br><br>However,
+Py2Exe does need a small amount of help to find certain modules in
+pywin32. A helper module is included in the GUI package to make the
+necessary adjustments; all you have to do is import it into your
+setup.py script along with py2exe. The imports at the top of your
+setup.py script should include the following:<br><br><tt>from distutils.core import setup<br>import GUI.py2exe<br>import py2exe<br></tt><br></body></html>

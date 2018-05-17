@@ -1,0 +1,156 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html><head><title>PyGUI</title><meta name="GENERATOR" content="Mozilla/3.01Gold (X11; I; SunOS 5.6 sun4u) [Netscape]"><!-- Changed by: Greg Ewing, 11-Aug-1998 -->
+
+
+</head>
+<body>
+<h1 align="center">PyGUI</h1>
+<h1 align="center"><small>A<br>
+Graphical Application Framework<br>
+for<br>
+Python</small></h1>
+<div align="center">by Greg Ewing<br>
+</div>
+<center>
+<p><tt><a href="mailto:greg.ewing@canterbury.ac.nz">greg.ewing@canterbury.ac.nz</a></tt></p>
+</center>
+<p> </p>
+<hr width="100%">
+
+<h2>Discussion</h2>
+
+<ul>
+<li><a href="ownership.html">Overview</a></li>
+<li><a href="terminology.html">Terminology</a></li>
+<li><a href="event_handling.html">Event Handling</a></li><li><a href="coordinates.html">Coordinates, Points
+and Rectangles</a><br>
+</li>
+<li><a href="actions.html">Actions</a></li>
+<li><a href="menu_setup.html">Menu Setup</a></li>
+<li><a href="using_the_view_class.html">Using the
+View and ScrollableView classes</a></li>
+<li><a href="customising-standard-menus.html">Customising
+the Standard Menu Bar</a><span style="color: rgb(255, 0, 0);"><span style="color: rgb(0, 153, 0);"></span></span></li>
+<li><a href="Resources.html">Resources</a><span style="color: rgb(255, 0, 0);"><span style="color: rgb(0, 102, 0);"></span></span></li>
+<li><a href="navigation.html">Keyboard Navigation</a></li><li><a href="printing.html">Printing</a></li><li><a href="py2app_py2exe.html">Using PyGUI with Py2App and Py2Exe</a></li>
+</ul>
+<h2>Tutorials</h2><ul><li><a href="Tutorial.html">BlobEdit</a></li></ul><h2>Framework Classes</h2>
+Classes making up the foundation of the model-view architecture and
+message handling system.
+<ul>
+<li><a href="Application.html">class Application</a></li>
+<li><a href="Document.html">class Document</a></li>
+<li><a href="Window.html">class Window</a></li>
+<li><a href="Model.html">class Model</a></li>
+<li><a href="View.html">class View</a></li>
+<li><a href="MessageHandler.html">class
+MessageHandler</a></li>
+</ul>
+<h2>Abstract Classes</h2>
+These
+classes define properties and methods that other PyGUI classes have in
+common. They are for internal use by the PyGUI framework only. You
+should not instantiate these classes or derive your own classes
+directly from them.<br>
+<ul>
+<li><a href="Component.html">class Component</a></li>
+<li><a href="Container.html">class Container</a></li>
+<li><a href="Control.html">class Control</a></li>
+<li><a href="ViewBase.html">class ViewBase</a></li>
+<li><a href="ImageBase.html">class ImageBase</a><br>
+</li>
+</ul>
+<h2>Window Classes</h2>Components that appear as top-level windows on the desktop.
+<ul>
+<li><a href="Window.html">class Window</a></li>
+<li><a href="Dialog.html">class Dialog</a></li>
+<li><a href="ModalDialog.html">class ModalDialog</a><br>
+</li></ul>
+<h2>User-Defined View Classes</h2>Components with drawing and input-handling methods that you can override.<ul><li><a href="View.html">class View</a></li><li><a href="ScrollableView.html">class ScrollableView</a></li><li><a href="GridView.html">class GridView</a></li><li><a href="PaletteView.html">class PaletteView</a></li></ul><h2>Control Classes</h2>Components for displaying and editing values.
+<ul>
+<li><a href="Label.html">class Label</a></li>
+
+<li><a href="Button.html">class Button</a></li><ul><li><a href="std_buttons.html#DefaultButton">class DefaultButton</a></li><li><a href="std_buttons.html#CancelButton">class CancelButton</a></li></ul>
+<li><a href="CheckBox.html">class CheckBox</a></li>
+<li><a href="RadioButton.html">class RadioButton</a></li>
+<li><a href="TextField.html">class TextField</a></li>
+<li><a href="Slider.html">class Slider</a><span style="color: rgb(255, 0, 0);"></span><br>
+</li>
+</ul>
+<h2>Layout Classes</h2>Components for arranging other components.<br><ul><li><a href="Frame.html">class Frame</a></li><li><a href="Row.html">class Row</a></li><li><a href="Column.html">class Column</a></li><li><a href="Grid.html">class Grid</a></li></ul><h2>Text Editing Classes</h2>Components for displaying and editing text.<ul><li><a href="TextField.html">class TextField</a></li><li><a href="TextEditor.html">class TextEditor</a></li></ul><h2>Menu Classes</h2>
+Classes for creating and manipulating menus and menu items.<br>
+<ul>
+<li><a href="Menu.html">class Menu</a></li>
+<li><a href="MenuList.html">class MenuList</a></li>
+<li><a href="MenuItem.html">class MenuItem</a><br>
+</li>
+</ul>
+<h2>Graphics Classes</h2>
+Classes concerned with drawing 2D graphics in user-defined views.<br>
+<ul>
+<li><a href="Canvas.html">class Canvas</a></li>
+<li><a href="Color.html">class Color</a></li>
+<li><a href="Font.html">class Font</a></li>
+<li><a href="Image.html">class Image</a></li>
+<li><a href="Pixmap.html">class Pixmap</a></li>
+</ul>
+<h2>Support Classes</h2>Non-graphical classes used behind the scenes.
+<ul>
+<li><a href="Event.html">class Event</a></li>
+<li><a href="RadioGroup.html">class RadioGroup</a></li>
+<li><a href="FileRef.html">class FileRef</a></li>
+<li><a href="DirRef.html">class DirRef</a></li>
+<li><a href="FileType.html">class FileType</a></li>
+<li><a href="Task.html">class Task</a><span style="color: rgb(0, 102, 0);"></span></li>
+<li><a href="Cursor.html">class Cursor</a><span style="color: rgb(255, 0, 0);"><span style="color: rgb(0, 102, 0);"></span></span></li>
+<li><a href="Exceptions.html">Exception classes</a><span style="color: rgb(255, 0, 0);"><span style="color: rgb(0, 102, 0);"><br>
+</span></span></li>
+</ul>
+<h2>OpenGL Classes</h2>Classes concerned with 3D drawing using OpenGL.
+<ul>
+<li><a href="GLConfig.html">class GLConfig</a><br>
+</li>
+<li><a href="GLView.html">class GLView</a></li>
+<li><a href="GLPixmap.html">class GLPixmap</a><span style="color: rgb(0, 102, 0);"></span></li>
+<li><a href="Texture.html">class Texture</a><span style="color: rgb(0, 102, 0);"></span></li>
+<li><a href="DisplayList.html">class DisplayList</a><span style="color: rgb(0, 102, 0);"></span></li>
+<li><a href="ShareGroup.html">class ShareGroup</a><span style="color: rgb(0, 102, 0);"></span></li>
+</ul>
+<h2>Printing Classes</h2>Classes related to printing support.<ul><li><a href="PageSetup.html">class PageSetup</a></li></ul><h2>Functions</h2>Stand-alone functions at the top level of the GUI package.
+<ul>
+<li><a href="Color.html">Color functions</a></li>
+
+<li><a href="application_func.html#application">application()</a></li>
+<li><a href="application_func.html#run">run()</a><span style="color: rgb(255, 0, 0);"></span><br>
+</li>
+</ul>
+<h2>Submodules</h2>Functionality provided as submodules of the GUI package.
+<ul>
+<li><a href="StdColors.html">StdColors</a> - Predefined Color objects</li>
+<li><a href="StdFonts.html">StdFonts</a> - Predefined Font objects</li>
+<li><a href="StdCursors.html">StdCursors</a> - Predefined Cursor objects</li><li><a href="StdMenus.html">StdMenus</a> - Constructing standard Menus and MenuBars</li><li><a href="alert_funcs.html">Alerts</a> - Various kinds of alert boxes</li><li><a href="file_dialogs.html">FileDialogs</a> - Dialogs for requesting old and new file&nbsp;and directory names</li><li><a href="Resources.html">Resources</a> - Functions for finding and loading resources bundled with an application</li>
+<li><a href="Geometry.html">Geometry</a> - Calculations with points and rectangles</li><li><a href="PageSetup.html">Printing</a> - Classes and functions related to printing</li>
+<li><a href="GL.html">GL</a> - OpenGL facilities</li><li><a href="Numerical.html">Numerical</a> - NumPy interface</li><li><a href="PIL.html">PIL</a> - Python Imaging Library interface</li>
+</ul>
+<h2>Example Code</h2>
+<ul>
+<li><a href="../Demos/BlobEdit/blobedit.py">blobedit.py</a></li>
+</ul>
+<p> </p>
+<hr width="100%">
+<p></p>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+</body></html>

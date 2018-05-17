@@ -1,0 +1,87 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><title>PyGUI - Menu Setup</title>
+  
+  <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"></head>
+
+<body>
+<h1>Menu Setup</h1>
+During the setup phase of menu command handling, the <tt>setup_menus</tt>
+method of each component along the message handling path is called with a
+<i>menu state object</i>. The <tt>setup_menus</tt> method uses the menu state
+object to enable or disable menu commands, add or remove check marks, and
+establish the contents of menu item groups.<br>
+<br>
+Each setup phase begins with all menu items disabled and all check marks
+removed, so it is normally only necessary to enable items and add check marks,
+not disable or remove them. However, on occasion a component may want to
+disable an item or remove a check mark that was enabled or added by a component
+higher up in the message handling hierarchy. It can do this because the <tt>setup_menus</tt>
+methods are called from the top of the message handling hierarchy to the
+bottom, giving more specific handlers the chance to override menu setup decisions
+made by more general ones.<br>
+<h2>Menu state objects</h2>
+A menu state object consists of a collection of <i>command state</i> and
+<i>command group</i> objects representing all the menu commands present in
+all the currently available menus, organised by their <i>command names</i>.
+An item can be selected from the menu state object by using the command name
+as either an attribute name or an index. For example, given a menu state
+object <tt>m</tt>, the state object for the command '<tt>foo_cmd</tt>' can
+be referred to as either<br>
+<blockquote><tt>m.foo_cmd</tt><br>
+</blockquote>
+or<br>
+<blockquote><tt>m['foo_cmd']</tt><br>
+</blockquote>
+Note that it is not an error to reference a non-existent command. Referring
+to a command that is not currently present in the available menus returns
+a dummy command state object, manipulation of which has no effect.<br>
+<h2>Command state objects</h2>
+A command state object represents the state of a single menu item.<br>
+<h3>Properties</h3>
+<blockquote>
+  <dl>
+    <dt><tt>enabled</tt></dt>
+    <dd>True if the item is to be selectable by the user.</dd>
+    <dd><br>
+    </dd>
+    <dt><tt>checked</tt></dt>
+    <dd>True if there is to be a distinguishing mark displayed beside the
+menu item. The precise appearance of this is platform-dependent.</dd>
+  </dl>
+</blockquote>
+<h2>Command group objects</h2>
+A command group object is a sequence object representing an indexed group
+of menu items. It allows the contents of the group to be established, and
+provides access to the command state objects of the individual items. It
+also allows the enabled and checked status of all the items to be changed
+at once.<br>
+<h3>Properties</h3>
+<blockquote>
+  <dl>
+    <dt><tt>enabled</tt></dt>
+    <dt><tt>checked</tt></dt>
+    <dd><i>Write-only.</i> Assigning to these properties changes the corresponding
+properties of all the items in the group.</dd>
+  </dl>
+</blockquote>
+<h3>Operators</h3>
+<blockquote>
+  <dl>
+    <dt><i>group</i>[<i>index</i>]</dt>
+    <dd><i>Read-only.</i> Returns a command state object for the item with
+the specified index.</dd>
+  </dl>
+</blockquote>
+<h3>Methods</h3>
+<blockquote>
+  <dl>
+    <dt><tt>set_items(</tt><i>item_list</i><tt>)</tt></dt>
+    <dd>Replaces the contents of the group with a set of menu items constructed
+from the <i>item_list</i>. Each member of the <i>item_list</i> should be
+a "text/key" string as accepted by the <a href="Menu.html">Menu</a> class
+constructor.</dd>
+  </dl>
+</blockquote>
+<br>
+<br>
+</body></html>

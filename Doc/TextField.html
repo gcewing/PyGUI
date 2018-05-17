@@ -1,0 +1,81 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html><head>
+
+<meta content="text/html;charset=ISO-8859-1" http-equiv="Content-Type"><title>TextField class</title>
+  
+                            <meta name="GENERATOR" content="Mozilla/3.01Gold (X11; I; SunOS 5.6 sun4u) [Netscape]"></head><body>
+     <h1>class <tt>TextField(Control)</tt></h1>
+     <p>A&nbsp;TextField is a simple single or multi-line text entry area. All
+  text in the field is displayed with the same attributes such as font, color and justification.</p>
+     <h2>Properties</h2>
+  <dl>
+  <dl>
+    <dt><tt>text</tt></dt>
+    <dd>Contents of the text field.</dd>
+  </dl>
+</dl>
+     <dl>
+  <dl>
+    <dt><tt>selection</tt></dt>
+    <dd>A pair (<span style="font-style: italic;">start, end</span>) indicating the starting and ending character
+  positions of the selection. Character positions occur between characters
+ and are numbered from 0.<br>
+      <br>
+      <span style="font-style: italic;">Note:</span> This property is
+only valid when the text field is the current target. Setting this
+property causes the text field to become the target, and the result of
+reading it when the text field is not the target is undefined.<br>
+</dd>
+  </dl>
+</dl>
+     <dl>
+  <dl>
+    <dt><tt>multiline</tt></dt>
+    <dd><i>Initialize only.</i> A boolean indicating whether multiple lines
+ can be entered.</dd>
+    <dd><br>
+       </dd>
+    <dt><tt>password</tt></dt>
+    <dd><i>Initialize only.</i> A boolean indicating that the text is to
+be displayed in an obfuscated  manner, as for entering a password.<br>
+      <br>
+</dd>
+    <dd><i>Note:</i> On some platforms, it may not be possible to combine
+ this with the <tt>multiline</tt> option.<br>
+      <br>
+</dd><dt style="font-family: monospace;">editable</dt>
+    <dd>A boolean indicating whether the user can edit the text. Default is true.<br>
+    </dd>
+</dl></dl><h2>Action Properties</h2><dl><dl><dt style="font-family: monospace;">enter_action</dt><dd>Performed when the Return or Enter key is pressed. (Multiline text
+fields only perform this action when the Enter key on the numeric
+keypad is used.) The default is to pass the key event to the next handler<span style="font-family: monospace;">.</span><br><br></dd><dt style="font-family: monospace;">escape_action</dt><dd>Performed when the Escape key is pressed. The default is to pass the key event to the next handler<span style="font-family: monospace;"></span>.<br><br></dd><dt><tt>tab_action</tt></dt><dd>Performed when the Tab key is pressed. The default is to move the keyboard focus to the next field in the window.<br>
+      <br>
+</dd><dt style="font-family: monospace;">text_changed_action</dt>
+    <dd>Performed when the text is changed by the user.<br>
+    </dd>
+</dl>
+</dl>
+     <h2>Methods</h2>
+  <ul>
+  </ul>
+  <blockquote>       <dl>
+    <dt><tt>select_all()</tt></dt>
+    <dd>Selects all of the text and makes the text field the current target.</dd>
+  </dl>
+  </blockquote>
+  <blockquote>       <dl>
+    <dt><tt>cut_cmd()</tt></dt>
+    <dt><tt>copy_cmd()</tt></dt>
+    <dt><tt>paste_cmd()</tt></dt>
+    <dt><tt>clear_cmd()</tt></dt>
+    <dd>These implement the standard editing menu commands. The corresponding 
+ menu items are enabled automatically whenever the text field has the keyboard 
+ focus.</dd>
+  </dl>
+   </blockquote>
+     <p>---</p>
+     <br>
+   <br>
+  <br>
+ <br>
+</body></html>

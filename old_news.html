@@ -1,0 +1,136 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><meta content="text/html; charset=ISO-8859-1" http-equiv="content-type"><title>PyGUI - Old News</title></head><body>
+<h1>Old News</h1>
+<br>
+<table border="0" cellpadding="2" cellspacing="2" width="100%">
+
+
+    <tbody>
+      
+      <tr>
+      <td style="vertical-align: top;"><span style="font-style: italic;">6 May 2006</span><br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+      <td style="vertical-align: top;">
+      <h3>Version 1.7.1</h3>
+
+      <div style="margin-left: 40px;">New features:<br>
+<ul><li>Slider control</li><li>run() convenience function</li><li>Geometry.rects_intersect() function<br>
+        </li></ul>
+      </div>
+
+      <div style="margin-left: 40px;">Enhancements:<br>
+      <ul><li>Filenames on command line opened at application startup</li><li>BlobEdit example extended to demonstrate update_rect usage<br>
+        </li></ul>
+Bug fixes:<br>
+      <ul><li>Disabled a stray debugging statement in Cursor.__init__</li><li>Fixed package name in setup.py<br>
+        </li></ul>
+      </div>
+      </td>
+    </tr>
+<tr>
+      <td style="vertical-align: top;"><span style="font-style: italic;">1 April 2006</span><br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+      <td style="vertical-align: top;">
+      <h3>Version 1.7</h3>
+
+      <div style="margin-left: 40px;">New features:<br>
+      </div>
+      <ul style="margin-left: 40px;"><li><span style="font-family: monospace; font-weight: bold;">GL.DisplayList</span> class for managing OpenGL display lists in a similar way to the GL.Texture class inroduced in 1.6.</li><li>Facilites for displaying a chosen cursor when the mouse is over a View.</li><li>Facilities for locating resources associated with an application.</li></ul>
+      <div style="margin-left: 40px;">Bug fixes:<br>
+      <ul><li>Cocoa: Getting the extent property of a ScrollableView did not work.</li><li>Cocoa: Worked around a PyObjC bug that was causing Tasks to leak memory.</li><li>Cocoa: Request New File dialog with a file type having a Macintosh type code did not work.<br>
+        </li></ul>
+Plus a number of other modifications, see <a href="file:///Local/Projects/C/PyGUI/version/CHANGES.txt">CHANGES</a>.<br>
+      <br>
+      </div>
+      </td>
+    </tr>
+<tr>
+      <td style="vertical-align: top;"><span style="font-style: italic;">7 March 2006</span><br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+      <td style="vertical-align: top;"><big style="font-weight: bold;">Version 1.6.1</big><br>
+      <div style="margin-left: 40px;"><br>Fixed a couple of minor bugs. See the <a href="file:///Local/Projects/C/PyGUI/version/CHANGES.txt">CHANGES</a> file for details.<br>
+      <br>
+      </div>
+      </td>
+    </tr>
+<tr>
+      <td style="vertical-align: top;"><span style="font-style: italic;">12 February 2006</span><br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+      <td style="vertical-align: top;"><big style="font-weight: bold;">Version 1.6<br>
+      <br>
+      </big>
+      <div style="margin-left: 40px;">This version uses Cocoa instead of Carbon for the Mac implementation. The Carbon implementation is no longer supported.<br>
+      <br>
+There have been many additions and changes. See the <a href="file:///Local/Projects/C/PyGUI/version/CHANGES.txt">CHANGES</a> file for details.<br>
+      <br>
+      </div>
+      </td>
+    </tr>
+<tr>
+      <td valign="top"><span style="font-style: italic;">4 July 2004</span><br>
+      </td>
+      <td valign="top"><br>
+      </td>
+      <td valign="top"><big><b>Version 1.5.1</b></big><br>
+      <blockquote>Bug fixes:<br>
+      </blockquote>
+      <ul><ul><li>Menu item groups did not work.<br>
+          </li><li>Mac: Labels were not updated properly on changing the text
+property.</li><li>Mac: Setup script failed when Pyrex was not available.<br>
+            <br>
+          </li></ul></ul>
+      </td>
+    </tr>
+    <tr>
+        <td nowrap="nowrap" valign="top"><i>27 June 2004</i><br>
+        </td>
+        <td valign="top" width="10"><br>
+        </td>
+        <td valign="top">                   <blockquote> </blockquote>
+        <big><b>Version 1.5</b></big>                   <blockquote>There is now a <b><tt>GLView</tt></b> class for 3D graphics 
+   using OpenGL.<br>
+        </blockquote>
+                    <blockquote> </blockquote>
+        </td>
+      </tr>
+      <tr>
+        <td nowrap="nowrap" valign="top"><i>21 June 2004</i><br>
+        </td>
+        <td valign="top" width="10"><br>
+        </td>
+        <td valign="top"> <big><b>Version 1.4</b></big>                   <blockquote><span style="font-family: monospace; font-weight: bold;">Image</span> and <span style="font-family: monospace; font-weight: bold;">Pixmap</span> classes 
+and a <span style="font-family: monospace; font-weight: bold;">shrink_wrap</span>
+method have been added, and some bugs have been fixed. See the <a href="file:///Local/Projects/C/PyGUI/version/CHANGES.txt">CHANGES</a>
+file for details.<br>
+        <br>
+        </blockquote>
+        </td>
+      </tr>
+      <tr>
+        <td nowrap="nowrap" valign="top"><i>14 June 2004</i><br>
+        </td>
+        <td valign="top" width="10"><br>
+        </td>
+        <td valign="top">                   <blockquote> </blockquote>
+        <b><big>Version 1.3</big><br>
+        </b>                   <blockquote>For the first time, PyGUI has two simultaneously working 
+   implementations covering different platforms: MacOS X using Carbon, and 
+ Linux using Gtk. The Gtk version should also be usable on other Unix/X11 
+platforms. and, at a pinch, on Windows, although a native Windows version 
+would be preferable.</blockquote>
+                    <blockquote> </blockquote>
+                    <blockquote> </blockquote>
+        </td>
+      </tr>
+        </tbody> 
+</table>
+<br>
+</body></html>

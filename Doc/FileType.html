@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><meta content="text/html; charset=ISO-8859-1" http-equiv="content-type"><title>PyGUI - FileType class</title></head>
+<body>
+<h1>class <span style="font-family: monospace;">Files.FileType</span></h1>
+The FileType class provides a multi-platform representation of a file
+type, holding the metadata used by the various platforms to create and
+recognise files of a particular type. FileType instances are used by
+the <a href="file_dialogs.html">standard file selection dialogs</a> to restrict the set of selectable files, and by the <a href="FileRef.html">FileRef</a> class to enable creating a file of a
+specified type.<br>
+<h2>Properties</h2>
+<dl style="margin-left: 40px;">
+  <dt style="font-family: monospace;">name</dt><dd>A short human-readable description of the file type.<br>
+    <br>
+  </dd>
+  <dt><span style="font-family: monospace;">suffix</span></dt>
+
+
+
+  
+
+  <dd>Filename suffix (without dot) used to recognise files of this
+type. This is the most generic way of specifying a file type, as it
+works across most platforms.</dd><dd><br>
+  </dd>
+  <dd>This property is used by <a href="file_dialogs.html#request_old_file">request_old_file()</a> to filter the set of files that can be selected, and by <a href="file_dialogs.html#request_new_file">request_new_file()</a> to determine the suffix of the returned filename. Note, however, that it is ignored by <a href="FileRef.html#open">FileRef.open()</a>
+when creating a file. If you use a filename other than one returned by
+request_new_file(),&nbsp; it is your responsibility to add any
+necessary suffix.<br>
+    <br>
+  </dd>
+
+
+  <dt><span style="font-family: monospace;">mac_creator</span></dt>
+  <dd>On the Macintosh, the 4-character creator code to be given to
+newly-created files of this type. This property is used by <a href="FileRef.html#open">FileRef.open()</a> when creating a file, but not by the file dialog functions.</dd><dd><br>
+On other platforms, this property is ignored.<br>
+    <br>
+  </dd>
+
+
+  <dt><span style="font-family: monospace;">mac_type</span></dt>
+  <dd>On the Macintosh, the 4-character type code. This property is
+used by <a href="FileRef.html#open">FileRef.open()</a> when creating a file, and by <a href="file_dialogs.html#request_old_file">request_old_file()</a> to filter the set of files that can be selected.<br>
+    <br>
+On other platforms, this property is ignored.<br>
+    <br>
+</dd><dt style="font-family: monospace;">mac_force_suffix</dt>
+  <dd>On MacOSX, this property controls whether files saved as this type are forced to have the specified suffix even when a <span style="font-family: monospace;">mac_type</span>
+is specified. The default is true, which ensures that the application
+will always recognise saved files as being of this type on all
+platforms.<br>
+    <br>
+By specifying a mac_type and setting this property to false, you can
+allow files to be saved on the Macintosh with any file name. On the
+Macintosh their type will be recognised by the mac_type, and files
+saved on other platforms will be recognised by their suffix. However,
+to ensure that files saved on the Macintosh will be recognised on other
+platforms, you will need to manually give them the correct suffix.<br>
+    <br>
+This property only applies when the file type specifies both a suffix
+and a mac_type. When there is no mac_type, the suffix is always
+enforced. When there is no suffix, this property is ignored (since
+there is no suffix to enforce).<br>
+    <br>
+On non-Macintosh platforms, this property is ignored, and the suffix, if any, is always enforced.<br>
+  </dd>
+</dl>---<br>
+</body></html>

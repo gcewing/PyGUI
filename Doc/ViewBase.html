@@ -1,0 +1,99 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><title>ViewBase</title>
+
+
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"></head><body>
+<h1>class <tt>ViewBase</tt></h1>
+ViewBase is an abstract class providing common functionality for
+user-defined views. It provides facilities for associating
+the view with one or more <a href="Model.html">Models</a>,
+and some default
+behaviour for responding to changes in a model.<br>
+<br>
+ViewBase is not intended to be used directly as a base class. Usable
+subclasses of ViewBase include <a href="View.html">View</a>
+and <a href="GLView.html">GLView</a>.<br>
+<h2>Properties</h2>
+<blockquote>
+<dl>
+<dt><tt>models</tt></dt>
+<dd>List of models being observed. <i>Do not modify
+this list directly.</i> Use the <tt>add_model</tt>
+and <tt>remove_model</tt> methods to attach and detach
+models.</dd>
+<dd><br>
+</dd>
+<dt><tt>model</tt></dt>
+<dd>Convenience property for when only one model is being
+observed. Reading this property returns <tt>models[0]</tt>
+when models is not empty, otherwise it returns <tt>None</tt>.
+Assigning a model to this property removes all other models and adds it
+as the sole model. Assigning <tt>None</tt> to this
+property removes all models.<br>
+<br>
+</dd>
+<dt style="font-family: monospace;"><a name="cursor"></a>cursor</dt>
+<dd>The <a href="Cursor.html"><span style="font-family: monospace;">Cursor</span></a>
+to display when the mouse is over the view, or <span style="font-family: monospace;">None</span> to use the
+default cursor.</dd>
+<dd><br>
+</dd>
+<dd>To prevent any cursor from being shown over this view,
+set the <span style="font-family: monospace;">cursor</span>
+property to <a href="StdCursors.html#invisible"><span style="font-family: monospace;">StdCursors.invisible</span></a>.<br>
+</dd>
+</dl>
+</blockquote>
+<h2>Abstract methods&nbsp;<br>
+</h2>
+<blockquote>
+<dl>
+<dt><tt>model_changed()</tt></dt>
+<dd>Called when an attached model's <tt>notify_view</tt>
+method is called without specifying a message name. The default action
+is to call the
+view's <tt>invalidate</tt> method.</dd>
+<dd><br>
+</dd>
+<dt><tt>model_destroyed(</tt><i>model</i><tt>)</tt></dt>
+<dd>Called when an attached model is destroyed. The default
+action is to destroy the window containing this view, if any.<br>
+<br>
+<i>Note:</i> The model parameter should only be used
+to identify which model is being destroyed, if the view is observing
+more than one model. Do not rely on the state of the model object that
+is being destroyed.<br>
+</dd></dl></blockquote><dl><h2>Methods</h2>
+</dl>
+<blockquote>
+<dl>
+<dt><tt>add_model(</tt><i>model</i><tt>)</tt></dt>
+<dd>Attaches a model to this view, so that the view will be
+notified of
+changes to the model. This is an alternative to calling the model's <tt>add_view</tt>
+method.</dd>
+<dd><br>
+</dd>
+<dt><tt>remove_model</tt><tt>(</tt><i>model</i><tt>)</tt></dt>
+<dd>Detaches a model from this view. This is an alternative
+to calling the model's <tt>remove_view</tt> method.</dd>
+</dl>
+</blockquote>
+<blockquote>
+<dl>
+<dt><tt>track_mouse()</tt></dt>
+<dd>Called following the receipt of a mouse-down event,
+returns an iterator which yields a series of mouse-drag events as long
+as the mouse button is held down, followed by a mouse-up event. The
+positions of all events are reported in the view's local coordinate
+system. While the iterator is active, all mouse movement events are
+reported, whether they occur within the view's bounds or not, and any
+other user input events are ignored.</dd>
+</dl>
+</blockquote>
+<dl>
+<dd>&nbsp;</dd>
+</dl>
+<br>
+<br>
+</body></html>

@@ -1,0 +1,64 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html><head><meta content="text/html;charset=ISO-8859-1" http-equiv="Content-Type">
+  
+                <title>Model class</title><meta name="GENERATOR" content="Mozilla/3.01Gold (X11; I; SunOS 5.6 sun4u) [Netscape]"></head>
+<body>
+   <h1>class <tt>Model(Properties)</tt></h1>
+   <p>A&nbsp;Model represents an application data structure which can have observers. 
+The observers are typically subclasses of <a href="View.html">View</a>, but need not be. Class Model 
+provides mechanisms for attaching and removing observers, and for notifying 
+observers when the Model changes.</p><p>A Model can have another Model or <a href="Document.html">Document</a> as a parent. When you call the <span style="font-family: monospace;">changed()</span>
+method of a Model, the call is propagated to its parent, if any. If the
+Model is ultimately contained in a Document, that Document will then be
+marked as needing to be saved.</p><h3>Pickling behaviour</h3>Models
+are designed to be pickled as a convenient way of saving and restoring
+the state of a Document. There are two ways in which class Model
+provides special support for pickling.<br><ul><li>The link
+between a Model and its observers is maintained outside the Model
+object, so that the observers will not be pickled along with the Model.<br></li><li><a name="pickling_parent"></a>There
+is a mechanism to prevent the parent object of a Model from being
+pickled when it would not be appropriate to do so. By default, this
+mechanism is used to prevent a Document reached via the parent
+attribute of a Model from being pickled. This is important, because
+normally you only want to save the contents of a Document, not the
+Document object itself. Furthermore, the Document contains references
+to the Application and all of the Windows attached to it, so pickling
+the Document would result in attempting to pickle almost the entire
+state of the application.<br><br>The mechanism involves looking for an attribute called <span style="font-family: monospace; font-weight: bold;">pickle_as_parent_model</span> on the object referenced by the model's <a href="#parent"><span style="font-family: monospace;">parent</span></a> attribute. If that attribute exists and has a <span style="font-style: italic;">false</span> value, then the <span style="font-family: monospace;">parent</span> attribute is omitted from the pickled state of the Model. Class Document has a <span style="font-family: monospace;">pickle_as_parent_model</span> attribute that defaults to False (and you should not change it).<br><br>A
+consequence is that the parent link from a Model to a containing
+Document is not automatically restored. You will need to set it
+yourself after unpickling in the Document's <span style="font-family: monospace;">read_contents()</span> method.</li></ul><h2>Constructor</h2><dl style="margin-left: 40px;"><dt style="font-family: monospace;">Model(parent = None)</dt><dd>Creates a Model with the specified parent.</dd></dl><h2>Properties</h2>
+   <blockquote>     <dl>
+    <dt><tt>views</tt></dt>
+    <dd>List of objects which are observing this Model. <i>Do not modify this
+list directly;</i> use the <tt>add_view</tt> and <tt>remove_view</tt> methods
+to add and remove observers.</dd>
+  </dl>
+ </blockquote>
+   <h2>Attributes</h2><dl style="margin-left: 40px;"><dt style="font-family: monospace;"><a name="parent"></a>parent</dt><dd>Containing Model or Document, if any.</dd></dl><h2>Methods</h2>
+   <blockquote>     <dl>
+    <dt><tt>add_view(view)</tt></dt>
+    <dd>Adds the given object as an observer of this Model. If the object 
+defines an <tt>add_model</tt> method, it is called with this Model as argument.</dd>
+  </dl>
+     <dl>
+    <dt><tt>remove_view(view)</tt></dt>
+    <dd>Removes the given object as an observer of this Model. If the object 
+defines a <tt>remove_model</tt> method, it is called with this Model as argument.</dd>
+  </dl>
+     <dl>
+    <dt><tt>notify_views(message = 'model_changed', ...)</tt></dt>
+    <dd>Calls a method of each observer with the same name as the message, 
+passing it any additional arguments.<br><br></dd><dt style="font-family: monospace;">changed()</dt><dd>If the Model is contained in a Document, mark the Document as needing to be saved.</dd>
+  </dl>
+ </blockquote>
+   <h2>Pickle protocol</h2><dl style="margin-left: 40px;"><dt style="font-family: monospace;">__getstate__()<br>__setstate__(state)</dt><dd>These methods implement the <a href="#pickling_parent">special treatment of the parent attribute</a> when pickling. The <span style="font-family: monospace;">__getstate__</span> method returns a possibly-modified version of the Model's <span style="font-family: monospace;">__dict__</span>, and the <span style="font-family: monospace;">__setstate__</span> method restores it. If you implement your own custom pickling behaviour, you should build on these methods.</dd></dl><h2>Destructor</h2>
+   <blockquote>     <dl>
+    <dt><tt>destroy</tt></dt>
+    <dd>Dissociates the Model from any attached observers, and calls the 
+     <tt>model_destroyed</tt> method of each observer which defines it.</dd>
+  </dl>
+ </blockquote>
+   <br>
+ <br>
+</body></html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+<meta content="text/html; charset=ISO-8859-1" http-equiv="content-type"><title>PyGUI - GL.Texture class</title>
+
+</head>
+<body>
+<h1>class <span style="font-family: monospace;">GL.Texture</span></h1>
+The Texture class in the GL submodule provides a context-independent
+representation of an OpenGL texture. You can use a single Texture
+object with multiple GLViews and/or GLPixmaps without being concerned
+whether they are sharing texture spaces or not, and without having to
+keep track of OpenGL texture numbers.<br>
+<br>
+Texture is an abstract class. To use it, you subclass it and define the
+<span style="font-family: monospace;">do_setup</span>
+method to make whatever OpenGL calls are necessary to set up the
+texture. Then, when you want to draw with the texture, you call the <span style="font-family: monospace;">bind</span>
+method to make it the current OpenGL texture. Whenever the Texture is
+used in a context where it has not been used before, your <span style="font-family: monospace;">do_setup</span> method
+will be called to create a representation of the texture appropriate to
+that context.<br>
+<br>
+Keep in mind that any call to <span style="font-family: monospace;">bind</span>
+can trigger allocation of a texture number and a call to your <span style="font-family: monospace;">do_setup</span>
+method, and this will usually happen while you are in the middle of
+doing OpenGL drawing. If this would be inconvenient, you may need to
+"preload" the texture by calling the <span style="font-family: monospace;">bind</span> method
+once in each context where the texture might be used, before you start
+drawing.<br>
+<h2>Constructor</h2>
+<div style="margin-left: 40px;">
+<dl>
+<dt style="font-family: monospace;">Texture(texture_type)</dt>
+<dd>Constructs a texture of the given type. The <span style="font-style: italic;">texture_type</span> should
+be one of the OpenGL texture type constants (GL_TEXTURE_2D etc).<br>
+</dd>
+</dl>
+</div>
+<h2>Methods</h2>
+<div style="margin-left: 40px;">
+<dl>
+<dt style="font-family: monospace;">bind()</dt>
+<dd>Makes this
+texture the current texture for the current context by calling
+glBindTexture. If this texture has not previously been used
+with the current context (or one with which it is sharing
+textures), an OpenGL texture number is allocated and <span style="font-family: monospace;">do_setup</span> is
+called to initialise a representation of the texture.<br><br></dd><dt style="font-family: monospace;">gl_id()</dt><dd>Returns
+the OpenGL texture number corresponding to this texture in the current
+context. May trigger allocation of a new texture and a call to <span style="font-family: monospace;">do_setup()</span>.
+Does not bind the texture, unless a new texture is allocated, in which
+case the current texture binding may be changed as a side effect.<br><br></dd><dt style="font-family: monospace;">gl_tex_image_2d(image, target = GL_TEXTURE_2D, internal_format = GL_RGBA,<br>&nbsp; &nbsp; &nbsp; &nbsp; border = False, with_mipmaps = False)</dt><dd>Loads the currently bound texture with data from an <a href="Image.html">Image</a>. You will typically call this from your <span style="font-family: monospace;">do_setup()</span> method to load the texture data. The image size is scaled up to a power of 2 if necessary. If <span style="font-family: monospace;">border</span> is true, the image will be assumed to have a 1-pixel wide border. If <span style="font-family: monospace;">with_mipmaps</span> is true, a set of mipmaps will be generated using <span style="font-family: monospace;">gluBuild2DMipmaps</span>.<span style="font-style: italic;"> Note:</span> <span style="font-family: monospace;">border</span> and <span style="font-family: monospace;">with_mipmaps</span> cannot both be true.<br></dd>
+<dt style="font-family: monospace;">deallocate()</dt>
+<dd>Deallocates any OpenGL resources currently allocated to the
+Texture. If it is used again, new resources will be allocated.<br>
+</dd>
+</dl>
+</div>
+<h2>Abstract methods</h2>
+<div style="margin-left: 40px;">
+<dl>
+<dt style="font-family: monospace;">do_setup()</dt>
+<dd>This method should be implemented to make the necessary
+OpenGL
+calls to initialise the texture. When this method is called, a texture
+number will already have been allocated and <span style="font-family: monospace;">glBindTexture</span>
+called to make it the current texture.<br>
+</dd>
+</dl>
+</div>
+<br>
+</body></html>

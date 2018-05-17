@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><meta content="text/html; charset=ISO-8859-1" http-equiv="content-type"><title>PyGUI - Resources</title></head>
+<body>
+<h1>module <span style="font-family: monospace;">Resources</span></h1>
+A <span style="font-style: italic;">resource</span> is a file
+containing information used by the application that is bundled with the
+application. PyGUI provides some functions for locating resources by
+looking in certain standard places for them.<br>
+<br>
+A resource is specified by a <span style="font-style: italic;">resource name</span>. This is a relative pathname using '/' as a directory separator on all platforms. A resource specification may also include a <span style="font-style: italic;">type</span>, which is a filename suffix (excluding the dot) to be appended to the resource name.<br>
+<br>
+The standard locations searched for resources are as follows:<br>
+<br>
+<table style="text-align: left; width: 100%;" border="1" cellpadding="6" cellspacing="0">
+  <tbody>
+    <tr>
+      <th style="vertical-align: top;">Search Order<br>
+      </th>
+      <th style="vertical-align: top;">MacOSX applications created with Py2App<br>
+      </th>
+      <th style="vertical-align: top;">Other platforms<br>
+      </th>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">1. Application resources<br>
+      </td>
+      <td style="vertical-align: top;">The Resources directory in the application bundle.<br>
+      </td>
+      <td style="vertical-align: top;">A directory called <span style="font-family: monospace;">Resources</span> in the same directory as the application's main Python code file or its parent directory.<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">2. PyGUI standard resources<br>
+      </td>
+      <td colspan="2" style="vertical-align: top;">A platform-dependent location within the PyGUI installation.<br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+<h2>Global Functions</h2>
+<dl>
+  <dt><span style="font-family: monospace;">find_resource(</span><span style="font-style: italic;">name</span><span style="font-family: monospace;">,</span> <span style="font-style: italic;">type</span> <span style="font-family: monospace;">=</span> <span style="font-family: monospace;">None)</span></dt>
+  <dd>Searches for the named resource and returns the full pathname of the first matching file found on the search path. If <span style="font-style: italic;">type</span> is specified, it is appended to the name with a dot between, after removing any existing dot-suffix from the <span style="font-style: italic;">name</span>. The <span style="font-style: italic;">type</span> itself should not contain a dot. If no matching file is found,&nbsp; <span style="font-family: monospace;">ResourceNotFoundError</span> is raised.<br>
+    <br>
+  </dd>
+  <dt><span style="font-family: monospace;">lookup_resource(</span><span style="font-style: italic;">name</span><span style="font-family: monospace;">,</span> <span style="font-style: italic;">type</span> <span style="font-family: monospace;">=</span> <span style="font-family: monospace;">None)</span></dt>
+  <dd>Searches for a resource as per <span style="font-family: monospace;">find_resource</span>, but if the resource is not found, <span style="font-family: monospace;">None</span> is returned instead of raising an exception.<br><br></dd><dt style="font-family: monospace;">get_resource(loader, name, type = None, default = None, **kwds)</dt><dd>Finds a resource and loads it using the specified <span style="font-family: monospace;">loader</span> function. The loader is called as <span style="font-family: monospace;">loader<span style="font-style: italic;">(</span></span><span style="font-style: italic;">path</span><span style="font-family: monospace;">, **kwds)</span> where <span style="font-style: italic;">path</span>
+is the full pathname of the resource. The loaded resource is cached,
+and subsequent calls referencing the same resource will return the
+cached value. If the resource is not found, the specified <span style="font-family: monospace;">default</span> is returned if any, otherwise <span style="font-family: monospace;">ResourceNotFoundError</span> is raised.</dd>
+</dl>
+<h2>Global Variables</h2>
+
+<dl>
+<dt style="font-family: monospace;">resource_path</dt><dd>A list of directory names to search for resources. This is
+initialised on startup to include the standard locations for PyGUI
+application resources. You can insert additional directories in this
+list to customise the search path.</dd>
+</dl>
+
+<h2>Exceptions</h2>
+<dl>
+  <dt style="font-family: monospace;">ResourceNotFoundError</dt>
+  <dd>Raised by <span style="font-family: monospace;">find_resource</span> when a resource cannot be found.<br>
+  </dd>
+</dl>
+---<br>
+<br>
+</body></html>

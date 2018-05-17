@@ -1,0 +1,54 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html><head><title>PyGUI - class MessageHandler</title>
+
+<meta name="GENERATOR" content="Mozilla/3.01Gold (X11; I; SunOS 5.6 sun4u) [Netscape]">
+</head>
+<body>
+<!-- Changed by: Greg Ewing, 9-Dec-1997 -->
+<h1>class <tt>MessageHandler </tt></h1>
+<p>MessageHandler is an abstract base class for objects which
+participate in the message delivery hierarchy. The message delivery
+mechanism is used to handle events such as keystrokes and menu commands
+which are not directed at a particular point on the screen. See <a href="event_handling.html">Event Handling</a> for more
+information.</p>
+<h2>Methods</h2>
+<dl style="margin-left: 40px;">
+<dt><tt>handle(msg_name, ...)</tt></dt>
+<dd>If there is a method with the same name as the message,
+calls it
+with the message arguments. Otherwise, passes the message to the next
+handler.<br><br></dd><dt style="font-family: monospace;">handle_here(msg_name, ...)</dt><dd>If there is a method with the same name as the message,
+calls it
+with the message arguments. Otherwise, does nothing.<br><br></dd><dt style="font-family: monospace;">handle_event(event)</dt><dd>Equivalent to <span style="font-family: monospace;">handle(event.kind, event)</span>.<br><br></dd><dt style="font-family: monospace;">handle_event_here(event)</dt><dd>Equivalent to <span style="font-family: monospace;">handle_here(event.kind, event)</span>.<br><br></dd><dt style="font-family: monospace;">pass_to_next_handler(msg_name, ...)</dt><dd>Calls the <span style="font-family: monospace;">handle()</span> method of the next message handler, if any.<br><br></dd><dt style="font-family: monospace;">pass_event_to_next_handler(event)</dt><dd>Equivalent to <span style="font-family: monospace;">pass_to_next_handler(event.kind, event)</span>.<br></dd>
+<dt><tt>next_handler()</tt></dt>
+<dd>Returns the object, if any, to which messages not handled
+by this object should be passed up.</dd>
+</dl>
+<h2>Abstract Methods</h2>
+<blockquote>
+<dl>
+
+<dt><tt>key_down(</tt><i>event</i><tt>)<br>
+</tt></dt>
+<dt><tt>key_up(</tt><i>event</i><tt>)</tt></dt>
+<dd>These methods are called in response to keyboard events.
+The default implementations pass the event to the next handler.<br><br>
+</dd>
+<dt><tt>setup_menus(menu_state)</tt></dt>
+<dd>During the menu setup phase of menu command processing,
+this method
+is called for all handlers along the message path in reverse order,
+i.e.
+from the Application down to the current target. MessageHandlers should
+use
+this method to enable and otherwise configure any menu items that they
+respond
+to and which are currently valid.&nbsp;See <a href="menu_setup.html">Menu Setup</a> for more
+information.</dd>
+</dl>
+<dl>
+</dl>
+</blockquote>
+<br>
+<br>
+</body></html>

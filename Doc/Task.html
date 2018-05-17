@@ -1,0 +1,38 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><meta content="text/html; charset=ISO-8859-1" http-equiv="content-type"><title>PyGUI - Class Task</title></head><body>
+<h1>class <span style="font-family: monospace;">Task</span></h1>
+A Task enables you to schedule code to be executed after a specified period of time, either once or repeatedly.<br>
+<br>
+Tasks are intended for applications in which accuracy of timing is not
+critical. Tasks are synchronised with the event loop, so if your
+application is busy processing an event when a Task becomes ready to
+execute, it will be delayed until processing of the event as finished.
+Also, on some platforms, Tasks might not run while a menu is being
+pulled down or other controls are being interacted with.<br>
+<h2>Constructor</h2>
+<dl style="margin-left: 40px;">
+  <dt style="font-family: monospace;">Task(proc, interval, repeat = False, start = True)</dt>
+  <dd>Creates a task which will execute the <span style="font-style: italic;">proc</span> after <span style="font-style: italic;">interval</span> seconds. If <span style="font-style: italic;">repeat</span> is true, the task will continue to fire repeatedly every <span style="font-style: italic;">interval</span> seconds, otherwise it will fire only once and then stop. If <span style="font-style: italic;">start</span> is true, the task's timer will be started immediately, otherwise the task will remain dormant until it is activated using the <span style="font-weight: bold;">start()</span> method.<br>
+    <br>
+Arbitrary fractions of a second may be specified for <span style="font-style: italic;">interval</span>, although granularity of timing is platform-dependent. <br>
+  </dd>
+</dl>
+<h2>Properties</h2>
+<dl style="margin-left: 40px;">
+  <dt style="font-family: monospace;">scheduled</dt>
+  <dd><span style="font-style: italic;">Read only</span> Returns true if the task has been scheduled to run by calling the <span style="font-weight: bold;">start()</span> method or passing true to the <span style="font-weight: bold;">start</span> parameter of the constructor.</dd>
+</dl>
+<h2>Methods</h2>
+<dl style="margin-left: 40px;">
+  <dt style="font-family: monospace;">start()</dt>
+  <dd>Schedules the task for execution and starts its timer. If the task was already scheduled, or was previously unscheduled using <span style="font-weight: bold;">stop()</span> part way through a timing period, the time period is started anew.<br>
+    <br>
+  </dd>
+  <dt style="font-family: monospace;">stop()</dt>
+  <dd>Stops the task's timer and unschedules it. The task will remain dormant until <span style="font-weight: bold;">start()</span> is called again.</dd>
+</dl>
+<br>
+--<br>
+<br>
+<br>
+</body></html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><meta content="text/html; charset=ISO-8859-1" http-equiv="content-type"><title>PyGUI - class Cursor</title></head>
+<body>
+<h1>class <span style="font-family: monospace;">Cursor</span></h1>
+The Cursor class represents an image that may be used as a mouse cursor. A Cursor can be assigned to the <a href="ViewBase.html#cursor"><span style="font-family: monospace;">cursor</span></a>
+property of a View to control the appearance of the cursor when the
+mouse is over that view. A cursor can be obtained from a resource file,
+constructed from an <a href="Image.html">Image</a>, or obtained from a set of predefined cursors in the <a href="StdCursors.html">StdCursors</a> module.<br>
+<br>
+The capabilites of cursors vary from one platform to another. There may
+be a limit on the size of a cursor, and coloured cursors may or may not
+be supported. For maximum portability, cursor images should be black
+and white and no larger than 16x16 pixels.<br>
+<h2>Constructors</h2>
+<dl style="margin-left: 40px;">
+  <dt><span style="font-family: monospace;">Cursor(</span><span style="font-style: italic;">resource_name</span><span style="font-family: monospace;">,</span> <span style="font-style: italic;">hotspot</span> <span style="font-family: monospace;">=</span> <span style="font-family: monospace;">None)</span></dt><dd>Constructs a cursor from the specified resource, which should be an image file.</dd>
+  <dd><br>
+  </dd>
+  <dd>If no hotspot is specifed, a <span style="font-style: italic;">hotspot file</span> is searched for using the resource name with the suffix replaced by "<span style="font-family: monospace;">.hot</span>". The hotspot file should be a single-line text file containing two coordinates separated by whitespace.<br>
+    <br>
+If no hotspot is specifed and no hotspot file is found, the hotspot defaults to the centre of the image.</dd>
+  <dt><br>
+  </dt>
+  <dt><span style="font-family: monospace;">Cursor(</span><span style="font-family: monospace;"></span><span style="font-style: italic;">image</span><span style="font-family: monospace;">,</span><span style="font-style: italic;"> hotspot</span> <span style="font-family: monospace;">=</span> <span style="font-family: monospace;">None)</span></dt>
+
+  <dd>Constructs a Cursor having the specified <a href="Image.html">Image</a>
+and hotspot point. If the image has an alpha channel, it is used as the
+cursor's mask. If no hotspot is specified, it defaults to the centre of
+the image.<br>
+</dd>
+</dl>
+<br>
+</body></html>

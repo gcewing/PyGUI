@@ -1,0 +1,86 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><title>PyGUI - Geometry submodule</title>
+  
+        <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"></head>
+
+<body>
+ <h1><tt>Geometry</tt> submodule</h1>
+ The Geometry submodule provides a collection of functions for operating
+on points and rectangles. See the section on <a href="coordinates.html">Coordinates, 
+Points and Rectangles</a> for a discussion of how these entities are defined.<br>
+ <h2>Point functions</h2>
+ <dl>
+  <dt><tt>add_pt(</tt><i>p1, p2</i><tt>)</tt></dt>
+  <dd>Returns the point resulting from adding the coordinates of points <i>p1</i> and <i>p2</i>.</dd>
+</dl>
+ <dl>
+  <dt><tt>sub_pt(</tt><i>p1, p2</i><tt>)</tt></dt>
+  <dd>Returns the point resulting from subtracting the coordinates of point 
+    <i>p2</i> from those of point <i>p1</i>.</dd>
+</dl>
+ <h2>Rectangle functions</h2>
+ <dl>
+  <dt><tt>rect_sized(</tt><i>p, size</i><tt>)</tt></dt>
+  <dd>Returns a rectangle of the specified size with <i>p</i> as its top left
+corner.</dd>
+</dl>
+ <dl>
+  <dt><tt>rect_left(</tt><i>r</i><tt>)</tt></dt>
+  <dt><tt>rect_top(</tt><i>r</i><tt>)</tt></dt>
+  <dt><tt>rect_right(</tt><i>r</i><tt>)</tt></dt>
+  <dt><tt>rect_bottom(</tt><i>r</i><tt>)</tt></dt>
+  <dd>These functions return the left, top, right or bottom coordinate, respectively, 
+of the given rectangle.</dd>
+</dl>
+ <dl>
+  <dt><tt>rect_width(</tt><i>r</i><tt>)</tt></dt>
+  <dt><tt>rect_height(</tt><i>r</i><tt>)</tt></dt>
+  <dd>These functions return the width or height, respectively, of the given 
+rectangle.</dd>
+</dl>
+ <dl>
+  <dt><tt>rect_topleft(</tt><i>r</i><tt>)</tt></dt>
+  <dt><tt>rect_botright(</tt><i>r</i><tt>)</tt></dt>
+  <dd>These functions return the top left or bottom right point, respectively, 
+of the given rectangle.</dd>
+</dl>
+ <dl>
+  <dt><tt>rect_size(</tt><i>r</i><tt>)</tt></dt>
+  <dd>Returns the size of the given rectangle.</dd>
+</dl>
+ <dl>
+  <dt><tt>union_rect(</tt><i>r1, r2</i>)</dt>
+  <dd>Returns the union of the rectangles <i>r1</i> and <i>r2</i>, i.e. the 
+smallest rectangle enclosing both <i>r1</i> and <i>r2</i>.</dd>
+</dl>
+ <dl>
+  <dt><tt>sect_rect(</tt><i>r1, r2</i><tt>)</tt></dt>
+  <dd>Returns the intersection of rectangles <i>r1</i> and <i>r2</i>.</dd>
+</dl>
+ <dl>
+  <dt><tt>inset_rect(</tt><i>r, </i><tt>(</tt><i>dx, dy</i><tt>))</tt></dt>
+  <dd>Returns the rectangle resulting from displacing the sides of the rectangle 
+    <i>r</i> inwards horizontally by <i>dx</i> and vertically by <i>dy</i>.</dd>
+</dl>
+ <dl>
+  <dt><tt>offset_rect(</tt><i>r,&nbsp;</i><tt>(</tt><i>dx, dy</i><tt>)</tt><tt>)</tt></dt>
+  <dd>Returns the rectangle resulting from displacing the rectangle <i>r</i> horizontally by <i>dx</i> and vertically by <i>dy</i>.</dd>
+</dl>
+ <dl>
+  <dt><tt>empty_rect(</tt><i>r</i><tt>)</tt></dt>
+  <dd>Returns true if <i>r</i> is an empty rectangle.</dd>
+</dl>
+ <dl>
+  <dt><tt>pt_in_rect(</tt><i>p, r</i><tt>)</tt></dt>
+  <dd>Returns true if the point <i>p</i> is in the rectangle <i>r</i>. A point
+is considered to be in a rectangle if the pixel immediately below and to
+the right of the point is enclosed by the rectangle.<br>
+    <br>
+</dd><dt><span style="font-family: monospace;">rects_intersect(</span><span style="font-style: italic;">r1</span>, <span style="font-style: italic;">r2</span><span style="font-family: monospace;">)</span></dt>
+  <dd>Returns true if the intersection of rectangles <span style="font-style: italic;">r1</span> and <span style="font-style: italic;">r2</span> is nonempty.<br>
+  </dd>
+
+</dl>
+ ---<br>
+ <br>
+</body></html>

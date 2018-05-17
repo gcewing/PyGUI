@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><title>PyGUI - ModalDialog class</title>
+  
+        <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"></head>
+<body>
+ <h1>class <tt>ModalDialog(Dialog)</tt></h1>
+ The ModalDialog class is a subclass of <a href="Dialog.html">Dialog</a>
+designed for modal dialogs. It has a default style of <tt>'modal_dialog'</tt>
+and provides facilities for presenting the dialog modally.<br>
+ <br>
+ While a ModalDialog is active, interaction with other parts of the application 
+is prevented. Other windows cannot be activated, application-wide menu commands 
+other than those used by the dialog itself are not enabled, and unhandled 
+events and messages are not forwarded to the application.<br>
+ <h2>Constructor</h2>
+ <blockquote>        <dl>
+    <dt><tt>ModalDialog(style</tt> <tt>=</tt> <tt>'modal_dialog',</tt></dt>
+    <dt><tt>&nbsp; &nbsp; </tt><tt>closable</tt>       <tt>=</tt> <tt>False,</tt>       <tt>resizable</tt> <tt>=</tt> <tt>False,</tt> <tt>zoomable</tt> = <tt>False</tt><tt>,</tt></dt>
+    <dt><tt>&nbsp; &nbsp; movable</tt> <tt>=</tt> <i>default</i><tt>,</tt> <tt>hidable</tt> =&nbsp;<i>default</i><tt>)</tt></dt>
+    <dd><br>Constructs a ModalDialog with the specified options. The default values
+for the <tt>movable</tt> and <tt>hidable</tt> options are platform-dependent.</dd>
+  </dl>
+  </blockquote>
+ <h2>Methods</h2>
+ <blockquote>     <dl>
+    <dt><tt>present()</tt></dt>
+    <dd>Present the dialog modally. The dialog is shown and a nested event 
+loop is entered which prevents interaction with any other part of the application. 
+This method retains control until the dialog's <tt>dismiss()</tt> method is
+called. The dialog is then hidden and the <span style="font-family: monospace;">present()</span> method returns with the value passed to <tt>dismiss()</tt>.<br>
+ </dd>
+  </dl>
+</blockquote>
+ <blockquote>     <dl>
+    <dt><tt>dismiss(result</tt> <tt>=</tt> <tt>0)</tt></dt>
+    <dd>Hides the dialog and, if the dialog is being presented modally, causes the <tt>present()</tt> method to return with the given result as its return value.<br><br></dd><dt style="font-family: monospace;">ok()</dt><dd>Dismisses the dialog with the value <span style="font-family: monospace;">True</span>. By default, this method is called in response to pressing a <a href="Button.html#DefaultButton">DefaultButton</a> or&nbsp;a Return/Enter key event.<br><br></dd><dt style="font-family: monospace;">cancel()</dt><dd>Dismisses the dialog with the value <span style="font-family: monospace;">False</span>. By default, this method is called in response to pressing a&nbsp;<a href="Button.html#CancelButton">CancelButton</a> or&nbsp;an Escape key event.</dd>
+  </dl>
+ </blockquote>
+ --- 
+</body></html>

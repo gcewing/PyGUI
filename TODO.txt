@@ -1,0 +1,104 @@
+Picture class.
+
+Add an 'editable' property to TextField.
+
+Support for multiple types of clipboard data.
+
+Fix justification of Labels, Buttons and TextFields.
+
+Way of testing whether a rect intersects the current clip region of a canvas.
+
+Add an 'equalize' option to place_row and place_column.
+
+Upgrade to newer PyGtk
+	Use gdk.Drawable.draw_pixbuf
+	Use Pixbuf.new_subpixbuf when scaling image
+
+Gtk/GLView:
+	Call viewport_changed on any size change, not just resized().
+
+Setting the document property of a window should trigger update_title().
+
+Make binary a mandatory constructor argument of Document?
+
+Cocoa: Don't open the same file more than once.
+
+Gtk: Remember directory last used by Open dialog.
+
+Cocoa: Implement Hide/Show commands in application menu.
+
+Cocoa: Load standard cursors lazily (IBeamCursor not available
+until application is created).
+
+Cocoa: Create NSApplication earlier? (Pixmap creation fails before
+NSApplication exists.)
+
+Gtk: Dialog centering? (15-dialog.py)
+
+Gtk: Don't enable Copy menu command in password field.
+
+Gtk: Test 92-glpixmap.py on a properly OpenGL-capable X11 system.
+
+Remove custom tab handling.
+
+Bulk conversion of coordinates?
+
+Coordinate conversion of rects?
+
+Return/Enter (and Escape?) action for TextFields.
+
+Do fsync before renaming temp save files.
+
+
+To be implemented in Cocoa version
+----------------------------------
+
+Font.text_size
+Mixed state check boxes
+
+
+To be implemented in Gtk version
+--------------------------------
+
+Mixed state check boxes
+
+
+To be documented
+----------------
+
+Font.text_size
+Font.but
+Container.added,removed
+View.model_added,model_removed
+New coordinate conversion methods
+
+
+Components to be added
+----------------------
+
+SpinButton control
+ComboBox control
+PopupMenu control
+
+Table view
+Rich text view
+
+
+To be de-documented
+-------------------
+
+Window.target
+
+
+To be implemented in Pythonwin version
+--------------------------------------
+
+Window._stagger
+Quit exception
+Special keys
+
+
+To be tested in Win32 version
+-----------------------------
+
+Float coords everywhere

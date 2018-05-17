@@ -1,0 +1,224 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html><head><meta content="text/html;charset=ISO-8859-1" http-equiv="Content-Type"><title>Window</title>
+  
+                                            <meta name="GENERATOR" content="Mozilla/3.01Gold (X11; I; SunOS 5.6 sun4u) [Netscape]"></head>
+<body>
+           <h1>class <tt>Window(<a href="Container.html">Container</a>)</tt></h1>
+           <p>A&nbsp;Window is a top-level component. In order to be visible on the screen,
+a component must be directly or indirectly contained in a window.</p>
+         A newly-created window is initially hidden so that components can
+ be  added to it without unsightly flashing. Once constructed, it should be
+ shown  using the <tt>show</tt> method.<br><h3>Size and position</h3>The geometry properties of a window govern the size and position of the window's <span style="font-style: italic;">content</span>
+area relative to the screen. Usually there will be borders, a title bar
+and so forth existing outside this area, and on some platforms there
+will also be a menu bar between the title and the content area. These
+things should be kept in mind if you are setting the position of a
+window explicitly. For example, trying to place a window in the top
+left corner of the screen by setting its position to (0, 0) will
+probably not work as expected, as it will result in the title bar and
+menus being hidden. <span style="font-style: italic;">(There is
+currently no good way of dealing with this; as a rule of thumb, allow 5
+pixels to the left and 40 pixels above to accommodate window
+decorations.)</span><br>
+     <br>
+     The initial position of a window is determined in a platform-dependent 
+ way,  and may not correspond to the initial values of its <tt>x</tt> and 
+<tt>y</tt>  properties. For example, standard-style windows might be staggered 
+and dialog-style  windows might be centred on the screen. However, once the 
+window has been  shown for the first time, the <tt>x</tt> and <tt>y</tt> properties
+will reflect  its actual screen position, and changing them will move the
+window to the specified position.<br>
+<h3>Menus</h3>
+A window can be given a list of window-specific menus that are to be available
+(along with the application-wide menus) only when that window is active.
+The manner in which these menus are presented is platform-dependent.<br>
+<h3>Document association</h3>
+A window can be associated with a document. When this is done, the behaviour
+of the window changes in the following ways:<br>
+The window's title will (by default) be derived automatically from the document's
+title.<br>
+<ul>
+  <li>The document becomes the window's <i>next handler</i> for keyboard
+events and menu commands.</li>
+  <li>An attempt by the user to close the window is taken as a request to
+close the associated document, which may trigger a dialog asking whether
+to save changes.</li>
+  <li>Closing the document causes all its associated windows to be destroyed.</li>
+</ul>
+       <h2>Constructor</h2>
+<blockquote>
+  <dl>
+    <dt><tt>Window(style</tt> <tt>=</tt> <tt>'standard',</tt></dt>
+    <dt><tt>&nbsp; movable</tt> <tt>=</tt> <i>default</i><tt>, closable</tt>
+      <tt>=</tt>&nbsp;<i>default</i>,<tt> hidable</tt> =&nbsp;<i>default</i><tt>,</tt></dt>
+    <dt><tt>&nbsp; resizable</tt> <tt>=</tt>&nbsp;<i>default</i>,<tt> zoomable</tt>
+=&nbsp;<i>default</i><tt>)</tt></dt>
+    <dd><br>
+    </dd>
+    <dd>The <i>style</i> parameter determines the appearance of the window,
+according to platform conventions. It is one of:</dd>
+  </dl>
+</blockquote>
+<blockquote>
+  <dl>
+    <dd>                                  <ul>
+      <li><tt>'standard'</tt></li>
+           <li><tt>'nonmodal_dialog'</tt></li>
+           <li><tt>'modal_dialog'</tt></li>
+           <li><tt>'alert'</tt></li><li><tt>'fullscreen'<br></tt></li>
+                                              </ul>
+       </dd>
+    <dd><br>
+      </dd>
+    <dd>Not all of these styles are necessarily distinguishable on all platforms.</dd>
+    <dd><br>
+    </dd>
+    <dd>      Note that the <span style="font-family: monospace;">'modal_dialog'</span>and <span style="font-family: monospace;">'alert'</span> styles only affect the <i>appearance</i> of the
+ window; they do not in themselves cause the  window to behave modally. For a window
+ with modal behaviour, use a <a href="ModalDialog.html">ModalDialog</a> or one of the <a href="alert_funcs.html">alert functions</a>.</dd>
+    <dd><br>
+    </dd>
+    <dd>The options<span style="font-family: monospace;">'movable'</span>, <span style="font-family: monospace;">'closable'</span>, <span style="font-family: monospace;">'resizable'</span>, <span style="font-family: monospace;">'hidable'</span>(minimizable)<span style="font-family: monospace;"></span> and <span style="font-family: monospace;">'zoomable'</span>(maximizable) request
+the presence or absence of controls for performing these functions. The default
+values of these options depend on the window style in a platform-dependent
+way. Some combinations of styles and options may not be available, in which case you will get the nearest available combination.</dd>
+  </dl><div style="margin-left: 40px;">A <span style="font-family: monospace;">'fullscreen'</span>
+window is created without any title, borders or other decoration, and
+with an initial size and position that covers the whole screen. The
+effect of changing a fullscreen window's size or position is undefined.
+On MacOSX, the menu bar is hidden when a fullscreen window is the
+active window.<br><br><span style="font-style: italic;">Note: the <span style="font-weight: bold;">fullscreen</span> style is currently not implemented on Gtk.</span></div>
+  </blockquote>
+  <h2>Properties</h2>
+<blockquote>        <dl>
+    <dt><tt>title</tt></dt>
+    <dd>Title of the window. Whether and how the title is displayed depends
+   on the window style and platform conventions.</dd>
+    <dd><br>
+    </dd>
+    <dt><tt>document</tt></dt>
+    <dd>The Document instance to which this window belongs, if any.</dd>
+    <dd><br>
+    </dd>
+    <dt><tt>menus</tt></dt>
+    <dd>List of window-specific menus, i.e. those which should be available
+   only when this window is active.<br>
+      <br>
+</dd>
+    <dd><i>Do not modify the contents of this list.</i> To change it, you
+should construct a new list of menus and then assign the whole list to this
+property.<br>
+      <br>
+</dd><dt style="font-family: monospace;">visible</dt>
+    <dd>True if the window is shown on the screen. The visibility of the window can&nbsp; be changed using the <span style="font-family: monospace;">show</span> and <span style="font-family: monospace;">hide</span> methods, or by assigning to this property. The effect on window stacking order of assigning true to this property is undefined.<br>
+      <br>
+    </dd>
+    <dt style="font-family: monospace;">auto_position</dt>
+    <dd>If true, the window will be positioned automatically the first
+time it is shown. The method of positioning depends on the platform and
+the style of the window. Typically, dialog windows will be centred on
+the screen, and other windows will be staggered or the user will be
+asked to place them.<br>
+      <br>
+If false, the initial position of the window is determined by the settings of its geometry properties.<br>
+      <br>
+    </dd>
+    <dt style="font-family: monospace;">target</dt>
+    <dd><span style="font-style: italic;">Read only</span>. The component within the window, if any, that is currently the target of keyboard events and menu commands. <span style="font-style: italic;">May not be implemented on all platforms.</span><br>
+    </dd>
+
+  </dl>
+</blockquote>
+<h2>Attributes</h2>
+<div style="margin-left: 40px;">
+<dl>
+  <dt style="font-family: monospace;">keeps_document_open</dt>
+  <dd>A
+boolean controlling whether the presence of this window keeps its
+associated document open. When a window is closed, and its document has
+no other window whose <span style="font-family: monospace;">keeps_document_open</span>
+flag is true, the document and any other remaining windows for it are
+closed. Defaults to true. May be specified as a class attribute.<br>
+  </dd>
+</dl>
+</div>
+<h2>Methods</h2>
+
+           <dl>
+  <dl>
+    <dt><tt>show()</tt></dt>
+    <dd>Makes the window visible on the screen (by setting the <tt>visible</tt>
+property to true), and brings it to the front. </dd>
+  </dl>
+</dl>
+           <dl>
+  <dl>
+    <dt><tt>hide()</tt></dt>
+    <dd>Temporarily removes the window from the screen. Equivalent to setting
+the <tt>visible</tt> property to false.</dd>
+  </dl>
+</dl>
+           <dl>
+  <dl>
+    <dt><tt>bring_to_front()</tt></dt>
+    <dd>Moves the window to the front of the stacking order. [NOT&nbsp;YET&nbsp;IMPLEMENTED]</dd>
+  </dl>
+</dl>
+           <dl>
+  <dl>
+    <dt><tt>send_to_back()</tt></dt>
+    <dd>Moves the window to the back of the stacking order. [NOT&nbsp;YET&nbsp;IMPLEMENTED]</dd>
+  </dl>
+</dl>
+           <dl>
+  <dl>
+    <dt><tt>place_behind(window)</tt></dt>
+    <dd>Places the window just behind the given window in the stacking order.
+   [NOT&nbsp;YET&nbsp;IMPLEMENTED]</dd>
+  </dl>
+  </dl><dl style="margin-left: 40px;"><dt style="font-family: monospace;">modal_event_loop()</dt><dd>Runs an event loop, fetching and handling input events for this window
+until <span style="font-family: monospace;">exit_modal_event_loop()</span>
+is called. Interaction with other windows is prevented.<br>
+<br>
+If a <span style="font-family: monospace;">Cancel</span>
+exception is raised during the event loop, it is silently caught and
+the event loop continues. The handling of an exception of any other
+type is platform-dependent; it may break the event loop and be
+propagated, or it may be handled within the loop using the application's <a href="Application.html#report_exception"><span style="font-family: monospace;">report_exception()</span></a> method.<br><br></dd><dt style="font-family: monospace;">exit_modal_event_loop()</dt><dd>Causes the current call to <span style="font-family: monospace;">modal_event_loop()</span><span style="font-family: monospace;"></span> to
+exit.</dd></dl><dl><h2>Abstract methods</h2>
+  <dl>
+    <dt><tt>update_title()</tt></dt>
+    <dd>Called when the title of the document owning this window changes. 
+  By default it changes the window title to match the document title.</dd>
+  </dl>
+</dl>
+           <dl>
+  <dl>
+    <dt><tt>close_cmd()</tt></dt>
+    <dd>Called in response to the <b>Close </b>menu command, or by activation
+   of whatever gadget is used to close a window on the platform concerned.
+ If the window belongs to a document and the document does not own any other
+ windows, the document's <tt>close_cmd</tt> method is called. In any other
+ case, the       <tt>destroy </tt>method of this window is called.</dd>
+  </dl>
+</dl>
+           <h2>Destructor</h2>
+           <dl>
+  <dl>
+    <dt><tt>destroy()</tt></dt>
+    <dd>Permanently removes the window from the screen, dissociates it from
+   any document, and recursively destroys any sub-components. Neither the
+window  nor any of its sub-components should be used again.</dd>
+    <dd><br>
+    </dd>
+    <dd>All windows and other components should be destroyed when they are
+no longer needed, otherwise they may not be garbage collected properly and
+may continue to tie up window system resources. This is taken care of by
+the framework when the user closes a window or document. In other situations
+you may need to call the <tt>destroy</tt> method yourself.<br>
+    </dd>
+  </dl>
+</dl>
+       <br>
+     <br>
+       </body></html>

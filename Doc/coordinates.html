@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+  
+        <title>PyGUI - Coordinates, Points and Rectangles</title><meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"></head>
+
+<body>
+<h1> Coordinates, Points and Rectangles<br>
+</h1>
+The coordinate system of a Window or View has (0, 0) at the top left corner,
+with <i>x</i> coordinates increasing to the right and <i>y</i> coordinates
+increasing downward. The coordinates label infinitely thin horizontal and
+vertical lines, and pixels exist between these lines, as illustrated in the
+figure below.<br>
+<br>
+A <b>point</b> is represented by a 2-tuple (<i>x, y</i>). A 2-tuple can also
+be used to represent as size (<i>width, height</i>) or a relative displacement
+(<i>dx, dy</i>).<br>
+<br>
+A <b>rectangle</b> is represented by a 4-tuple (<i>left, top, right, bottom</i>).
+If <i>right</i> &lt;= <i>left</i> or <i>bottom</i> &lt;= <i>top</i>, the
+rectangle is an <i>empty rectangle</i> and is considered to enclose no pixels.<br>
+<br>
+<b>Angles</b> are measured in degrees <i>anticlockwise</i> from the <i>x</i>-axis.<br>
+<br>
+The <a href="Geometry.html">Geometry</a> submodule provides a collection
+of functions for operating on points and rectangles.<br>
+<br>
+<div align="center"><img src="coordinates.jpg" alt="" height="360" width="576">
+<br>
+<small><font face="Helvetica, Arial, sans-serif">Relationship between coordinates,
+pixels, points and rectangles</font></small><br>
+</div>
+</body></html>

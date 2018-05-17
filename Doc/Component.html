@@ -1,0 +1,176 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html><head>
+<meta content="text/html;charset=ISO-8859-1" http-equiv="Content-Type"><title>Component</title><!-- Changed by: Greg Ewing,  4-Aug-1998 -->
+  
+                                   <meta name="GENERATOR" content="Mozilla/3.01Gold (X11; I; SunOS 5.6 sun4u) [Netscape]"></head><body>
+       <!-- Changed by: Greg Ewing,  3-Aug-1998 -->    <h1>class <tt>Component(<a href="MessageHandler.html">MessageHandler</a>)</tt></h1>
+       <p>Component is an abstract base class representing a visual component of
+  the graphical user interface. A&nbsp;Component owns a rectangular region 
+ of screen space defined by its <i>bounds</i> property. It may be contained 
+ within another component, in which case it is clipped to the boundaries of
+ its container.<br>
+</p>
+<p>You should not derive directly from Component. Custom components should be based on a <a href="View.html">View</a> or <a href="Frame.html">Frame</a>.</p>
+
+       <h2>Geometry Properties</h2>
+    The geometry properties control the position and size of the component
+ within  its container. There are several overlapping sets of geometry properties,
+  corresponding to different ways of defining the component's bounding rectangle.
+  The properties within each set are orthogonal, meaning that any one of
+them   may be changed without affecting the others.<br>
+       <dl>
+  <dl>
+    <dt><tt>bounds</tt></dt>
+    <dd>A rectangle (<i>left, top, right, bottom</i>) in the container's
+coordinate system.<br>
+        </dd>
+    <dt><br>
+        </dt>
+    <dt><tt>left</tt></dt>
+    <dt><tt>top</tt></dt>
+    <dt><tt>right</tt></dt>
+    <dt><tt>bottom</tt></dt>
+    <dd>Each of these properties corresponds to one element of the bounds
+  rectangle. Changing one of these properties changes the position of one
+edge  of the component without affecting any of the others (and will consequently
+  change the width or height).<br>
+        </dd>
+    <dt><br>
+        </dt>
+    <dt><tt>x</tt></dt>
+    <dt><tt>y</tt></dt>
+    <dt><tt>width</tt></dt>
+    <dt><tt>height</tt></dt>
+    <dd>The <tt>x</tt> and <tt>y</tt> properties are the coordinates of the
+  top left corner of the component in its container's coordinate system.
+Assigning   to <tt>x</tt> or <tt>y</tt> will change the position of the component
+within   its container, but not its size.<br>
+        </dd>
+  </dl>
+</dl>
+       <dl>
+  <dl>
+    <dt><tt>position</tt></dt>
+    <dt><tt>size</tt></dt>
+    <dd>The <tt>position</tt> property is equivalent to the tuple <tt>(x,
+  y)</tt>. The size property is equivalent to the tuple <tt>(width, height)</tt>.</dd>
+  </dl>
+</dl>
+<h2>Other Properties</h2>
+    <dl>
+  <dl>
+    <dt><tt>container</tt> </dt>
+    <dd>The Frame which contains this Component, if any. Setting this property 
+  has the effect of removing the Component from the previous container and 
+ adding it to the new container.<br><br></dd><dt style="font-family: monospace;"><a name="anchor"></a>anchor</dt><dd>This
+property controls the layout behaviour of the component when its
+container is resized. It is a string made up of the letters <span style="font-family: monospace;">'l'</span>, <span style="font-family: monospace;">'r'</span>, <span style="font-family: monospace;">'t'</span> and <span style="font-family: monospace;">'b'</span> for left, right, top and bottom.<br><br>If
+the component is anchored to the left or top of its container, it
+remains stationary when the container is resized. If it is anchored to
+the right or bottom, it moves along with that side of the container. If
+it is anchored to both left and right, or both top and bottom, it
+stretches when the container is resized.</dd>
+    <dd><br>
+       </dd><dt><tt>border</tt></dt>
+    <dd>Setting this to true requests that the component be given a border. 
+ The width and style of the border (or whether it even exists at all) is platform-dependent.
+ When the border is present, it is positioned around the outside of the component's
+ bounds rectangle, and is not included in the component's size.<br><br></dd><dt style="font-family: monospace;">tab_stop</dt><dd>A boolean indicating whether the component can be navigated into using the Tab key.<br><br>The default value of this property depends on the component's class, platform conventions and the setting of the <a href="navigation.html">PYGUI_KEYBOARD_NAVIGATION</a>
+environment variable. For the standard control classes, you should
+normally leave it set to the default value so as not to interfere with
+the user's expectations. However, you may want to set it to false if
+you provide some other way of invoking the control's function using the
+keyboard.<br><br><span style="font-style: italic;">Note:</span> This
+property is currently ignored for standard controls on MacOSX, where
+the platform conventions and the user's System Preferences settings are
+always followed.</dd>
+  </dl></dl>
+       <h2>Resizing Attributes</h2>
+    These attributes determine what happens to the container's position and 
+ size when the size of its container changes as a result of the user resizing
+the containing window, or a containing component's <tt>resize</tt> method
+being called. These attributes are typically not set directly,  but are established
+by the container's <tt>place</tt> method when the component  is added to
+the container.<br>
+<br>
+<div style="margin-left: 40px;"><span style="font-style: italic;">NOTE: Because these are attributes and not properties, you can't set them using keyword arguments in the constructor.</span><br>
+</div>
+
+    <dl>
+  <dl>
+    <dt><tt>hmove</tt> </dt>
+    <dd>If true, a change to the width of the container causes this component 
+  to move horizontally by the same amount. </dd>
+  </dl>
+</dl>
+       <dl>
+  <dl>
+    <dt><tt>vmove</tt> </dt>
+    <dd>If true, a change to the height of the container causes this component 
+  to move vertically by the same amount. </dd>
+  </dl>
+</dl>
+       <dl>
+  <dl>
+    <dt><tt>hstretch</tt> </dt>
+    <dd>If true, a change to the width of the container causes the width
+of this component to change by the same amount. </dd>
+  </dl>
+</dl>
+       <dl>
+  <dl>
+    <dt><tt>vstretch</tt></dt>
+    <dd>If true, a change to the&nbsp;height of the container causes the&nbsp;height
+of this component to change by the same amount.</dd>
+  </dl>
+</dl>
+          <h2>Methods</h2><blockquote><dl><dt><tt>become_target()</tt></dt>
+    <dd>Arranges for this&nbsp;component to have the first chance to handle
+ keystrokes, menu commands and other messages dispatched to the containing
+window. If the component is not contained in a window, the effect is undefined.<br>
+      <br>
+      <span style="font-style: italic;">Note:</span> Depending on the
+platform, not all components may be capable of becoming targets. This
+method is only guaranteed to work on components which directly handle
+input events. Its effect on other components is undefined.<br>
+</dd>
+  </dl>
+      <dl>
+    <dt><tt>is_target()</tt></dt>
+    <dd>Returns true if this&nbsp;component is the current message target
+within its containing window. If the component is not contained in a window,
+the result is undefined.<br>
+      <br>
+</dd><dt><span style="font-family: monospace;">broadcast(</span><span style="font-style: italic;">message</span><span style="font-family: monospace;">,</span> <span style="font-style: italic;">arg</span>...<span style="font-family: monospace;">)</span></dt>
+    <dd>Traverses the component hierarchy, calling each component's handler for the given message, if any.<br>
+    </dd>
+
+  </dl>
+ </blockquote><h2>Abstract methods</h2><dl style="margin-left: 40px;"><dt><tt>mouse_down(</tt><i>event</i><tt>)<br>mouse_drag</tt><tt>(</tt><i>event</i><tt>)</tt><br><tt>mouse_up</tt><tt>(</tt><i>event</i><tt>)</tt><br><tt>mouse_move</tt><tt>(</tt><i>event</i><tt>)</tt></dt><dd>These methods are called in response to mouse events occuring in the view. The position attribute 
+  of the event contains the location of the mouse in local coordinates.</dd></dl><dl style="margin-left: 40px;"><dt><span style="font-family: monospace;"><a name="container_resized"></a>container_resized(</span><span style="font-style: italic;">delta</span><span style="font-family: monospace;">)</span></dt><dd>Called from the <a href="Container.html#resized"><span style="font-family: monospace;">resized()</span></a> method of the component's container. The delta parameter is a tuple <span style="font-style: italic;">(dx, dy)</span>
+indicating the amount by which the container has changed size. The
+default implementation updates the position and size of the component
+according to its <a href="#anchor">resizing options</a>.</dd></dl>
+<dl style="margin-left: 40px;">
+<dt><tt>targeted()</tt></dt><dd>Called whenever this view becomes the current message
+target in a visible window.<br>
+<br>
+</dd><dt style="font-family: monospace;">untargeted()</dt><dd>Called whenever this view ceases to be the current
+message target in a visible window.<br>
+</dd>
+</dl>
+
+
+<h2>Destructor</h2>
+       <dl>
+  <dl>
+    <dt><tt>destroy()</tt></dt>
+    <dd>Destroys the component and removes it from the screen. It should not
+be used again.</dd>
+  </dl>
+</dl>
+      <br>
+    <br>
+  <br>
+ <br>
+</body></html>

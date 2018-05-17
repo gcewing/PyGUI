@@ -1,0 +1,228 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html><head><meta content="text/html;charset=ISO-8859-1" http-equiv="Content-Type"><title>Application</title>
+
+<meta name="GENERATOR" content="Mozilla/3.01Gold (X11; I; SunOS 5.6 sun4u) [Netscape]"></head>
+<body>
+<h1>class <tt>Application(MessageHandler)</tt></h1>
+<p>Each application has exactly one Application object, which
+looks after application-wide concerns such as maintaining the set of
+windows and documents, running the event loop, and handling global menu
+commands.</p>
+<h2>Global Functions</h2>
+<dl>
+<dt><tt>application()</tt></dt>
+<dd>Returns the Application instance. The first time an
+instance of Application or a subclass of Application is created, a
+global reference to it is stored; the <tt>application</tt>
+function returns this reference.<br>
+</dd>
+<dd>If this function is called before any application object
+has been created, it creates an instance of class Application
+automatically.</dd>
+</dl>
+<h2>Constructor</h2>
+<dl style="margin-left: 40px;">
+<dt style="font-family: monospace;">Application(title =
+None)</dt>
+<dd>Creates and initializes an Application. The <span style="font-style: italic;">title</span> must be
+specified as a keyword argument; it
+defaults to the name of the main Python file, or in the case of a
+MacOSX application built with Py2App, it is taken from the info.plist
+resource.</dd>
+</dl>
+<h2>Properties</h2>
+<blockquote>
+<dl>
+<dt><tt>menus</tt></dt>
+<dd>List of application-wide Menu instances. These menus will
+always be
+available regardless of which window is active.<br>
+<br>
+</dd>
+<dd><i>Do not modify the contents of this list
+directly. </i>If you want to add or remove menus, build a new
+list of menus and assign the whole
+list to the <tt>menus</tt> property. Otherwise, the
+displayed menus may
+not be updated properly.</dd>
+</dl>
+<dl>
+<dt><tt>windows</tt></dt>
+<dd><i>Read only</i>. List of all currently
+existing Window&nbsp;instances.<span style="font-style: italic;">
+Do not modify this list.</span><br>
+</dd>
+</dl>
+<dl>
+<dt><tt>documents</tt></dt>
+<dd><i>Read only</i>. List of all currently
+existing Document&nbsp;instances.<span style="font-style: italic;"> Do not modify this list.</span><br>
+<br>
+</dd>
+<dt style="font-family: monospace;">open_file_types</dt>
+<dd>A list of <a href="FileType.html">FileType</a>s
+specifying the types of files that can be opened by the <span style="font-weight: bold;">Open...</span>
+command. If empty, any type of file is acceptable. You only need to set
+this if you want to make use of the default implementation of the <span style="font-weight: bold;">Open...</span> command.<br>
+<br>
+</dd>
+<dt style="font-family: monospace;">save_file_type</dt>
+<dd>A <a href="FileType.html">FileType</a>
+specifying the default file type for Documents that don't specify one
+of their own. You only need to set
+this if you want to make use of the default implementations of the <span style="font-weight: bold;">Save</span> and <span style="font-weight: bold;">Save As...</span> commands,
+and you don't explicitly set the <span style="font-family: monospace;">file_type</span>
+property of all your Documents.<br>
+<br>
+</dd>
+<dt style="font-family: monospace;">file_type</dt>
+<dd><span style="font-style: italic;">Write only.</span>
+This is a convenience property for applications that only deal with one
+type of file. Setting it to a FileType <span style="font-style: italic;">f</span> is the same as
+setting <span style="font-family: monospace;">open_file_types</span>
+to <span style="font-family: monospace;">[</span><span style="font-style: italic;">f</span><span style="font-family: monospace;">]</span> and <span style="font-family: monospace;">save_file_type</span>
+to <span style="font-style: italic;">f</span>.<br>
+<br>
+</dd>
+<dt style="font-family: monospace;">target</dt>
+<dd><span style="font-style: italic;">Read-only.</span>
+The object which is the current target of keyboard events and menu
+commands. This will be a Component contained within the frontmost
+window, the frontmost window itself, or if there are no windows, the
+Application itself.<br>
+<br>
+</dd>
+<dt style="font-family: monospace;">target_window</dt>
+<dd><span style="font-style: italic;">Read-only.
+</span>The Window containing the current target of keyboard
+events and menu commands, or None if there are no windows.</dd>
+</dl>
+<dl>
+</dl>
+</blockquote>
+<h2>Attributes</h2><dl style="margin-left: 40px;"><dt style="font-family: monospace;">page_setup</dt><dd>A default application-wide <a href="PageSetup.html">PageSetup</a> instance that is edited by the generic implementation of the <span style="font-style: italic;">Page Setup</span> command and used by default implementations of the <span style="font-style: italic;">Print</span> command.</dd></dl><h2>Methods</h2>
+<blockquote>
+<dl>
+<dt><tt>run()</tt></dt>
+<dd>The main event loop. A program calls this method after
+initialisation, and it retains control until the application is quit.
+Catches any unhandled exceptions and reports them to the user via <span style="font-family: monospace;">report_exception()</span>.<br>
+<br>
+The normal method of quitting the application is to call <span style="font-family: monospace;">quit_cmd()</span>.
+This gives the user the opportunity to close any open documents and
+save any unsaved changes. If this is undesirable for some reason, a
+more direct exit can be achieved using <span style="font-family: monospace;">_quit()</span>.<br></dd></dl>
+</blockquote>
+<blockquote>
+<dl>
+<dt style="font-family: monospace;">event_loop()</dt>
+<dd>Runs an event loop, fetching and handling input events
+until <span style="font-family: monospace;">exit_event_loop()</span>
+is called.<br>
+<br>
+If a <span style="font-family: monospace;">Cancel</span>
+exception is raised during the event loop, it is silently caught and
+the event loop continues. The handling of an exception of any other
+type is platform-dependent; it may break the event loop and be
+propagated, or it may be handled within the loop using <span style="font-family: monospace;">report_exception()</span>.<br><br></dd>
+<dt style="font-family: monospace;">exit_event_loop()</dt>
+<dd>Causes the current call to <span style="font-family: monospace;">event_loop()</span><span style="font-family: monospace;"></span> to
+exit.<br>
+<br>
+</dd>
+<dt style="font-family: monospace;"><a name="report_exception"></a>report_exception()</dt>
+<dd>Displays an alert box reporting the current exception (as
+determined by <span style="font-family: monospace;">sys.exc_info()</span>)
+and giving the user the option of continuing, getting a traceback or
+exiting the application.</dd>
+</dl>
+<dl>
+</dl>
+<dl>
+<dt><tt>new_cmd()</tt></dt>
+<dd>Implements the standard <b>New </b>command.
+Calls <tt>make_document</tt> to create a new document,
+initialises it as an empty document, and calls <tt>make_window</tt>
+to create an initial window for it.</dd>
+</dl>
+<dl>
+<dt><tt><a name="open_cmd"></a>open_cmd()</tt></dt>
+<dd>Implements the standard <b>Open...</b>
+command. Requests a file name from the user, calls <tt>make_document</tt>
+to create a document, loads the document from the file, and calls <tt>make_window</tt>
+to create an initial window for it.</dd>
+</dl>
+<dl>
+<dt><tt>quit_cmd()</tt></dt>
+<dd>Implements the standard <b>Quit </b>command.
+Asks the user whether to save changes to any changed documents, and if
+the user doesn't cancel, raises a <tt>Quit</tt> exception.<br><br></dd><dt style="font-family: monospace;">page_setup_cmd()</dt><dd>Default implementation of the <span style="font-weight: bold;">Page Setup...</span> command. Edits the PageSetup instance referred to by the <span style="font-family: monospace;">page_setup</span> attribute.</dd>
+</dl>
+<dl>
+<dt><tt>query_clipboard()</tt></dt>
+<dd>Returns true if the clipboard contains any data. This is
+likely to
+be more efficient than testing the result of <tt>get_clipboard()</tt>.</dd>
+</dl>
+<dl>
+<dt><tt>get_clipboard()</tt></dt>
+<dd>Returns the current contents of the clipboard as a
+string, or an
+empty string if the clipboard contains no data.<br>
+</dd>
+</dl>
+</blockquote>
+<blockquote>
+<dl>
+<dt><tt>set_clipboard(</tt><i>data</i><tt>)</tt></dt>
+<dd>Replaces the contents of the clipboard with the given
+data, which
+should be a string.</dd>
+</dl>
+</blockquote>
+<ul>
+</ul>
+<blockquote> <dl><dt style="font-family: monospace;">_quit()</dt><dd>Exits the main event loop immediately, without giving any option to save changes. For emergency use only.</dd></dl></blockquote>
+<h2>Abstract Methods</h2>
+<blockquote>
+<dl>
+<dt style="font-family: monospace;">open_app()</dt>
+<dd>This
+method is called when the application is started without any
+command-line arguments. The default implementation does nothing. In a
+document-based application, you will typically override it to call the <span style="font-family: monospace;">new_cmd()</span>
+method to create a new, empty document.<br>
+</dd>
+</dl>
+<dl>
+<dt><tt>make_document(</tt>file_ref<tt> </tt><span style="font-style: italic;">or</span><tt> None)</tt></dt>
+<dd>If you want to use the built-in support for the <span style="font-weight: bold;">New</span> or <span style="font-weight: bold;">Open...</span>
+commands, you need to implement this method.<br>
+<br>
+If the <span style="font-weight: bold;">file_ref</span>
+argument is None, you should create a new Document object of the
+appropriate class in response to a <b>New </b>command.<br>
+<br>
+Otherwise, should
+create a new Document object of the appropriate class for
+the file represented by the given <a href="FileRef.html">FileRef</a>.
+You may
+examine the file name, read the beginning of the file or do whatever
+else
+is necessary to determine what class of object to create. If you can't
+recognise the file, you should return None, and an appropriate error
+message will be displayed. The default implementation returns None.<br>
+</dd>
+</dl>
+<dl>
+<dt><tt>make_window(</tt>document<tt>)</tt></dt>
+<dd>If you want to use the built-in support for the <span style="font-weight: bold;">New</span> and <span style="font-weight: bold;">Open...</span>
+commands,&nbsp;you need to implement this method. Your
+implementation
+should create a Window containing a component hierarchy suitable
+for viewing the given Document object. There is no default
+implementation.<br><br></dd><dt><tt>get_default_open_directory()</tt></dt><dd>Called by the default implementation of <a href="#open_cmd"><tt>open_cmd()</tt></a> to find an initial directory for <a href="file_dialogs.html#request_old_file"><tt>request_old_file()</tt></a>. Should return a <a href="DirRef.html">DirRef</a> or <a href="FileRef.html">FileRef</a>, or&nbsp; None if there is no preferred location.<br><br>The default implementation returns the last directory in which a document was opened or saved during this session.</dd>
+</dl>
+</blockquote>
+<p>---</p>
+</body></html>

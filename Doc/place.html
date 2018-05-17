@@ -1,0 +1,166 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html><head><title>PyGUI - Placement Methods</title>
+  
+                                                                               <meta name="GENERATOR" content="Mozilla/3.01Gold (X11; I; SunOS 5.6 sun4u) [Netscape]"></head>
+<body>
+                          <h1>Placement Methods</h1>
+                      <p>Class Frame provides three methods, <tt>place</tt>, <tt>place_row</tt>
+    and <tt>place_column</tt>, for adding and laying out subcomponents. These
+    methods accept a very flexible set of options for specifying the position
+    and size of the subcomponents, adding scroll bars and borders to them,
+ and   controlling how they behave when the containing frame is resized.<br>
+        </p>
+                      <h2>Common placement options</h2>
+        The following options are accepted by all three placement methods.<br>
+               <h3>Positioning options<br>
+        </h3>
+                        <blockquote>           <dl>
+    <dt><tt>left</tt></dt>
+    <dt><tt>right</tt></dt>
+    <dt><tt>top</tt></dt>
+    <dt><tt>bottom</tt></dt>
+    <dd>These options specify the initial positions of the edges of a component.
+They may  take one of four forms:                           
+      <br>
+                                   <ol>
+           <li><tt>None</tt></li>
+                                                                                                   <p>This is the default value, and it leaves the edge unspecified. 
+ The   position of an unspecified edge is determined by the component's current
+   size and the positioning of the opposite edge. If the opposite edge is
+unspecified    as well, the positions of both edges are left as they are.</p>
+            <li>A <i>distance</i></li>
+                                                                                                   <p>The edge is positioned at the specified distance from one of the
+     edges of the containing frame. Which edge of the frame is used depends
+  on  the value of <i>distance</i>. Positive distances are measured from
+the   left  or top edge of the frame, whereas negative distances are measured
+ from the  right or bottom edge of the frame.<br>
+                </p>
+                                                                             <p>A distance of zero is measured from the corresponding edge to the
+  one being specified -- for example, specifying <tt>left</tt> <tt>=</tt>         <tt>0</tt>  positions the left edge of the component at the left edge
+of the frame, and  specifying     <tt>right</tt> <tt>=</tt> <tt>0</tt> positions
+the right edge of the component  at the right edge of the frame.</p>
+            <li>A <i>component</i></li>
+                                                                                                   <p>The edge is aligned with the <i>opposite</i> edge of the specified
+    component. For example, specifying <tt>left</tt> <tt>=</tt> <tt>my_button</tt>  aligns the left  edge of the component with the right edge of <tt>my_button</tt>.</p>
+            <li>An expression of the form <i>component</i> <tt>+</tt> <i>distance
+              </i>or<i>&nbsp;</i><i>component</i> <tt>-</tt> <i>distance</i></li>
+                                                                                                   <p>The edge is positioned at the specified distance from the <i>opposite</i>
+     edge of the specified component. For example, specifying <tt>left</tt>          <tt>=</tt> <tt>my_button</tt> <tt>+</tt> <tt>10</tt> positions the 
+ left edge of the component 10 pixels to the right   of the right edge of 
+        <tt>my_button</tt>, and specifying <tt>bottom</tt> <tt>=</tt> <tt>my_label</tt>          <tt>-</tt> <tt>20</tt> positions the bottom edge of the component 
+ 20 pixels above the  top edge of <tt>my_label</tt>.</p>
+                                                                   </ol>
+                It is important to understand that these options only control
+ the       <i>initial</i> position and size of the component. Specifying
+and  edge relative to another component does not create any sort of connection
+ or constraint between the two components. Whether the relationship will
+be  maintained when the frame is subsequently resized depends entirely on
+the  value of the <tt>sticky</tt> option (see below).<br></dd>
+    
+    <dd>Note also that the <tt>left</tt>, <tt>top</tt>, <tt>right</tt>, and 
+       <tt>bottom</tt> <i>options</i> to the placement methods are quite different
+ from the <tt>left</tt>, <tt>top</tt>, <tt>right</tt>, and <tt>bottom</tt>        <i>properties</i> of components. The special forms described above 
+can be used only with the former and not with the latter.<br>
+       </dd>
+  </dl>
+   </blockquote>
+     <h3>Resizing options</h3>
+     <blockquote>           <dl>
+    <dt><tt>sticky</tt></dt>
+    <dd>This option controls what happens to the position and size of the 
+ component when the frame is subsequently resized. It consists of a string 
+ made up of the letters '<tt>n</tt>', '<tt>s</tt>', '<tt>e</tt>' and '<tt>w</tt>' 
+ for north, south, east and west.</dd>
+    <dd><br>
+       </dd>
+    <dd>If <tt>sticky</tt> contains '<tt>w</tt>' but not '<tt>e</tt>', the 
+ component will "stick" to the left edge of the frame, meaning that its position 
+ and size in the horizontal direction will not change when the frame is resized. 
+ If it contains '<tt>e</tt>' but not '<tt>w</tt>', the component will stick 
+ to the right edge of the frame, meaning that it will move along with the 
+right edge of the frame while retaining its size.</dd>
+    <dd><br>
+       </dd>
+    <dd>If <tt>sticky</tt> contains both '<tt>e</tt>' and '<tt>w</tt>', the 
+ component's left edge will stick to the left edge of the frame, and its right
+ edge will stick to the right edge of the frame. The component will therefore
+ stretch or shrink in the horizontal direction when the frame changes size.</dd>
+    <dd><br>
+       </dd>
+    <dd>Similar considerations apply to the letters '<tt>n</tt>' and '<tt>s</tt>' 
+ with regard to the vertical direction.</dd>
+    <dd><br>
+       </dd>
+    <dd>The default value of <tt>sticky</tt> is '<tt>nw</tt>', so that the 
+ component sticks to the top and left edges of the frame.</dd>
+  </dl>
+   </blockquote>
+   <h3>Scrolling options</h3>
+<blockquote>
+  <dl>
+    <dt><tt>scrolling</tt></dt>
+    <dd>This option is a string made up of the letters '<tt>h</tt>' and '<tt>v</tt>'
+specifying horizontal and vertical scrolling, respectively. It should only
+be used when the component being placed is a subclass of ScrollableView, or some other
+component that supports scrolling. The effect of using it on a component
+that does not support scrolling is undefined.</dd>
+    </dl>
+</blockquote>
+<h3>Border options</h3>
+     <blockquote>
+  <dl>
+    <dt><tt>border</tt></dt>
+    <dd>This is a boolean option requesting that the component be given a
+border. Whether a border is actually added, and if so, its size and appearance,
+depends on the platform and on the type of component being placed. When a
+border is provided, it exists outside the bounds of the component, and is
+not included in the calculation of any component's position and size.<br>
+    </dd>
+  </dl>
+</blockquote>
+<h2>Placing rows and columns</h2>
+<dl>
+  <dt>Whereas the <tt>place</tt> method places a single component at a time,
+the <tt>place_row</tt> and <tt>place_column</tt> methods can be used to lay
+out a list of components in a row or column. These two methods accept all
+of the placement options listed above, plus the following:</dt>
+</dl>
+<blockquote>
+  <dl>
+    <dt><tt>spacing</tt></dt>
+    <dd>The amount of space to leave between adjacent components. If unspecified,
+a platform-dependent default is used.</dd>
+  </dl>
+</blockquote>
+Placing a row or column is achieved by first placing one of the components
+as specified by the given options, and then placing each subsequent component
+relative to the previous one. All of the same placement options are applied
+to each subsequent component, except for one of its edges, which will be
+positioned at the specified <tt>spacing</tt> from the previous component.<br>
+<br>
+Which component is placed first, and the direction of subsequent component
+placement, is determined by which edges are specified in the placement options.
+For example, if you specify the <tt>left</tt> edge when placing a row, the
+first component in the list will be placed first, with its left edge at the
+specified position. The second component will then be placed to the right
+of the first, with the left edge of the second component relative to the
+right edge of the first, and so forth.<br>
+<br>
+On the other hand, if you specify the <tt>right</tt> edge (instead of the left
+edge), then the <i>last</i> component in the list will be placed first, and
+then the second-to-last to the left of it, and so forth.<br>
+<br>
+(It is currently illegal to specify both the left and right edges when placing
+a row, or both the top and bottom edges when placing a column. This restriction
+may be lifted in the future.)<br>
+<br>
+If you're finding the above description too confusing, just think of the
+edge specifications as applying to the whole collection of components rather
+than to any individual component. For example, <tt>my_frame.place_row([button1,</tt>
+<tt>button2,</tt> <tt>button3],</tt> <tt>top</tt> <tt>=</tt> <tt>42,</tt>
+<tt>right</tt> <tt>=</tt> <tt>-12,</tt> <tt>spacing</tt> <tt>=</tt> <tt>8)</tt>
+means "place these buttons in a row 8 pixels apart, 42 pixels from the top
+of the frame and 12 pixels from the right."
+<h2>     ---<br>
+                   </h2>
+</body></html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head><meta content="text/html; charset=ISO-8859-1" http-equiv="content-type"><title>Printable class</title></head>
+<body><h1>class <span style="font-family: monospace;">Printing.Printable</span></h1><span style="font-family: monospace;">Printable</span> is an abstract base class for components that provide an implementation of the <span style="font-style: italic;">Print</span> command.<br><br>If
+enabled for the instance concerned, components inheriting from this
+class will automatically enable the Print command and will print
+themselves in response to it.<br><br>Printing behaviour is controlled by the <span style="font-family: monospace;">printable</span>
+property. Setting this property to false causes the Print command to be
+ignored and passed on to the Document or Application. You may need to
+do this if you want your document to be printed in a different way than
+it appears on screen. See the Printing topic for more information.<br><br>Printable components in the PyGUI framework include <a href="View.html">View</a>, <a href="ScrollableView.html">ScrollableView</a> and <a href="TextEditor.html">TextEditor</a>.<br><br>Note:<span style="font-style: italic;">
+The Printable class is designed for internal use by the PyGUI framework
+only; you should not inherit directly from it yourself. To implement a
+printable view, base it on one of the concrete component classes listed
+above.</span><br><h2>Properties</h2><dl style="margin-left: 40px;"><dt style="font-family: monospace;">printable</dt><dd>If true, the <span style="font-style: italic;">Print</span> command is handled by this component, otherwise it is passed on to the next handler. Defaults to true.<br><br></dd><dt style="font-family: monospace;">page_setup</dt><dd><span style="font-style: italic;">Read only.</span> The <a href="PageSetup.html">PageSetup</a> instance to be used when printing this component. By default, a <span style="font-family: monospace;">page_setup</span> attribute is looked for on the associated <span style="font-family: monospace;">model</span>, if any. If there is no model, or it does not have a <span style="font-family: monospace;">page_setup</span> attribute,
+or its value is None, the application's default PageSetup instance is
+used. You can customise this behaviour by overriding the <span style="font-family: monospace;">get_page_setup()</span> method.<br><br></dd><dt style="font-family: monospace;">print_title</dt><dd><span style="font-style: italic;">Read only.</span>
+Title to use for print jobs. The usage of this property is
+platform-dependent. Defaults to the title of the containing Window. You
+can customise it by overriding the <span style="font-family: monospace;">get_print_title()</span> method.</dd></dl><h2>Methods</h2><dl style="margin-left: 40px;"><dt style="font-family: monospace;">print_cmd()</dt><dd>Implements the standard <span style="font-style: italic;">Print</span> command by calling<span style="font-family: monospace;"> print_view()</span> with the value of the <span style="font-family: monospace;">page_setup</span> property.</dd></dl><dl style="margin-left: 40px;"><dt style="font-family: monospace;">print_view(page_setup, prompt = True)</dt><dd>Prints the contents of the component using the specified <a href="PageSetup.html">PageSetup</a> object. If <span style="font-style: italic;">prompt</span>
+is true, a printing dialog is first displayed, otherwise the printing
+operation is started immediately without user interaction.<br></dd></dl><h2>Abstract Methods</h2><dl style="margin-left: 40px;"><dt><span style="font-family: monospace;">get_page_setup()</span></dt><dd>Override this to customise the way the <a href="PageSetup.html">PageSetup</a> object is obtained when handling the <span style="font-style: italic;">Print</span> command.<br><br></dd><dt style="font-family: monospace;">get_print_title()</dt><dd>Determines the value of the <span style="font-family: monospace;">print_title</span> property.</dd></dl>---</body></html>

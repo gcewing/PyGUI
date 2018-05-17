@@ -1,0 +1,82 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html><head><title>PyGUI - FileRef class</title>
+   
+   <meta name="GENERATOR" content="Mozilla/3.01Gold (X11; I; SunOS 5.6 sun4u) [Netscape]"></head>
+<body>
+
+<h1>class <tt>Files.FileRef</tt></h1>
+
+<p>A&nbsp;FileRef is a platform-independent representation of a file system object. It consists of two parts, a <span style="font-style: italic;">directory specification</span> and the <span style="font-style: italic;">name</span> of an object within that directory.</p>
+<p>A FileRef may name an existing object or one that does not yet
+exist. The directory specification always refers to an existing
+directory, however (although this is not necessarily enforced).<br>
+</p>
+<p>When using a pathname in the construction of a FileRef, an absolute
+pathname should be used. The effect of specifying a relative pathname
+is undefined.<br>
+</p>
+<p>FileRef objects are immutable.<br>
+</p>
+<h2>Constructors</h2>
+<div style="margin-left: 40px;">
+<dl>
+  <dt><span style="font-family: monospace;">FileRef(dir</span> <span style="font-family: monospace;">=</span> <a href="DirRef.html">DirRef</a> or path, <span style="font-family: monospace;">name</span> <span style="font-family: monospace;">=</span> string<span style="font-family: monospace;">)</span></dt>
+  <dd>Constructs a FileRef from a directory specification and a name
+within that directory. The directory may be specified either by a full
+pathname or a DirRef.<br>
+    <br>
+  </dd>
+  <dt><span style="font-family: monospace;">FileRef(path</span> <span style="font-family: monospace;">=</span> string<span style="font-family: monospace;">)</span></dt>
+  <dd>Constructs a FileRef from a full pathname.<br>
+  </dd>
+</dl>
+</div>
+<h2>Properties</h2>
+
+
+<dl>
+<dl>
+<dt><tt>name</tt></dt>
+
+<dd><span style="font-style: italic;">Read only. </span>Name of the object within its parent directory.<br>
+</dd>
+</dl>
+</dl>
+
+<dl>
+<dl>
+<dt><tt>dir</tt></dt>
+
+<dd><span style="font-style: italic;">Read only.&nbsp; </span>A&nbsp;<a href="DirRef.html">DirRef</a> representing the directory
+in which the object resides, or will reside in the case of an object which does
+not yet exist.</dd>
+</dl>
+</dl>
+
+<h2>Methods</h2>
+
+
+<dl>
+<dl>
+<dt><tt><a name="open"></a>open(mode, file_type = None)</tt></dt>
+
+<dd>Opens the referenced object as a file using the given <i>mode </i>(which is the
+same as the <i>mode </i>parameter to the built-in <tt>open</tt> function).
+If opening for writing and the file does not yet exist, it is created.<br>
+      <br>
+If <span style="font-style: italic;">file_type</span> is given, it should be a <a href="FileType.html">FileType</a>
+instance specifying the file type metadata to be attached to the file.
+This parameter is only used if the call results in the creation of a
+new file. On platforms which do not have file type metadata, it is
+ignored.<br>
+      <br>
+</dd><dt style="font-family: monospace;">mkdir()</dt>
+    <dd>Creates a directory with the name and parent directory specified by the FileRef. Returns a <a href="DirRef.html">DirRef</a> representing the created directory.<br>
+    </dd>
+
+</dl>
+</dl>
+
+<p>---</p>
+
+</body></html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><title>Dialog</title>
+
+  
+  <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"></head><body>
+<h1>class <tt>Dialog(<a href="Window.html">Window</a>)</tt></h1>
+<br>
+The Dialog class is a subclass of <a href="Window.html">Window</a> designed
+for use as a dialog box. It provides facilities for defining default and
+cancel buttons that are activated by keyboard equivalents.<br>
+<br>
+A Dialog differs from a Window in having a default style of <tt>'nonmodal_dialog'</tt>,
+and by default (if possible on the platform) not being closable, zoomable
+or resizable. These options can be overridden in the constructor call. <br>
+<br>
+On platforms which display a menu bar at the top of each window, a Dialog
+does not normally have a menu bar. Enabled menu items are still available by their
+keyboard equivalents while the Dialog is active, however.<br>
+<h2>Constructor</h2>
+<blockquote>
+  <dl>
+    <dt><tt>Dialog(style</tt> <tt>=</tt> <tt>'nonmodal_dialog',</tt></dt>
+    <dt><tt>&nbsp; &nbsp; &nbsp; &nbsp;</tt><tt>closable</tt>       <tt>=</tt> <tt>False,</tt>
+      <tt>resizable</tt> <tt>=</tt> <tt>False,</tt> <tt>zoomable</tt> = <tt>False</tt><tt>,</tt></dt>
+    <dt><tt>&nbsp; &nbsp; &nbsp; &nbsp;movable</tt> <tt>=</tt> <i>platform_default</i><tt>,</tt> <tt>hidable</tt>
+= <i>platform_default</i><tt>)<br></tt></dt>
+    <dd>Constructs a Dialog with the specified options. The default values
+for the movable and hidable options are platform-dependent.</dd>
+  </dl>
+</blockquote>
+<h2>Properties</h2>
+<div style="margin-left: 40px;">
+<dl>
+  <dt style="font-family: monospace;">default_button</dt>
+  <dd>The <a href="Button.html">Button</a> that is to be activated in
+response to the platform's keyboard equivalent for the default button
+of a dialog. Setting this property also causes the button's <span style="font-family: monospace;">default</span> property to be set to true, so that the button will be displayed as a default button, and sets the button's <span style="font-family: monospace;">action</span> property to <span style="font-family: monospace;">'do_default_action'</span>.</dd>
+  <dt><br>
+    <span style="font-family: monospace;">cancel_button</span></dt>
+  <dd>The <a href="Button.html">Button</a> that is to be activated in
+response to the platform's keyboard equivalent for the cancel button of
+a dialog. Setting this property also causes the button's <span style="font-family: monospace;">cancel</span> property to be set to true, so that the button will be displayed as a cancel button, and sets the button's <span style="font-family: monospace;">action</span> property to <span style="font-family: monospace;">'do_cancel_action'</span>.</dd>
+</dl>
+</div>
+<h2>Action Properties</h2>
+
+<blockquote>
+  <dl>
+    <dt><tt>default_action</tt></dt>
+    <dd><span style="font-family: monospace;"></span>Action
+to perform in response to a Return or Enter key event. This action is
+also typically invoked by activating a default button or pressing
+Return or Enter in a text field. The default is <span style="font-family: monospace;">'ok'</span>, which is implemented by <a href="ModalDialog.html">ModalDialog</a> to dismiss the dialog with the value <span style="font-family: monospace;">True</span>. You can create a button which invokes this action using <a href="Button.html#DefaultButton">DefaultButton</a>.</dd></dl><dl><dt><tt>cancel_action</tt></dt>
+    <dd>Action
+to perform in response to an Escape key event.&nbsp;This action is also
+typically invoked by activating a cancel button or pressing Escape in a
+text field. The default is <span style="font-family: monospace;">'cancel'</span>, which is implemented by <a href="ModalDialog.html">ModalDialog</a> to dismiss the dialog with the value <span style="font-family: monospace;">False</span>. You can create a button which invokes this action using <a href="Button.html#CancelButton">CancelButton</a>.</dd>
+  </dl>
+</blockquote>
+<br>
+<br>
+</body></html>

@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html><head><title>PyGUI - File Dialog Functions</title>
+  
+          <meta name="GENERATOR" content="Mozilla/3.01Gold (X11; I; SunOS 5.6 sun4u) [Netscape]"></head>
+<body>
+  <h1>module <span style="font-family: monospace;">FileDialogs</span></h1>
+  <p>This module defines functions that present dialog boxes for requesting new and existing files and directories according
+to platform conventions.<br>
+</p>
+<h2>Parameters</h2>
+<p>The following parameters are used by these functions:<br>
+</p>
+<dl style="margin-left: 40px;">
+  <dt style="font-family: monospace;">prompt</dt>
+  <dd>A prompt string to be displayed. It is up to the platform exactly
+where and how the prompt is shown, and it may not be shown at all in
+some cases. If omitted, a suitable default is used depending on the
+type of request.<br>
+    <br>
+  </dd>
+  <dt style="font-family: monospace;">default_dir</dt>
+  <dd>A <a href="FileRef.html">FileRef</a> or <a href="DirRef.html">DirRef</a>
+specifying the initial directory to be browsed. If omitted, a
+platform-dependent default is used (usually the last directory visited
+in the application by a file dialog).<br>
+    <br>
+  </dd>
+  <dt style="font-family: monospace;">default_name</dt>
+  <dd>For functions that request a new object name, the initial value
+entered into the name area of the dialog. If omitted, the name area is
+initially empty.<br>
+    <br>
+  </dd>
+  <dt><span style="font-family: monospace;">file_type, file_types</span></dt>
+  <dd>A <a href="FileType.html">FileType</a> or list of FileTypes specifying acceptable file types.</dd>
+</dl>
+<h2>Functions</h2>
+
+  
+<dl style="margin-left: 40px;">
+
+
+    <dt><tt><a name="request_old_file"></a>request_old_file(</tt><tt>prompt</tt> <tt>=</tt> <span style="font-family: monospace;">None</span><tt>,</tt> <tt>default_dir</tt> <tt>=</tt> <span style="font-family: monospace;">None</span><tt>,</tt> <tt>file_types</tt> <tt>=</tt> <tt>None<span style="font-family: monospace;">)</span><br>
+    <br>
+    </tt></dt>
+
+    <dd>Prompts the user to select an existing file. If any <span style="font-style: italic;">file_types</span> are supplied, the user is only allowed to select a file matching one of the specified types.</dd><dd><br>
+  </dd>
+  <dd>Returns a <a href="FileRef.html">FileRef</a>, or <tt>None</tt> if the user cancelled.</dd>
+
+  
+</dl>
+
+
+  <dl style="margin-left: 40px;">
+  </dl>
+<dl style="margin-left: 40px;">
+<dt><tt>request_old_files(</tt><tt>prompt</tt> <tt>=</tt> <span style="font-family: monospace;">None</span><tt>,</tt> <tt>default_dir</tt> <tt>=</tt> <span style="font-family: monospace;">None</span><tt>,</tt> <tt>file_types</tt> <tt>=</tt> <tt>None</tt><tt>)<br>
+    <br>
+    </tt></dt><dd>Prompts the user to select a set of existing files. If any <span style="font-style: italic;">file_types</span> are supplied, the user is only allowed to select files matching one of the specified types.</dd><dd><br>
+  </dd><dd>Returns a list of <a href="FileRef.html">FileRef</a>s, or <tt>None</tt> if the user cancelled.</dd>
+</dl>
+<dl style="margin-left: 40px;">
+<dt><a name="request_new_file"></a><tt>request_new_file(</tt><tt>prompt</tt> <tt>=</tt> <span style="font-family: monospace;">None</span><tt>,</tt> <tt>default_dir</tt> <tt>=</tt> <span style="font-family: monospace;">None</span><tt>,</tt> <tt>default_name</tt> <tt>=</tt> <tt style="font-family: monospace;">None,</tt> <tt>file_type</tt> <tt>=</tt> <tt>None<span style="font-family: monospace;">)</span><br>
+    <br>
+</tt></dt>
+  <dd>Prompts the user to supply a name and location for a new file. If <span style="font-style: italic;">file_type</span>
+is specified, it should represent the type if file which is to be
+created; some platforms use this to restrict the list of existing files
+displayed, and to determine the suffix of the returned filename.<br>
+</dd><dd><br>
+  </dd>
+  <dd>Returns a <a href="FileRef.html">FileRef</a>, or <tt>None</tt> if the user cancelled.</dd>
+
+<dl>
+    
+    
+  </dl>
+</dl>
+
+  
+<dl style="margin-left: 40px;">
+<dt><tt>request_old_directory(</tt><tt>prompt</tt> <tt>=</tt> <span style="font-family: monospace;">None</span><tt>,</tt> <tt>default_dir</tt> <tt>=</tt> <span style="font-family: monospace;">None</span><tt>)</tt></dt><dd><br>
+Prompts the user to select an existing directory.</dd><dd><br>
+</dd><dd>Returns a <a href="FileRef.html">FileRef</a>, or <tt>None</tt> if the user cancelled.</dd>
+</dl>
+<dl style="margin-left: 40px;">
+<dt></dt><dt><tt>request_old_directories(</tt><tt>prompt</tt> <tt>=</tt> <span style="font-family: monospace;">None</span><tt>,</tt> <tt>default_dir</tt> <tt>=</tt> <span style="font-family: monospace;">None</span><tt>)</tt></dt>
+<dd><br>
+Prompts the user to select a set of existing directories.</dd>
+  <dd><br>
+  </dd>
+  <dd>Returns a list of <a href="FileRef.html">FileRef</a>s, or <tt>None</tt> if the user cancelled.</dd>
+</dl>
+<dl style="margin-left: 40px;">
+  <dt><tt>request_new_directory(</tt><tt>prompt</tt> <tt>=</tt> <span style="font-family: monospace;">None</span><tt>,</tt> <tt>default_dir</tt> <tt>=</tt> <span style="font-family: monospace;">None</span><tt>,</tt> <tt>default_name</tt> <tt>=</tt> <span style="font-family: monospace;">None</span><tt><span style="font-family: monospace;">)</span><br>
+  <br>
+</tt></dt>
+<dd>Prompts the user to supply a name and location for a new directory.<br>
+</dd><dd><br>
+</dd><dd>Returns a <a href="FileRef.html">FileRef</a>, or <tt>None</tt> if the user cancelled.</dd>
+</dl>
+
+---<br>
+</body></html>

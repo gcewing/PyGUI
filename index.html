@@ -1,0 +1,136 @@
+<!DOCTYPE html PUBLIC "-//w3c//dtd html 4.0 transitional//en">
+<html><head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Mozilla/4.7 [en] (X11; U; SunOS 5.8 i86pc) [Netscape]"><title>PyGUI</title>
+
+<style type="text/css">
+.block {
+  border: 1px solid #3333ff;
+}
+table {
+  border-collapse: collapse;
+}
+.head {
+  border-left-width: 1px;
+  border-right-style: solid;
+  margin-bottom: 10px;
+}
+li {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+</style></head><body>
+<table style="background-color: rgb(127, 223, 255); width: 100%;" class="block head" border="0" cellpadding="10" cellspacing="0">
+<tbody>
+<tr>
+<td style="color: rgb(0, 0, 153);">
+<h1>The Python GUI Project </h1>
+</td>
+<td align="right" valign="top"><big><i>by
+Gregory Ewing</i></big><br>
+<tt><a href="mailto:greg.ewing@canterbury.ac.nz">greg.ewing@canterbury.ac.nz</a></tt><br>
+</td>
+</tr>
+</tbody>
+</table>
+<table style="width: 100%;" border="0" cellpadding="10" cellspacing="0">
+<tbody>
+<tr>
+<td class="block" style="width: 50%; vertical-align: top; background-color: rgb(127, 223, 255);">
+<h2>About
+the Project</h2>
+This is a project to develop a cross-platform pythonic GUI
+API.&nbsp; The goals of this project are:
+<ul>
+<li> Develop a GUI API that is
+designed specifically for Python, taking advantage of Python's unique
+language features and
+working smoothly with Python's data types.<br>
+</li>
+<li> Provide implementations of the API for the three
+major platforms (Unix, Macintosh and Windows) that are small and
+lightweight, interposing as little code as possible between the Python
+application and the platform's underlying GUI facilities, and not
+bloating the Python installations or applications which use them.<br>
+</li>
+<li> Document the API purely in Python terms, so that
+the programmer does not need to read the documentation for another
+GUI&nbsp;library, in terms of another language, and translate into
+Python.<br>
+</li>
+<li> Get the library and its documentation included in
+the core Python distribution, so that truly cross-platform
+GUI&nbsp;applications may be written that will run on any Python
+installation, anywhere.</li>
+</ul>
+<blockquote></blockquote>
+<blockquote> </blockquote>
+</td>
+<td class="" style="vertical-align: top;">
+<h2>Latest Version - 2.5.4</h2><br>Now works with <span style="font-weight: bold;">Python 3</span> on MacOSX and Windows!<br><br>(Python
+3 support for Gtk will have to wait until Gtk 3 and related libraries
+are stable and up to speed with GObject Introspection.)<br><br>The ScrollableView class has been completely reimplemented on Windows and should now work properly with all builds of PyWin32.<span style="font-weight: bold;"></span>
+<h2>Browse</h2>
+<blockquote><big style="font-weight: bold;"><a href="screenshots.html">Screenshots</a></big><br>
+<br>
+<big><b><a href="version/Doc/index.html">Documentation</a><br></b></big>Includes tutorial material, example code and API reference<big><b><br><br></b></big><a href="CHANGES.txt">CHANGES</a></blockquote>
+<h2>Download</h2>
+<blockquote><big><a href="PyGUI-2.5.4.tar.gz" style="font-weight: bold;">PyGUI-2.5.4.tar.gz</a></big><span style="font-style: italic;"></span><br>
+<i>Last updated 25 Mar 2017</i><br>
+</blockquote>
+This version includes three implementations:<br>
+<ul>
+<li><span style="font-weight: bold;">MacOSX</span>
+- requires <a href="http://pyobjc.sourceforge.net/">PyObjC</a>
+(tested with PyObjC-1.2 on Tiger, PyObjC-2.3 on Snow Leopard)<br>
+</li>
+<li><span style="font-weight: bold;">Linux</span>
+- requires <a href="http://www.pygtk.org/">pygtk</a>
+(tested with pygtk-2.14.0 and Gtk+-2.14.7)<br>
+</li>
+<li><span style="font-weight: bold;">Windows</span>
+- requires <a href="http://sourceforge.net/projects/pywin32/">pywin32</a>
+(tested with pywin32-213) and <a href="http://python.net/crew/theller/ctypes/">ctypes</a>
+(included with Python 2.5 and later)</li>
+</ul>
+<p>Python versions required:</p><ul><li>Python 2: 2.3 or later</li><li>Python 3:&nbsp;3.1 or later</li></ul>
+To use the OpenGL facilities, you will need <a href="http://pyopengl.sourceforge.net/">PyOpenGL</a>,
+and, for the Gtk version, <a href="http://gtkglext.sourceforge.net/">GtkGLExt
+and PyGtkGLExt</a>.<br>
+<span style="font-weight: bold;"></span><br>
+<a href="old_versions.html" style="font-style: italic;">Obsolete
+Versions</a><br>
+<h2>Examples</h2>
+Example application: <a href="version/Demos/BlobEdit/blobedit.py">blobedit.py</a><br>
+<br>
+You may also find the contents of the <span style="font-weight: bold;">Tests</span> folder in the
+distribution useful as a source of example code.
+<h2>Discussion</h2><a href="http://mail.python.org/mailman/listinfo/pygui">PyGUI Mailing List</a> -- for all discussion relating to the development and use of PyGUI.<br><br>The <a href="mailto:pyobjc-dev@lists.sourceforge.net">PyObjC</a>,
+<a href="mailto:pygtk@daa.com.au">PyGtk</a>
+and <a href="mailto:python-win32@python.org">PyWin32</a>
+mailing lists may also be appropriate for platform-specific issues.<br>
+<h2>Acknowledgements</h2>
+Some
+parts of the Windows implementation are based on contributions by
+Patrick Forget and Erez-Sh. Even though I didn't use much of their code
+in the end, I appreciate their efforts and may draw more from it in the
+future.<br>
+</td>
+</tr>
+</tbody>
+</table>
+<div style="margin-left: 40px;"><br>
+</div>
+<br>
+<blockquote>
+<h3><br>
+</h3>
+</blockquote>
+<br>
+<br>
+<br>
+<br>
+<br>
+</body></html>

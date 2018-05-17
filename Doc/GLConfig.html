@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><meta content="text/html; charset=ISO-8859-1" http-equiv="content-type"><title>PyGUI - GLConfig class</title></head>
+<body>
+<h1>class <span style="font-family: monospace;">GL.GLConfig</span></h1>
+The GLConfig class of the GL submodule provides a bundle of attributes
+for configuring an OpenGL context. It also provides facilities for
+testing whether a given set of attributes is supported and finding out
+what attributes are supported on the platform where the application is
+running.<br>
+<h2>Properties</h2>
+<dl style="margin-left: 40px;">
+  <dt style="font-family: monospace;">double_buffer</dt>
+  <dd>True if double buffering is desired.<br>
+    <br>
+  </dd>
+  <dt style="font-family: monospace;">alpha</dt>
+  <dd>True if an alpha channel is required.<br>
+    <br>
+  </dd>
+  <dt style="font-family: monospace;">color_size</dt>
+  <dd>Desired number of bits per color buffer component.<br>
+    <br>
+  </dd>
+  <dt style="font-family: monospace;">alpha_size</dt>
+  <dd>Desired number of bits per alpha channel component.<br>
+    <br>
+  </dd>
+  <dt style="font-family: monospace;">stereo</dt>
+  <dd>True if a stereoscopic context is required.<br>
+    <br>
+  </dd>
+  <dt style="font-family: monospace;">aux_buffers</dt>
+  <dd>Number of auxiliary buffers required.<br>
+    <br>
+  </dd>
+  <dt style="font-family: monospace;">depth_buffer</dt>
+  <dd>True if a depth buffer is required.<br>
+    <br>
+  </dd>
+  <dt style="font-family: monospace;">depth_size</dt>
+  <dd>Desired number of bits per depth buffer element.<br>
+    <br>
+  </dd>
+  <dt style="font-family: monospace;">stencil_buffer</dt>
+  <dd>True if a stencil buffer is required.<br>
+    <br>
+  </dd>
+  <dt style="font-family: monospace;">stencil_size</dt>
+  <dd>Desired number of bits per stencil buffer element.<br>
+    <br>
+  </dd>
+  <dt style="font-family: monospace;">accum_buffer</dt>
+  <dd>True if an accumulation buffer is required.<br>
+    <br>
+  </dd>
+  <dt style="font-family: monospace;">accum_size</dt>
+  <dd>Desired number of bits per accumulation buffer element.<br>
+    <br>
+  </dd>
+  <dt style="font-family: monospace;">multisample</dt>
+  <dd>True if a multisampled context is desired.<br>
+    <br>
+  </dd>
+  <dt style="font-family: monospace;">samples_per_pixel</dt>
+  <dd>Desired number of samples per pixel when multisampling is active.<br>
+  </dd>
+</dl>
+<h2>Methods</h2>
+<div style="margin-left: 40px;">
+<dl>
+  <dt style="font-family: monospace;">supported(mode = 'both')</dt>
+  <dd>Tests whether the requested combination of attributes, or
+something close to them, can be satisfied. If successful, a new
+GLConfig instance is returned whose attributes reflect those actually
+available. Otherwise, None is returned.<br><br>The <span style="font-family: monospace;">mode</span> parameter may be <span style="font-family: monospace;">'screen'</span>, <span style="font-family: monospace;">'pixmap'</span> or <span style="font-family: monospace;">'both'</span> to request a configuration suitable for drawing to a GLView, a GLPixmap, or both a GLView and a GLPixmap.</dd>
+</dl>
+</div>
+<br>
+</body></html>

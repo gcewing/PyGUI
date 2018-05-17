@@ -1,0 +1,12 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head><meta content="text/html; charset=ISO-8859-1" http-equiv="content-type"><title>PyGUI - Keyboard Navigation</title></head><body><h1>Keyboard Navigation</h1>Most
+platforms allow you to use the Tab key to move from one text field to
+another within a window. Some (e.g. Gtk, Windows) also allow you to tab
+into non-text controls such as buttons and check boxes. Some (e.g.
+MacOSX) do not do this by default, but provide a user preference
+setting for enabling it.<br><br>By default, PyGUI follows the platform conventions concerning the behaviour of the Tab key, but allows the user to change it.<br><br>On Gtk and Windows, setting the <span style="font-family: monospace;">PYGUI_KEYBOARD_NAVIGATION</span>
+environment variable to a true value ("True" or "1") enables tabbing
+into all controls, and setting it to a false value ("False" or "0")
+disables this.<br><br>On MacOSX, this environment variable is not used,
+and the System Preferences settings under Keyboard Shortcuts for tab
+key behaviour are always followed.</body></html>

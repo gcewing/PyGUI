@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><meta content="text/html; charset=ISO-8859-1" http-equiv="content-type"><title>ScrollableView class</title></head>
+<body>
+<h1>class <span style="font-family: monospace;">ScrollableView(<a href="ViewBase.html">ViewBase</a>, <a href="Printable.html">Printable</a>)</span></h1>
+A ScrollableView is a <a href="View.html">View</a> with support for scrolling.<br>
+<h2>Properties</h2>
+<dl style="margin-left: 40px;">
+  <dt style="font-family: monospace;">scrolling</dt>
+  <dd>A string containing <span style="font-family: monospace;">'h'</span> to enable horizontal scrolling and <span style="font-family: monospace;">'v'</span> to enable vertical scrolling.<br>
+    <br>
+  </dd>
+  <dt style="font-family: monospace;">hscrolling</dt>
+  <dd>True if horizontal scrolling is enabled.<br>
+    <br>
+  </dd>
+  <dt style="font-family: monospace;">vscrolling</dt>
+  <dd>True if vertical scrolling is enabled.<br>
+    <br>
+  </dd>
+  <dt><tt>extent</tt></dt>
+  <dd>Tuple (<span style="font-style: italic;">width, height</span>) defining the size of the scrollable area.<br>
+    <br>
+  </dd>
+  <dt><tt>scroll_offset</tt></dt>
+  <dd>Tuple (<span style="font-style: italic;">dx, dy</span>) representing the difference in local coordinates between
+   the top left corner of the view's bounds and the top left corner of the
+ extent.  Assigning to this property will cause the view to scroll. The value
+ is clamped  to the allowable scrolling range, as determined by the current
+ bounds and  extent.<br>
+    <br>
+  </dd>
+  <dt><tt>line_scroll_amount</tt></dt>
+  <dd>Tuple (<span style="font-style: italic;">dh, dv</span>) representing the size of a "line" in each direction
+   for scrolling purposes.<br><br></dd><dt><tt>background_color</tt></dt><dd><a href="Color.html"><tt>Color</tt></a> with which to fill any visible area of the view that lies outside the extent, or <tt>None</tt> to suppress automatic background drawing. When a background color is specified, the <tt>update_rect</tt> passed to the <tt>draw()</tt> method is clipped to exclude areas outside the extent.<br><br><i>Note:</i> On MacOSX, it is impossible to draw outside the view's extent even when the background color is set to None.</dd>
+</dl>
+<h2>Methods</h2>
+<dl style="margin-left: 40px;">
+<dt><tt>scroll_by(</tt><i>dx</i><tt>,</tt> <i>dy</i><tt>)</tt></dt><dd>Scrolls the view by the given horizontal and vertical amounts, within 
+  the limits defined by the extent.</dd><dd><br>
+         </dd><dt><tt>scroll_line_left()</tt></dt><dt><tt>scroll_line_right()</tt></dt><dt><tt>scroll_line_up()</tt></dt><dt><tt>scroll_line_down()</tt></dt><dd>Scrolls the view by one line in the specified direction, as determined 
+  by the <tt>line_scroll_amount</tt> property.</dd><dd><br>
+         </dd><dt><tt>scroll_page_left()</tt></dt><dt><tt>scroll_page_right()</tt></dt><dt><tt>scroll_page_up()</tt></dt><dt><tt>scroll_page_down()</tt></dt><dd>Scrolls the view by one page in the specified direction. The size 
+  of a page is equal to the size of the viewed rectangle minus the <tt>line_scroll_amount</tt>.</dd>
+</dl>
+---<br>
+</body></html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><meta content="text/html; charset=ISO-8859-1" http-equiv="content-type"><title>PyGUI - Exception classes</title></head><body>
+<h1>Exception classes</h1>
+PyGUI defines the following exception classes for use by application code.<br>
+<dl style="margin-left: 40px;">
+  <dt style="font-family: monospace;">Cancel</dt>
+  <dd><br>
+This exception can be raised to abort an operation, such as in response
+to the user clicking a Cancel button. It is silently caught by the main
+event loop.<br>
+    <br>
+When writing code, you should keep the possibility of Cancel exceptions
+in mind, and make judicious use of try-finally to clean up after
+operations that could be cancelled part way through.<br>
+    <br>
+  </dd>
+  <dt><span style="font-family: monospace;">ApplicationError(</span><span style="font-style: italic;">message</span> [, <span style="font-style: italic;">detail</span>]<span style="font-family: monospace;">)</span><br>
+  </dt>
+  <dd><br>
+This exception can be raised to signal an error that should be reported
+to the user. It is caught by the main event loop and a suitable alert
+displayed.<br>
+    <br>
+The <span style="font-style: italic;">message</span> should be a brief description of the error, including primary relevant information. The <span style="font-style: italic;">detail</span> may be a longer discourse providing further information about the cause of the error and/or possible remedies. For example,<br>
+    <br>
+    <div style="margin-left: 40px;">
+    <dl>
+      <dt>message:</dt>
+    </dl>
+    </div>
+  </dd>
+  <dd>
+    <div style="margin-left: 40px;">
+    <dl>
+      <dd>"Unable to open the file 'InterestingStuff.txt'".</dd>
+    </dl>
+    <br>
+    <dl>
+      <dt>detail:</dt>
+      <dd>"Someone has spread peanut butter on the disk. Please clean it and try again."</dd>
+    </dl>
+    </div>
+  </dd>
+</dl>
+---<br>
+</body></html>

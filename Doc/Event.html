@@ -1,0 +1,164 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html><head><title>PyGUI - class Event</title>
+  
+                              <meta name="GENERATOR" content="Mozilla/3.01Gold (X11; I; SunOS 5.6 sun4u) [Netscape]"></head>
+<body>
+       <h1>class <tt>Event</tt> </h1>
+       <p>An Event object represents an input event such as a mouse click or keystroke.
+  </p>
+       <h2>Attributes </h2>
+       <blockquote>     <dl>
+    <dt><tt>kind </tt></dt>
+    <dd>A code indicating the type of event. One of:<br>
+       <br>
+  </dd>
+    <dl>
+      <dl>
+        <li><tt>'mouse_down'</tt></li>
+        <li><tt>'mouse_drag'</tt></li>
+        <li><tt>'mouse_up'</tt></li><li><tt>'mouse_move'</tt></li><li><tt>'key_down'</tt></li>
+        <li><tt>'key_up'</tt>         </li>
+      </dl>
+    </dl>
+    <dd>&nbsp;</dd>
+    <dt><tt>position </tt></dt>
+
+    <dd>For mouse events, the location of the mouse pointer when the  event 
+occurred, in the coordinate system of the component receiving the event. For
+mouse-down events, this is the component in which the click occurred. For
+other mouse events, it is the view whose <tt>track_mouse</tt> method was
+used to receive the event.&nbsp;<br></dd><dt style="font-family: monospace;">delta</dt><dd>For
+mouse-move and mouse-drag events, a 2-tuple representing the relative
+mouse motion since the last mouse event, unconstrained by screen
+boundaries.<span style="font-style: italic;"> Currently implemented only on MacOSX.</span></dd>
+    <dd><br>
+     </dd>
+    <dt><tt>global_position</tt></dt>
+    <dd>The location in screen coordinates of the mouse pointer when the event
+occurred. This attribute is valid for all event types.<br>
+&nbsp;<br>
+    </dd>
+
+    <dt><tt>time</tt> </dt>
+
+    <dd>Time at which the event occurred. The origin and units are platform-dependent.<br>
+    &nbsp;</dd>
+    <dt><tt>num_clicks </tt></dt>
+    <dd>For mouse-down events, the number of clicks which have so far occurred 
+sufficiently  close together in time and space to be considered a multiple 
+click.</dd>
+    <dd><br>
+     </dd>
+    <dt style="font-family: monospace;">button</dt><dd>For mouse-down and mouse-up events, the mouse button that caused the event. One of <span style="font-family: monospace;">'left'</span>, <span style="font-family: monospace;">'middle'</span> or <span style="font-family: monospace;">'right'</span>.</dd><dd><br>
+    </dd>
+    <dd>
+      <div style="margin-left: 40px;"><span style="font-weight: bold;">NOTE</span>:
+Portable applications should not rely on all of these values being
+available. Some platforms have only 2 buttons (e.g. Windows) or 1
+button (e.g. Macintosh). You should provide alternative ways of
+invoking middle and right mouse button functions if you want your
+application to be usable on these platforms.<br>
+      </div>
+
+      <br>
+    </dd>
+
+    <dt><tt>char</tt></dt>
+
+    <dd>For key-down and key-up events, the ASCII character corresponding 
+to the key. If the key is not associated with a character, or the character cannot be represented in ASCII, this is
+an empty string.<br><br></dd><dt style="font-family: monospace;">unichars</dt><dd>For key-down and key-up events,&nbsp;a Unicode string representing the textual value of the key, if any.</dd>
+  </dl>
+  <dl>
+    <dt><tt>key</tt></dt>
+    <dd>For keys which do not have an ASCII character, and certain other special keys, this is a string naming
+the key. It may have the following values:</dd>
+  </dl>
+  <table align="center" border="0" cellpadding="2" cellspacing="2">
+ <tbody>
+      <tr>
+        <td><tt>'left_arrow'<br>
+'right_arrow'<br>
+'up_arrow'<br>
+'down_arrow'<br>'return'<br>
+'enter'<br>
+'f1' to 'f15'<br>
+        </tt></td>
+        <td valign="top" width="20"><br>
+        </td>
+        <td valign="top"><tt>'insert'<br></tt><tt>'delete'<br>
+        </tt><tt>'home'<br>
+'end'<br>
+'page_up'<br>
+'page_down'<br>
+        </tt></td>
+      </tr>
+      </tbody>
+  </table>
+  <dl>
+    </dl>
+  <dl>
+    <dd><span style="font-weight: bold;">Note:</span> The Return key on the main keyboard and the Enter key on the numeric keypad both set the <span style="font-family: monospace;">char</span> attribute to <span style="font-family: monospace;">'\r'</span>. They are distinguished by the <span style="font-family: monospace;">key</span> attribute being set to <span style="font-family: monospace;">'return'</span> for the Return key and <span style="font-family: monospace;">'enter'</span> for the Enter key. (On most PC keyboards, both of these keys are marked "Enter", but the same behaviour applies.)<br><br><span style="font-weight: bold;">Note:</span> On Macintosh keyboards, the <span style="font-family: monospace;">insert</span> key is labelled "Help".<br><br><span style="font-weight: bold;">Note:</span>
+On the Macintosh, keystrokes with the Option key produce accented
+characters and other special symbols which cannot be represented in
+ASCII; for these, the <span style="font-family: monospace;">char</span> attribute will be empty. The <span style="font-family: monospace;">unichars</span> attribute may be used to find the Unicode value for these characters, and the <span style="font-family: monospace;">key</span> attribute will contain an ASCII string identifying the keyboard key that was pressed. For example, Option-a produces <span style="font-family: monospace;">unichars = u'\xe5'</span> and <span style="font-family: monospace;">key = 'a'</span>.</dd>
+  </dl>
+  <dl>
+    <dt><tt>auto</tt></dt>
+
+    <dd>For key-down events, and on platforms which support it, a boolean 
+indicating that the event is due to an auto-repeating key rather than a physical 
+keystroke.<br>
+     </dd>
+  
+  </dl>
+
+ </blockquote>
+       <h2>Modifier Attributes </h2>
+       <p>The following attributes are boolean values indicating the state of mouse
+ buttons and/or keyboard modifier keys at the time of the event.<br>
+  </p>
+  <p>There are two groups of modifiers, high-level and low-level. The high-level
+ modifiers are abstract and are mapped onto the available keys and buttons
+ in a platform-dependent way. The low-level modifiers, on the other hand,
+represent physical keys.<br>
+  </p>
+  <p>Some of the high-level modifiers may be defined in terms of the low-level
+ modifiers, so the programmer should not rely on all possible combinations 
+ of modifiers being distinguishable. Modifiers within each group, however, 
+ should always be independent of each other. </p>
+       <p>The high-level modifiers are: </p>
+       <dl>
+  <dl>
+    <dt><tt>extend_contig </tt></dt>
+    <dt><tt>extend_noncontig </tt></dt>
+    <dd>These indicate that a selection is to be extended contiguously or 
+ non-contiguously. If neither of these is true, a new selection is to be begun
+ or an existing selection deselected. </dd>
+    <dd>&nbsp;</dd>
+    <dt><tt>option </tt></dt>
+    <dd>This is a general-purpose modifier whose interpretation is up to the
+programmer. </dd>
+  </dl>
+</dl>
+      <p>The low-level modifiers are: </p>
+        <dl>
+  <dl>
+    <dt><tt>shift </tt></dt>
+    <dt><tt>control </tt></dt>
+    <dd>These represent the state of the shift and control keys on the keyboard.
+ They ought to be available on most platforms, although there may be exceptions
+ (early Macintosh keyboards, for example, had no Control key). </dd>
+  </dl>
+</dl>
+       <h2>Methods</h2>
+ <blockquote>     <dl>
+    <dt><tt>position_in(</tt><i>view</i><tt>)</tt></dt>
+    <dd>Returns the location of the event in the coordinate system of the 
+specified view.</dd>
+  </dl>
+ </blockquote>
+ <br>
+ <br>
+    <br>
+</body></html>

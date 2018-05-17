@@ -1,0 +1,496 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html><head><title>PyGUI - class Canvas</title>
+
+<meta name="GENERATOR" content="Mozilla/3.01Gold (X11; I; SunOS 5.6 sun4u) [Netscape]">
+<style type="text/css"></style></head>
+<body>
+<h1>class <tt>Canvas </tt></h1>
+<p>Canvas is an abstract class representing something that can be
+drawn upon. It may represent an area of the screen, an offscreen
+pixmap, or something else such as a printed page.<br>
+</p>
+<p>The drawing model of a Canvas is based on the Postscript
+drawing model. In this model, drawing is performed by first building up
+a geometric description of a <i>path</i>, and then <i>stroking</i>
+the path with a pen or <i>filling</i>
+the path with a colour, or both. Paths can also be used to define a <i>clipping
+region</i> to which subsequent drawing is restricted.</p>
+<p>The Postscript model is extended with the additional
+drawing operations:</p><ul><li> <span style="font-weight: bold;">Erasing</span>
+is filling the path with a background colour. On platforms supporting
+alpha transparency, the background colour completely replaces the
+colour in the existing image, instead of being blended with it as is
+the case for the other drawing operations.<br><br></li><li><span style="font-weight: bold;">Framing</span> is
+similar to stroking, except that the pen is moved around the inside of
+the path instead of being centred on the path. It is equivalent to stroking a path displaced inwards by half the pen size.<br>
+</li></ul>
+<p>Higher-level operations are also provided for convenient
+drawing of common shapes such as rectangles, ellipses, arcs and
+polygons.<br>
+</p>
+<h2>Graphics state</h2>
+Each canvas maintains a <i>graphics state</i> consisting
+of the following items:<br>
+<ul>
+<li>A <i>pen colour</i> and <span style="font-style: italic;">pen size</span> for
+stroking and framing operations.</li>
+<li>A <i>fill colour</i> for filling operations.</li><li>A <span style="font-style: italic;">text colour</span> for drawing text.</li>
+<li>A <span style="font-style: italic;">background
+colour</span> for erasing operations.</li>
+<li>A<i> font</i> for drawing text.</li>
+<li>A <i>current point</i> used in path
+construction and text drawing.<br>
+</li>
+<li>A <i>clipping region</i> to which all drawing
+operations are restricted.</li>
+</ul>
+The canvas also maintains a <i>graphics state stack</i>. The
+current graphics state can be saved by pushing it onto the stack with <span style="font-family: monospace;">gsave</span>, and
+restored by popping it from the stack with <span style="font-family: monospace;">grestore</span>.<br>
+<h2>Current path</h2>
+Each canvas has a <i>current path</i>. The current path
+consists of a collection of path <i>segments</i>, each of
+which is a sequence of straight lines and/or Bezier curves. Each path
+segment can be either <i>open</i> or <i>closed</i>.
+Some operations expect closed path segments, in which case an open
+segment is treated as though it were closed by a line connecting its
+last point to its first point.<br>
+<br>
+Paths are constructed using the <tt>newpath</tt>,<tt>
+moveto</tt>,<tt> lineto</tt>,<tt> rmoveto</tt>,<tt>
+rlineto</tt>,<tt> curveto</tt>,<tt> rcurveto</tt>,<tt>
+arc</tt> and <tt>closepath</tt> methods. There are
+also some higher-level methods for adding commonly-used geometric
+shapes to the path.<br><br>Once constructed, a path can be used in the following ways:<br>
+<ul>
+<li>It can be <i>stroked</i> with the current pen
+colour and size using the <tt>stroke</tt> method.</li>
+<li>It can be <i>filled</i> with the current fill
+colour using the <tt>fill</tt> method.</li>
+<li>It can be both filled and stroked using the <span style="font-family: monospace;">fill_stroke</span>
+method.</li>
+<li>It can be <span style="font-style: italic;">erased</span> with the current background colour using
+the <span style="font-family: monospace;">erase</span>
+method.</li>
+<li>It can be used to restrict the current clipping region (see
+below) using the <tt>clip</tt> method.</li>
+</ul>
+Note that the current path is <span style="font-style: italic;">not</span> part of the
+state saved on the graphics state stack, and is unaffected by <span style="font-family: monospace;">gsave</span> and <span style="font-family: monospace;">grestore</span>.<span style="font-style: italic;"></span><br><h3>Overlapping path elements</h3>If
+the lines and curves making up a path intersect, or the regions they
+enclose overlap, the region enclosed by the path as a whole is
+determined using the <span style="font-style: italic;">even-odd winding number rule</span>.
+Under this rule, the overlapping regions behave as though they were
+"exclusive-or"ed together. Thus, you can create a region with a hole in
+it using one segment for the outer boundary and another one for the
+boundary of the hole.<br><br>Note that this only works for segments
+belonging to a single path. Segments of different paths are independent
+and do not exclusive-or together.<span style="font-style: italic;"><br></span>
+<h2>Current point</h2>Path construction makes use of the <span style="font-style: italic;">current point</span>.
+When a line or curve is added to a path, the current point is used as
+the first point of the element, and the last point of the element
+becomes the new current point. The current point is also used by
+certain other operations such as text drawing.<br><br>Under certain circumstances, the current point may be <span style="font-style: italic;">undefined</span>. The current point is undefined when a new path has been started using <span style="font-family: monospace;">newpath</span>, and after a path segment has been closed using <span style="font-family: monospace;">closepath</span> or by calling one of the higher-level methods that adds a closed shape to the path. The current point becomes defined when <span style="font-family: monospace;">moveto</span> or <span style="font-family: monospace;">rmoveto</span> is called, or a line or curve is added to the path.<br>
+<br>Some methods require the current point to be defined. The result of
+calling these methods when the current point is undefined is
+platform-dependent.<br><h2>Drawing text</h2>
+Text is drawn using the <tt>show_text</tt> method, which
+draws a string
+in the current font and text colour, starting at the current point. The
+current
+point is then advanced to the end of the string, ready for drawing
+another
+string.<br>
+<h2>Drawing Images</h2>
+Images and Pixmaps can also be drawn on Canvases, using methods
+provided by those classes. See <a href="ImageBase.html">ImageBase</a>
+for details.<br>
+<h2>Clipping</h2>
+Each canvas has a <span style="font-style: italic;">clipping
+region</span> to which all drawing is clipped. The initial
+clipping region depends on the type of canvas and the circumstances
+under which it was created. For&nbsp;a canvas passed to a view's <tt>draw</tt>
+method, it is the region of the view requiring drawing. For a canvas
+obtained by calling a view's <tt>with_canvas</tt> method,
+it is the viewed rectangle.<br>
+<br>
+The clipping region can be modified by the <span style="font-family: monospace;">clip</span> and <span style="font-family: monospace;">rectclip</span>
+methods, which set the clipping region to the intersection of the
+current clipping region and a path or rectangle. There is no explicit
+way of enlarging the clipping region, so modifications to the clipping
+region should normally be made within a <span style="font-family: monospace;">gsave</span>/<span style="font-family: monospace;">grestore</span> pair
+to restore the previous clipping region afterwards.<br>
+<h2>Higher-level operations</h2>
+In addition to the primitive operations making up the drawing model,
+there are a number of higher-level drawing methods which provide more
+convenient ways of drawing commonly-used shapes.<br>
+<br>
+The available shapes are:<br>
+<ul>
+<li style="font-weight: bold;">Rectangle</li>
+<li><span style="font-weight: bold;">Oval</span>
+- an ellipse defined by a bounding rectangle.</li>
+<li><span style="font-weight: bold;">Arc</span>
+- a circular arc defined by a centre point, radius and start and end
+angles.</li>
+<li><span style="font-weight: bold;">Wedge</span>
+- a "pie slice" shape consisting of a circular arc together with two radial lines from
+the centre point to the endpoints of the arc.</li>
+<li><span style="font-weight: bold;">Polyline</span>
+- a connected sequence of straight lines.</li>
+<li><span style="font-weight: bold;">Polygon</span>
+- a sequence of straight lines forming a closed polygon.</li><li><span style="font-weight: bold;">Polycurve</span> - an open sequence of connected Bezier curves.</li><li><span style="font-weight: bold;">Loop</span> - a closed sequence of connected Bezier curves.</li>
+</ul>
+Note
+that the Arc, Polyline and Polycurve are considered open shapes, even if the
+starting and ending points coincide. For corresponding closed shapes,
+use an Oval, Poly or Loop respectively.<br><br>Operations
+are provided both for adding these shapes to a path, and for drawing
+them directly without having to construct a path first.<br>
+<h3>Summary of Operations</h3>
+The following matrix of higher-level operations is supported.<br>
+<br>
+<table style="text-align: left;" border="1" cellpadding="3" cellspacing="0">
+<tbody>
+<tr>
+<td style="vertical-align: top; white-space: nowrap; text-align: left;"></td>
+<td style="font-weight: bold; text-align: center;" nowrap="nowrap" valign="top">Add to<br>Path</td>
+<td style="font-weight: bold; text-align: center;" nowrap="nowrap" valign="top">Fill</td>
+<td style="font-weight: bold; text-align: center;" nowrap="nowrap" valign="top">Stroke</td>
+<td style="font-weight: bold; text-align: center;" nowrap="nowrap" valign="top">Frame</td>
+<td style="font-weight: bold; text-align: center;" nowrap="nowrap" valign="top">Fill and Stroke</td>
+<td style="font-weight: bold; text-align: center;" nowrap="nowrap" valign="top">Fill and Frame</td>
+<td style="font-weight: bold; text-align: center;" nowrap="nowrap" valign="top">Erase</td>
+</tr>
+<tr>
+<td style="font-weight: bold;" align="left" nowrap="nowrap" valign="top">Path</td>
+<td align="left" nowrap="nowrap" valign="top"></td>
+<td style="font-family: monospace;" align="left" nowrap="nowrap" valign="top"><small>fill</small></td>
+<td style="font-family: monospace;" align="left" nowrap="nowrap" valign="top"><small>stroke</small></td>
+<td style="font-family: monospace;" align="left" nowrap="nowrap" valign="top"></td>
+<td style="font-family: monospace;" align="left" nowrap="nowrap" valign="top"><small>fill_stroke</small></td>
+<td style="font-family: monospace;" align="left" nowrap="nowrap" valign="top"></td>
+<td style="font-family: monospace;" align="left" nowrap="nowrap" valign="top"></td>
+</tr>
+<tr>
+<td style="font-weight: bold;" align="left" nowrap="nowrap" valign="top">Rectangle</td>
+<td style="font-family: monospace;" align="left" nowrap="nowrap" valign="top"><small>rect</small></td>
+<td style="font-family: monospace;" align="left" nowrap="nowrap" valign="top"><small>fill_rect</small></td>
+<td style="font-family: monospace;" align="left" nowrap="nowrap" valign="top"><small>stroke_rect</small></td>
+<td style="font-family: monospace;" align="left" nowrap="nowrap" valign="top"><small>frame_rect</small></td>
+<td style="font-family: monospace;" align="left" nowrap="nowrap" valign="top"><small>fill_stroke_rect</small></td>
+<td style="font-family: monospace;" align="left" nowrap="nowrap" valign="top"><small>fill_frame_rect</small></td>
+<td style="font-family: monospace;" align="left" nowrap="nowrap" valign="top"><small>erase_rect</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;" align="left" nowrap="nowrap" valign="top">Oval</td>
+<td style="vertical-align: top; white-space: nowrap; text-align: left; font-family: monospace;"><small>oval</small></td>
+<td style="font-family: monospace;" align="left" nowrap="nowrap" valign="top"><small>fill_oval</small></td>
+<td style="font-family: monospace;" align="left" nowrap="nowrap" valign="top"><small>stroke_oval</small></td>
+<td style="font-family: monospace;" align="left" nowrap="nowrap" valign="top"><small>frame_oval</small></td>
+<td style="font-family: monospace;" align="left" nowrap="nowrap" valign="top"><small>fill_stroke_oval</small></td>
+<td style="font-family: monospace;" align="left" nowrap="nowrap" valign="top"><small>fill_frame_oval</small></td>
+<td style="font-family: monospace;" align="left" nowrap="nowrap" valign="top"><small>erase_oval</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;" align="left" nowrap="nowrap" valign="top">Arc</td>
+<td style="vertical-align: top; white-space: nowrap; text-align: left; font-family: monospace;"><small>arc</small></td>
+<td style="font-family: monospace;" align="left" nowrap="nowrap" valign="top"></td>
+<td style="font-family: monospace;" align="left" nowrap="nowrap" valign="top"><small>stroke_arc</small></td>
+<td style="font-family: monospace;" align="left" nowrap="nowrap" valign="top"><small>frame_arc</small></td>
+<td style="font-family: monospace;" align="left" nowrap="nowrap" valign="top"></td>
+<td style="font-family: monospace;" align="left" nowrap="nowrap" valign="top"></td>
+<td style="font-family: monospace;" align="left" nowrap="nowrap" valign="top"></td>
+</tr>
+<tr>
+<td style="font-weight: bold;" align="left" nowrap="nowrap" valign="top">Wedge</td>
+<td style="vertical-align: top; white-space: nowrap; text-align: left; font-family: monospace;"><small>wedge</small></td>
+<td style="font-family: monospace;" align="left" nowrap="nowrap" valign="top"><small>fill_wedge</small></td>
+<td style="font-family: monospace;" align="left" nowrap="nowrap" valign="top"><small>stroke_wedge</small></td>
+<td style="font-family: monospace;" align="left" nowrap="nowrap" valign="top"></td>
+<td style="font-family: monospace;" align="left" nowrap="nowrap" valign="top"><small>fill_stroke_wedge</small></td>
+<td style="font-family: monospace;" align="left" nowrap="nowrap" valign="top"></td>
+<td style="font-family: monospace;" align="left" nowrap="nowrap" valign="top"><small>erase_wedge</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;" align="left" nowrap="nowrap" valign="top">Polyline</td>
+<td style="font-family: monospace;" align="left" nowrap="nowrap" valign="top"><small>lines</small></td>
+<td style="font-family: monospace;" align="left" nowrap="nowrap" valign="top"></td>
+<td style="font-family: monospace;" align="left" nowrap="nowrap" valign="top"><small>stroke_lines</small></td>
+<td style="font-family: monospace;" align="left" nowrap="nowrap" valign="top"></td>
+<td style="font-family: monospace;" align="left" nowrap="nowrap" valign="top"></td>
+<td style="font-family: monospace;" align="left" nowrap="nowrap" valign="top"></td>
+<td style="font-family: monospace;" align="left" nowrap="nowrap" valign="top"></td>
+</tr>
+<tr>
+<td style="vertical-align: top; white-space: nowrap; text-align: left; font-weight: bold;">Polygon</td>
+<td style="font-family: monospace;" align="left" nowrap="nowrap" valign="top"><small>poly</small></td>
+<td style="font-family: monospace;" align="left" nowrap="nowrap" valign="top"><small>fill_poly</small></td>
+<td style="font-family: monospace;" align="left" nowrap="nowrap" valign="top"><small>stroke_poly</small></td>
+<td style="font-family: monospace;" align="left" nowrap="nowrap" valign="top"></td>
+<td style="font-family: monospace;" align="left" nowrap="nowrap" valign="top"><small>fill_stroke_poly</small></td>
+<td style="font-family: monospace;" align="left" nowrap="nowrap" valign="top"></td>
+<td style="font-family: monospace;" align="left" nowrap="nowrap" valign="top"><small>erase_poly</small></td>
+</tr><tr><td style="font-weight: bold;" align="left" nowrap="nowrap" valign="top">Polycurve</td><td style="font-family: monospace;" align="left" nowrap="nowrap" valign="top"><small>curves</small></td><td style="font-family: monospace;" align="left" nowrap="nowrap" valign="top"><small></small></td><td style="font-family: monospace;" align="left" nowrap="nowrap" valign="top"><small>stroke_curves</small></td><td style="font-family: monospace;" align="left" nowrap="nowrap" valign="top"><small></small></td><td style="font-family: monospace;" align="left" nowrap="nowrap" valign="top"><small></small></td><td style="font-family: monospace;" align="left" nowrap="nowrap" valign="top"><small></small></td><td style="font-family: monospace;" align="left" nowrap="nowrap" valign="top"><small></small></td></tr><tr><td align="left" nowrap="nowrap" valign="top"><span style="font-weight: bold;">Loop</span></td><td style="font-family: monospace;" align="left" nowrap="nowrap" valign="top"><small>loop</small></td><td style="font-family: monospace;" align="left" nowrap="nowrap" valign="top"><small>fill_loop</small></td><td style="font-family: monospace;" align="left" nowrap="nowrap" valign="top"><small>stroke_loop</small></td><td style="font-family: monospace;" align="left" nowrap="nowrap" valign="top"><small></small></td><td style="font-family: monospace;" align="left" nowrap="nowrap" valign="top"><small>fill_stroke_loop</small></td><td style="font-family: monospace;" align="left" nowrap="nowrap" valign="top"><small></small></td><td style="font-family: monospace;" align="left" nowrap="nowrap" valign="top"><small>erase_loop</small></td></tr>
+</tbody>
+</table>
+<br>Note: There are no filling or erasing operations for Arcs, Polylines and Polycurves because they are open shapes.<br><br>Note:
+There are currently no framing operations for Polygons and Loops because there is no
+straightforward way of determining an "inwards" direction in which to
+displace the pen.<br>
+<h2>Properties </h2>
+<dl>
+<dl>
+<dt><tt>pencolor</tt></dt>
+<dd>Colour to be used for&nbsp;stroking and framing
+operations.<br>
+<br>
+</dd>
+<dt style="font-family: monospace;">fillcolor</dt>
+<dd>Colour to be used for filling operations.</dd>
+<dd><br></dd><dt style="font-family: monospace;">textcolor</dt><dd>Colour to be used for drawing text.<br><br></dd>
+<dt><tt>backcolor </tt></dt>
+<dd>Colour to be used for erasing operations.<br><br></dd><dt style="font-family: monospace;">forecolor</dt><dd><span style="font-style: italic;">Write-only.</span> Setting this property sets the pen, fill and text colours to the same colour.</dd>
+</dl>
+</dl>
+<dl>
+<dl>
+<dt><tt>pensize </tt></dt>
+<dd>Width of the pen used for stroking and framing. </dd>
+</dl>
+</dl>
+<dl>
+<dl>
+<dt><tt>font </tt></dt>
+<dd>Font to be used in text drawing operations.<br><br></dd><dt style="font-family: monospace;">current_point</dt><dd><span style="font-style: italic;">Read-only.</span> The current point. If the current point is undefined, the result is platform-dependent.<br><br></dd><dt style="font-family: monospace;">printing</dt><dd><span style="font-style: italic;">Read-only.</span> True if the canvas is producing output for a printer or other non-display destination.</dd>
+</dl>
+</dl>
+<dl>
+<dl>
+</dl>
+</dl>
+<h2>Primitive methods </h2>
+<dl>
+<dl>
+<dt><tt>newpath()</tt></dt>
+<dd>Clears the current path.</dd>
+<dd><br>
+</dd>
+<dt><tt>moveto(</tt><i>x</i><tt>,</tt><i>
+y</i><tt>)</tt></dt>
+<dd>Moves the current point to (<i>x</i>, <i>y</i>).
+A subsequent call to <tt>lineto</tt>,<tt> rlineto</tt>,<tt>
+curveto</tt>,<tt> rcurveto</tt> or <tt>arc</tt>
+will start a new segment of the current path.</dd>
+<dd><br>
+</dd>
+<dt><tt>lineto(</tt><i>x</i><tt>,</tt><i>
+y</i><tt>)</tt></dt>
+<dd>Adds a straight line to the the current path from the
+current point to (<i>x</i>, <i>y</i>), and
+then makes (<i>x</i>, <i>y</i>) the current
+point.</dd>
+<dt><br>
+</dt>
+<dt><tt>rmoveto(</tt><i>dx</i><tt>,</tt><i>
+dy</i><tt>) </tt></dt>
+<tt>rlineto(</tt><i>dx</i><tt>,</tt><i>
+dy</i><tt>)</tt><dd>The same as <tt>moveto</tt>
+and <tt>lineto</tt>, except that the coordinates are
+measured relative to
+the current point.<br>
+<br>
+</dd>
+<dt><span style="font-family: monospace;">curveto(</span><span style="font-style: italic;">cp1</span><span style="font-family: monospace;">,</span> <span style="font-style: italic;">cp2</span><span style="font-family: monospace;">,</span> <span style="font-style: italic;">ep</span><span style="font-family: monospace;">)</span></dt>
+<dd>Adds a Bezier curve to the current path segment starting
+at the current point, having control points <span style="font-style: italic;">cp1 </span>and <span style="font-style: italic;">cp2,</span> and ending at
+the point <span style="font-style: italic;">ep</span>. The end point of the curve becomes the new current point.<span style="font-style: italic;"></span><br>
+<br>
+</dd>
+<dt><span style="font-family: monospace;">rcurveto(</span><span style="font-style: italic;">cp1</span><span style="font-family: monospace;">,</span> <span style="font-style: italic;">cp2</span><span style="font-family: monospace;">,</span> <span style="font-style: italic;">ep</span><span style="font-family: monospace;">)</span></dt>
+<dd>The same as <span style="font-family: monospace;">curveto</span>
+except that&nbsp;<span style="font-family: monospace;"></span><span style="font-style: italic;">cp1</span>, <span style="font-style: italic;">cp2</span> and <span style="font-style: italic;">ep</span> are measured
+relative to the current point.&nbsp;<span style="font-style: italic;"></span></dd><dd><br>
+</dd>
+<dt><tt>closepath()</tt></dt>
+<dd>Closes the last segment of the current path by adding a
+straight line
+from its last point to its first point. A subsequent call to&nbsp;<tt>lineto</tt>,<tt>
+rlineto</tt>,<tt> curveto</tt>,<tt> rcurveto</tt>
+or <tt>arc</tt> will start a new
+segment of the current path.</dd>
+</dl>
+</dl>
+<dl>
+<dl>
+<dt><tt>fill() </tt></dt>
+<dd>Fills the interior of the current path with the current
+fill color. The interior of the path is determined using the even-odd
+winding number
+rule.<br>
+<br>
+</dd>
+<dt><tt>stroke()</tt></dt>
+<dd>Draws a line along the current path using the current pen
+size and pen colour. The width of the line is distributed as evenly as
+possible either side of the path. The treatment of joins between lines
+is implementation-dependent.</dd>
+<dd><br>
+</dd>
+<dt style="font-family: monospace;">fill_stroke()</dt>
+<dd>Fills and then strokes the current path.</dd>
+</dl>
+</dl>
+<dl>
+<dl>
+<dt><tt>erase() </tt></dt>
+<dd>Fills the interior of the current path with the current
+background color. </dd>
+</dl>
+</dl>
+<dl>
+<dl>
+<dt><tt>show_text(</tt><i>string</i><tt>)</tt>
+</dt>
+<dd>Draws the given text using the current font and
+foreground color. The left end of the baseline of the text starts at the current point.
+After drawing, the current
+point is advanced rightwards along the baseline by the width of the characters
+drawn. The effect on the current path is undefined. If the current
+point is not defined when this method is called, the result is
+platform-dependent. </dd>
+</dl>
+</dl>
+<dl>
+<dl>
+</dl>
+</dl>
+<dl>
+<dl>
+<dt><tt>clip() </tt></dt>
+<dd>Replaces the current clipping region with the
+intersection of the current clipping region and the interior of the
+current path.&nbsp;The interior of the path is determined using the
+even-odd winding number rule.<span style="font-style: italic;"></span></dd>
+</dl>
+</dl>
+<dl>
+<dl>
+<dt><tt>gsave() </tt></dt>
+<dd>Pushes the current graphics state onto the graphics state
+stack.</dd>
+</dl>
+</dl>
+<dl>
+<dl>
+<dt><tt>grestore() </tt></dt>
+<dd>Pops the most recently saved graphics state from the
+graphics state stack and makes it the current graphics
+state.</dd>
+<dd><br>
+</dd>
+<dt><tt>initgraphics()</tt></dt>
+<dd>Sets all the elements of the current graphics state to
+default values.</dd>
+</dl>
+</dl>
+<h2>Higher-level path methods</h2>
+<dl style="margin-left: 40px;">
+<dt><span style="font-family: monospace;">rect(</span><span style="font-style: italic;">rect</span><span style="font-family: monospace;">)</span></dt>
+<dd>Adds a new closed segment to the current path in the shape
+of a
+rectangle.<br>
+<br>
+</dd>
+<dt><span style="font-family: monospace;">oval(</span><span style="font-style: italic;">rect</span><span style="font-family: monospace;">)</span></dt>
+<dd>Adds a new closed segment to the current path in the shape
+of an ellipse bounded by the given rectangle.<br></dd><dd><br>
+</dd><dt><span style="font-family: monospace;"><a name="arc"></a>arc(</span><span style="font-style: italic;">centre</span><span style="font-family: monospace;">,</span> <span style="font-style: italic;">radius</span><span style="font-family: monospace;">,</span> <span style="font-style: italic;">start_angle</span><span style="font-family: monospace;">,</span> <span style="font-style: italic;">end_angle</span><span style="font-family: monospace;">)</span></dt><dd>Adds a circular arc to the current path segment with the
+given centre and radius. The arc is drawn&nbsp;clockwise from the start
+angle to the end angle. Both angles are in degrees&nbsp;clockwise from
+the positive <span style="font-style: italic;">x</span>-axis.
+If the current point is defined, a straight line is added from
+the current point to the start point of the arc. The end point of the
+arc becomes the new current point.<span style="font-style: italic;"><br></span><br></dd><dt><span style="font-family: monospace;">wedge(</span><span style="font-style: italic;">centre</span><span style="font-family: monospace;">,</span> <span style="font-style: italic;">radius</span><span style="font-family: monospace;">,</span> <span style="font-style: italic;">start_angle</span><span style="font-family: monospace;">,</span> <span style="font-style: italic;">end_angle</span><span style="font-family: monospace;">)</span></dt><dd>Adds a new closed segment to the current path in the shape of a wedge. The wedge is defined as for <a href="#arc"><span style="font-family: monospace;">arc</span></a>.<br><br></dd>
+<dt>
+<span style="font-family: monospace;">lines(</span><span style="font-style: italic;">points</span><span style="font-family: monospace;">)</span></dt>
+<dd>Adds a new open segment to the current path consisting of a
+sequence of straight lines. Equivalent to calling <span style="font-family: monospace;">moveto</span> for the first point and then <span style="font-family: monospace;">lineto</span> for each subsequent point.<br>
+<br></dd><dt><span style="font-family: monospace;">linesto(</span><span style="font-style: italic;">points</span><span style="font-family: monospace;">)</span></dt><dd>Adds a connected sequence of straight lines to the current path segment. Equivalent to calling&nbsp;<span style="font-family: monospace;">lineto</span> for each point.<br></dd>
+<dt><span style="font-family: monospace;">poly(</span><span style="font-style: italic;">points</span><span style="font-family: monospace;">)</span></dt>
+<dd>Adds a new closed segment to the current path in the shape
+of a polygon.<br>
+<br></dd><dt><span style="font-family: monospace;">curves(</span><span style="font-style: italic;">points</span><span style="font-family: monospace;">)</span></dt><dd>Adds a new open segment to the current path consisting of a
+sequence of connected Bezier curves.&nbsp;Equivalent to calling <span style="font-family: monospace;">moveto</span> for the first point and then <span style="font-family: monospace;">curveto</span> for each subsequent group of 3 points.<span style="font-style: italic;"></span><br><br></dd><dt><span style="font-family: monospace;">curvesto(</span><span style="font-style: italic;">points</span><span style="font-family: monospace;">)</span></dt><dd>Adds a sequence of connected Bezier curves to the current path segment.&nbsp;Equivalent to calling&nbsp;<span style="font-family: monospace;">curveto</span> for each consecutive group of 3 points.<span style="font-style: italic;"></span><br><br></dd><dt><span style="font-family: monospace;"><a name="loop"></a>loop(</span><span style="font-style: italic;">points</span><span style="font-family: monospace;">)</span></dt><dd>Adds a new closed segment to the current path consisting of a
+sequence of connected Bezier curves. Equivalent to calling <span style="font-family: monospace;">curves</span> followed by <span style="font-family: monospace;">closepath</span>.<span style="font-style: italic;"></span><br></dd>
+<dt><tt>rectclip(</tt><i>rect</i><tt>)</tt></dt>
+<dd>Replaces the current clipping region with the intersection
+of the current clipping region and the given rectangle. The effect on
+the current point and current path are undefined.</dd>
+</dl>
+<h2>Higher-level drawing methods</h2>
+Note: The effect of these methods on the current path is undefined.<br>
+<blockquote>
+<dl>
+<dt><tt>fill_rect(</tt><i>rect</i><tt>)<br>
+</tt></dt><span style="font-family: monospace;">stroke_rect(</span><span style="font-style: italic;">rect</span><span style="font-family: monospace;">)</span><tt><br>frame_rect(</tt><i>rect</i><tt>)<br>fill_stroke_rect</tt><tt>(</tt><i>rect</i><tt>)</tt><span style="font-family: monospace;"><br></span><tt>fill_frame_rect(</tt><span style="font-style: italic;">rect</span><tt>)<br>
+erase_rect</tt><tt>(</tt><span style="font-style: italic;">rect</span><tt>)</tt>
+<dd>Performs the indicated operation on the given rectangle.</dd>
+<dd>
+<br>
+</dd>
+<dt><tt>fill_oval(</tt><i>rect</i><span style="font-family: monospace;">)</span><br>
+<span style="font-family: monospace;"></span><span style="font-family: monospace;">stroke_oval(</span><span style="font-style: italic;">rect</span><span style="font-family: monospace;">)</span></dt>
+<dt><tt>frame_oval(</tt><i>rect</i><tt>)<br></tt><span style="font-family: monospace;">fill_stroke_oval</span><tt>(</tt><i>rect</i><span style="font-family: monospace;">)</span></dt>
+<dt><span style="font-family: monospace;">fill_frame_oval</span><tt>(</tt><i>rect</i><span style="font-family: monospace;">)</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">erase_oval</span><tt>(</tt><i>rect</i><span style="font-family: monospace;">)</span></dt>
+<dd>Performs the indicated operation on an ellipse bounded by
+the specified
+rectangle.<br>
+</dd>
+<dt></dt>
+<dt><tt>stroke_arc</tt><span style="font-family: monospace;">(</span><i>centre,
+radius</i><i>, start_angle, end_angle</i><tt>)<br>
+</tt></dt>
+<dt><tt>frame_arc</tt><span style="font-family: monospace;">(</span><i>centre,
+radius</i><i>, start_angle, end_angle</i><tt>)</tt></dt>
+<dd>Performs the indicated operation on a circular arc. The arc is defined as for the <a href="#arc">arc</a> method.<br>
+</dd>
+</dl>
+</blockquote>
+<blockquote>
+<dl>
+<dt><tt>fill_wedge(</tt><i>centre,
+radius,
+start_angle, end_angle</i><tt>)<br>
+</tt><tt>stroke_wedge</tt><tt>(</tt><i>centre,
+radius,
+start_angle, end_angle</i><tt>)</tt></dt>
+<dt><tt>fill_stroke_wedge(</tt><i>centre,
+radius,
+start_angle, end_angle</i><tt>)<br>
+</tt><tt>erase_wedge</tt><tt>(</tt><i>centre,
+radius,
+start_angle, end_angle</i><tt>)</tt></dt>
+<dd>Performs the indicated operation on a&nbsp;pie-shaped
+wedge.&nbsp;The wedge is defined as for the <a href="Canvas.html#arc">arc</a> method.<br>
+<br>
+</dd>
+<dt><span style="font-family: monospace;">stroke_line</span><tt>s(</tt><i>points</i><tt>)</tt></dt>
+<dd>Strokes a sequence of connected line segments.</dd>
+<dd><br>
+</dd>
+<dt><tt>fill_poly</tt><tt>(</tt><i>points</i><tt>)</tt><br>
+<tt>stroke_poly(</tt><i>points</i><tt>)<br>
+</tt><tt>fill_stroke_poly</tt><tt>(</tt><i>points</i><tt>)</tt><br>
+<tt>erase_poly</tt><tt>(</tt><i>points</i><tt>)</tt></dt>
+<dd>Performs the indicated operation on a closed polygon.<br><br></dd><dt><tt>fill_loop</tt><tt>(</tt><i>points</i><tt>)</tt><br>
+<tt>stroke_loop(</tt><i>points</i><tt>)<br>
+</tt><tt>fill_stroke_loop</tt><tt>(</tt><i>points</i><tt>)</tt><br>
+<tt>erase_loop</tt><tt>(</tt><i>points</i><tt>)</tt></dt><dd>Performs the indicated operation on a closed sequence of Bezier curves. See <a href="#loop">loop</a>.<span style="font-style: italic;"></span></dd>
+</dl>
+<dl>
+</dl>
+</blockquote>
+---<br>
+</body></html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head><meta content="text/html; charset=ISO-8859-1" http-equiv="content-type"><title>Printing</title></head>
+<body><h1>Printing</h1>Most
+of the time you won't have to do anything to get basic printing support
+in your PyGUI application. There are default implementations of the <span style="font-style: italic;">Page Setup</span> command in the Application class, and the <span style="font-style: italic;">Print</span>
+command in the View and ScrollableView classes. The generic printing
+system uses the same code for printing a view as is used for drawing to
+the screen, so once you've written a <span style="font-family: monospace;">draw()</span> method for your view, you can also print it.<br><br>While
+the default printing system works well enough, it is fairly rudimentary
+and won't always do exactly what you want. However,&nbsp;you can
+customise and build upon it in various ways to provide more advanced
+features. This section explains how the printing support in PyGUI works
+and how you can extend it.<br><h2>Page Setup</h2>Page setup information is represented by an instance of the <a href="PageSetup.html">PageSetup</a>
+class. This class holds all of the information typically specified by a
+"Page Setup" dialog. For PyGUI's purposes, the most important of these
+are the<span style="font-style: italic;"> </span><span style="font-weight: bold;">paper size</span> (the physical size of the sheet of paper) and the <span style="font-weight: bold;">margins</span> (the distances from the edge of the paper to the region that will be printed on). Together these determine the <span style="font-weight: bold;">page size</span> (the size of the printed area). The following diagram illustrates the relationships between these attributes.<br><br><div style="text-align: center;"><img style="width: 231px; height: 300px;" alt="" src="page_setup.png"><br></div><br>The Application object has a <span style="font-family: monospace;">page_setup</span> attribute that holds a default PageSetup instance, and an implementation of the <span style="font-style: italic;">Page Setup</span> command that presents a dialog for editing it. The Document class also has a <span style="font-family: monospace;">page_setup</span> attribute and a corresponding <span style="font-style: italic;">Page Setup</span>
+command handler. Thus, in a document-oriented application, each
+document has its own set of page setup information. If a view is
+associated with a document, it will use that document's PageSetup when
+printed; otherwise, it will use the application-wide one.<br><br>None
+of these PageSetup objects are automatically saved anywhere. If you
+want them to persist, you will need to save them along with your
+document data, or if you're not using documents, write the
+application-wide one to a preferences file. To facilitate this,
+PageSetup objects are designed to be pickled. They also have <span style="font-family: monospace;">to_string()</span> and <span style="font-family: monospace;">from_string()</span> methods, in case you don't want to use pickle.<br><br>You can customise the way page setup information is edited by overriding the <span style="font-family: monospace;">page_setup_cmd()</span> method of a view, a document or the application. You may want to make use of the utility function <a href="PageSetup.html#present_page_setup_dialog">present_page_setup_dialog()</a>, which displays the platform's standard page setup dialog for a given PageSetup instance.<br><h2>Printing Views</h2>The <span style="font-style: italic;">Print</span> command is handled by the <span style="font-family: monospace;">print_cmd()</span> method of the View and ScrollableView classes. First, the view attempts to find a PageSetup instance. If the view's <span style="font-family: monospace;">model</span> attribute refers to a Document, and the document's <span style="font-family: monospace;">page_setup</span>
+attribute is not None, then it is used. Otherwise, the application-wide
+PageSetup is used. If you want the PageSetup to be located some other
+way, you can override the <span style="font-family: monospace;">get_page_setup()</span> method of the view.<br><br>Next, the view's <span style="font-family: monospace;">print_view()</span>
+method is called, with the PageSetup object as a parameter. This method
+does most of the hard work. First it determines the total size of the
+area to be printed. For a View, this is the same as the size of the
+view on the screen; for a ScrollableView, it is the view's extent.<br><br>Then the printed area is divided into pages. with the size of each page equal to the <span style="font-family: monospace;">page_size</span> attribute of the PageSetup. The view's <span style="font-family: monospace;">draw()</span>
+method is called once for each page, with a special canvas object that
+draws to the printer instead of the screen. In place of the update_rect
+parameter, a rectangle is passed representing the bounds of the page
+currently being drawn.<br><br>The following diagram illustrates a view
+with a large extent being divided into pages for printing. Note that
+the origin of the coordinate system as seen by the <span style="font-family: monospace;">draw()</span> method is
+always at the top left corner of the extent, regardless of which page
+is being printed. So the view doesn't need to know whether it's drawing
+to a screen or a printer (although it can find out if it wants to, as
+we will see below).<br><br><div style="text-align: center;"><img style="width: 406px; height: 360px;" alt="" src="pagination.png"><br></div><h2>Customising Printing</h2>Often
+you won't want to print a view exactly the same way as it appears on
+the screen. For example, things like selection highlighting and page
+boundaries should only be shown on the screen and not on the printed
+page. The Canvas object passed to the <span style="font-family: monospace;">draw()</span> method has a <span style="font-family: monospace;">printing</span>
+attribute that is true when printing and false when drawing to the
+screen. You can use this to determine which elements of the view should
+be drawn.<br><br>This technique is sufficient to accommodate minor
+differences between screen drawing and printing. Sometimes, however,
+you may want to lay out the document quite differently when printing.
+An example would be a word processor where you want to display the text
+in a continuous "galley" view on the screen, without any page breaks.
+When printed, however, you want to add headers and footers to each
+page. This presents a problem, because the extent of the view has to be
+increased when printing in order to accommodate the headers and footers.<br><br>The
+solution to this kind of problem is to use a different view subclass
+for printing. When you come to print, instead of printing the view that
+you use on the screen, create an off-screen instance of the printing
+view and call its <span style="font-family: monospace;">print_view()</span>
+method. The printing view can then calculate its extent appropriately
+and generally do things in as different a way as needed from the
+on-screen one.<br><br>An example of the use of this technique can be
+seen in PyGUI's TextEditor class. When printed, it wraps to the width
+of the page instead of the width of the view on the screen. It also
+figures out how many lines will fit on a page and avoids splitting a
+line between two pages. To accomplish this, it uses a separate View
+subclass behind the scenes (TextEditorPrintingView). It's implemented
+in pure Python, so you can examine it if you want to see how it works.<br><br>There
+are a couple of ways you can intervene in order to introduce your
+custom printing view into the printing process. One way is to override
+the <span style="font-family: monospace;">print_view()</span> method of the on-screen view to instantiate a printing view and then call its <span style="font-family: monospace;">print_view()</span> method instead. (This is the technique used by TextEditor.)<br><br>The
+other way, applicable in a document-oriented application, is to handle
+printing at the document level instead of the view level. This may make
+more sense if you have a number of different kinds of on-screen view of
+the document, but only one way of printing it. Whichever view is active
+when the user gives the <span style="font-style: italic;">Print</span> command, you want the same printing code to be invoked.<br><br>To do it this way, you will first need to disable handling of the <span style="font-style: italic;">Print</span> command in the view, otherwise it will never get as far as the document. You can do this by setting the <span style="font-family: monospace;">printable</span> property of the view to false. The view will then ignore the <span style="font-style: italic;">Print</span> command and pass it on to the next handler.<br><br>Then you can give your Document subclass a <span style="font-family: monospace;">print_cmd() m</span>ethod that creates an instance of your printing view and calls its <span style="font-family: monospace;">print_view()</span> method, passing it the document's <span style="font-family: monospace;">page_setup</span>. Remember to enable the <span style="font-style: italic;">Print</span> command in the document's <span style="font-family: monospace;">setup_menus()</span> method.<br><br>---</body></html>

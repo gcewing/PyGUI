@@ -1,0 +1,269 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+<meta content="text/html; charset=ISO-8859-1" http-equiv="content-type"><title>StdMenus</title>
+
+</head>
+<body>
+<h1>module <span style="font-family: monospace;">StdMenus</span></h1>
+The StdMenus submodule provides facilities for creating menu bars
+containing standard menus and menu commands arranged according to
+platform conventions. The menus can be customised in a variety of ways:
+items can be included or excluded individually or by functional group,
+and the titles and keyboard equivalents of selected items can be
+overridden.<br>
+<h3>Standard menu items</h3>
+The standard menu commands &nbsp;and their associated command names
+are as follows:<br>
+<br>
+<table style="text-align: left; margin-left: 40px;" border="0" cellpadding="2" cellspacing="2">
+<tbody>
+<tr>
+<td style="vertical-align: top;"><span style="font-weight: bold;">Typical menu text</span><br>
+</td>
+<td style="vertical-align: top; width: 10px;"><br>
+</td>
+<td style="vertical-align: top;"><span style="font-weight: bold;">Internal command name</span><br>
+</td>
+</tr>
+<tr>
+<td colspan="3" rowspan="1" style="vertical-align: top;"><span style="font-style: italic;"><br>
+General commands</span><br>
+</td>
+</tr>
+<tr>
+<td style="vertical-align: top;">About <span style="font-style: italic;">app_name</span><br>
+</td>
+<td style="vertical-align: top; width: 10px;"><br>
+</td>
+<td style="vertical-align: top; font-family: monospace;">about_cmd<br>
+</td>
+</tr>
+<tr>
+<td>Help</td>
+<td></td>
+<td><span style="font-family: monospace;">help_cmd</span></td>
+</tr>
+<tr>
+<td style="vertical-align: top;">Preferences...<br>
+</td>
+<td style="vertical-align: top; width: 10px;"><br>
+</td>
+<td style="vertical-align: top; font-family: monospace;">preferences_cmd<br>
+</td>
+</tr>
+<tr>
+<td style="vertical-align: top;">Quit<br>
+</td>
+<td style="vertical-align: top; width: 10px;"><br>
+</td>
+<td style="vertical-align: top; font-family: monospace;">quit_cmd<br>
+</td>
+</tr>
+<tr>
+<td colspan="3" rowspan="1" style="vertical-align: top;"><span style="font-style: italic;"><br>
+File commands</span><br>
+</td>
+</tr>
+<tr>
+<td style="vertical-align: top;">New<br>
+</td>
+<td style="vertical-align: top; width: 10px;"><br>
+</td>
+<td style="vertical-align: top; font-family: monospace;">new_cmd<br>
+</td>
+</tr>
+<tr>
+<td style="vertical-align: top;">Open...<br>
+</td>
+<td style="vertical-align: top; width: 10px;"><br>
+</td>
+<td style="vertical-align: top; font-family: monospace;">open_cmd<br>
+</td>
+</tr>
+<tr>
+<td style="vertical-align: top;">Close<br>
+</td>
+<td style="vertical-align: top; width: 10px;"><br>
+</td>
+<td style="vertical-align: top; font-family: monospace;">close_cmd<br>
+</td>
+</tr>
+<tr>
+<td style="vertical-align: top;">Save<br>
+</td>
+<td style="vertical-align: top; width: 10px;"><br>
+</td>
+<td style="vertical-align: top; font-family: monospace;">save_cmd<br>
+</td>
+</tr>
+<tr>
+<td style="vertical-align: top;">Save As...<br>
+</td>
+<td style="vertical-align: top; width: 10px;"><br>
+</td>
+<td style="vertical-align: top; font-family: monospace;">save_as_cmd<br>
+</td>
+</tr>
+<tr>
+<td style="vertical-align: top;">Revert<br>
+</td>
+<td style="vertical-align: top; width: 10px;"><br>
+</td>
+<td style="vertical-align: top; font-family: monospace;">revert_cmd<br>
+</td>
+</tr>
+<tr>
+<td colspan="3" rowspan="1" style="vertical-align: top;"><span style="font-style: italic;"><br>
+Editing commands</span><br>
+</td>
+</tr>
+<tr>
+<td style="vertical-align: top;">Undo<br>
+</td>
+<td style="vertical-align: top; width: 10px;"><br>
+</td>
+<td style="vertical-align: top; font-family: monospace;">undo_cmd<br>
+</td>
+</tr>
+<tr>
+<td style="vertical-align: top;">Redo<br>
+</td>
+<td style="vertical-align: top; width: 10px;"><br>
+</td>
+<td style="vertical-align: top; font-family: monospace;">redo_cmd<br>
+</td>
+</tr>
+<tr>
+<td style="vertical-align: top;">Cut<br>
+</td>
+<td style="vertical-align: top; width: 10px;"><br>
+</td>
+<td style="vertical-align: top; font-family: monospace;">cut_cmd<br>
+</td>
+</tr>
+<tr>
+<td style="vertical-align: top;">Copy<br>
+</td>
+<td style="vertical-align: top; width: 10px;"><br>
+</td>
+<td style="vertical-align: top; font-family: monospace;">copy_cmd<br>
+</td>
+</tr>
+<tr>
+<td style="vertical-align: top;">Paste<br>
+</td>
+<td style="vertical-align: top; width: 10px;"><br>
+</td>
+<td style="vertical-align: top; font-family: monospace;">paste_cmd<br>
+</td>
+</tr>
+<tr>
+<td style="vertical-align: top;">Clear<br>
+</td>
+<td style="vertical-align: top; width: 10px;"><br>
+</td>
+<td style="vertical-align: top; font-family: monospace;">clear_cmd<br>
+</td>
+</tr>
+<tr>
+<td style="vertical-align: top;">Select All<br>
+</td>
+<td style="vertical-align: top; width: 10px;"><br>
+</td>
+<td style="vertical-align: top; font-family: monospace;">select_all_cmd<br>
+</td>
+</tr>
+</tbody>
+</table>
+<h3><a name="CommandGroups"></a>Command Groups</h3>
+To facilitate including or excluding groups of
+related commands, the StdMenus module provides the following predefined
+command sets that can be used to build values for the <span style="font-family: monospace;">include</span> and <span style="font-family: monospace;">exclude</span>
+parameters of the <a href="#basic_menus"><span style="font-family: monospace;">basic_menus()</span></a>
+function.<br>
+<br>
+<table style="text-align: left; margin-left: 40px;" border="0" cellpadding="2" cellspacing="2">
+<tbody>
+<tr>
+<td style="font-weight: bold;">Group</td>
+<td style="width: 10px; font-weight: bold;"></td>
+<td style="font-weight: bold;">Commands included</td>
+</tr>
+<tr>
+<td style="font-family: monospace; vertical-align: top;">fundamental_cmds</td>
+<td style="font-family: monospace;"></td>
+<td><span style="font-family: monospace;">quit_cmd</span><br>
+May also include platfom-specific commands that are common to all
+applications.</td>
+</tr>
+<tr>
+<td style="font-family: monospace; vertical-align: top;">file_cmds</td>
+<td style="font-family: monospace;"></td>
+<td style="font-family: monospace;">new_cmd,
+open_cmd, close_cmd, save_cmd, save_as_cmd, revert_cmd</td>
+</tr>
+<tr>
+<td style="font-family: monospace; vertical-align: top;">print_cmds</td>
+<td style="font-family: monospace;"></td>
+<td style="font-family: monospace;">page_setup_cmd,
+print_cmd</td>
+</tr>
+<tr>
+<td style="font-family: monospace; vertical-align: top;">pref_cmds</td>
+<td style="font-family: monospace;"></td>
+<td style="font-family: monospace;">preferences_cmd</td>
+</tr>
+<tr>
+<td style="font-family: monospace; vertical-align: top;">help_cmds</td>
+<td style="font-family: monospace;"></td>
+<td style="font-family: monospace;">about_cmd,
+help_cmd</td>
+</tr>
+</tbody>
+</table>
+<br>
+<h2>Functions</h2>
+<dl>
+<dt style="font-family: monospace;"><a name="basic_menus"></a>basic_menus(include = None,
+exclude = None, substitutions = {})</dt>
+<dd>Returns a <a href="MenuList.html"><span style="font-family: monospace;">MenuList</span></a> containing selected framework-defined
+menu
+commands, arranged and named according to platform conventions. It is
+recommended that you use this as a starting point for defining your own
+menu bars.<br>
+<br>
+The <span style="font-family: monospace;">include</span>
+and <span style="font-family: monospace;">exclude</span>
+parameters determine which of the standard menu items are included.
+Each of them can take either a single command name or a sequence or set
+of command names. The menu bar returned will include all of the
+standard menu items whose command names are in <span style="font-family: monospace;">include</span> and not
+in <span style="font-family: monospace;">exclude</span>.<br>
+<br>
+If <span style="font-family: monospace;">include</span>
+is not specified, it defaults to all of the standard commands.</dd><dd></dd><dd>The <span style="font-family: monospace;">fundamental_cmds</span>
+and <span style="font-family: monospace;">edit_cmds</span>
+are always included unless you explicitly exclude them via the <span style="font-family: monospace;">exclude</span>
+parameter.<br>
+<br>
+The <span style="font-family: monospace;">substitutions</span>
+parameter can be used to override the titles and/or keyboard
+equivalents of selected menu items. It takes a mapping from command
+names to replacement menu item strings as accepted by the <span style="font-family: monospace;">Menu()</span>
+constructor. Each item string may contain a replacement title, a
+replacement keyboard equivalent, or both, with standard values being
+used for the unspecified parts.</dd>
+</dl>
+<h2>Variables</h2>
+<dl>
+<dt style="font-family: monospace;">fundamental_cmds<br>
+file_cmds<br>
+print_cmds<br>
+pref_cmds<br>
+help_cmds</dt>
+<dd>Predefined <a href="CommandSet.html">CommandSet</a> instances containing <a href="#CommandGroups">groups of
+standard command names</a>.</dd>
+</dl>
+---<br>
+<br>
+</body></html>

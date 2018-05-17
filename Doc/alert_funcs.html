@@ -1,0 +1,138 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html><head><title>Alert Functions</title>
+
+<meta name="GENERATOR" content="Mozilla/3.01Gold (X11; I; SunOS 5.6 sun4u) [Netscape]">
+</head>
+<body>
+<h1>module <span style="font-family: monospace;">Alerts</span></h1>
+This module defines functions that display various commonly-used types
+of modal dialog containing a textual message.<br>
+<h2>Alert kinds</h2>
+The <tt>kind</tt> parameter in the following functions
+determines the appearance of the dialog. It may take the following
+values:<br>
+<blockquote>
+<dl>
+<dt><tt>'stop'</tt></dt>
+<dd>Used for displaying an error message or other condition
+which prevents an operation from being completed.</dd>
+</dl>
+<dl>
+<dt><tt>'caution'</tt></dt>
+<dd>Used for warning the user when an operation could cause
+loss of data or other undesirable effects.</dd>
+</dl>
+<dl>
+<dt><tt>'note'</tt></dt>
+<dd>Used for presenting an informational message to the user.</dd>
+</dl>
+<dl>
+<dt><tt>'query'</tt></dt>
+<dd>Used for requesting information from the user.</dd>
+</dl>
+</blockquote>
+Some platforms may not display all of these in a unique way.<br>
+<h2>Functions<br>
+</h2>
+<h3>Low-level alert functions</h3>
+<dl>
+<dt><tt>alert(kind, message, ok_label = "OK")</tt></dt>
+<dd>Displays an alert box with one button, which is the default
+button.
+Does not return a value.</dd>
+<dl>
+</dl>
+</dl>
+<dl>
+<dt><tt>alert2(kind,&nbsp;</tt><tt>message</tt><tt>,
+yes_label = "Yes", no_label = "No",</tt></dt>
+<dt><tt>&nbsp; &nbsp; &nbsp;
+&nbsp;default = 1, cancel = 0)</tt></dt>
+<dd>Displays an alert box with two buttons. Returns 1 if the
+"yes" button is pressed, 0 if the "no" button is pressed. The <tt>default</tt>
+and <tt>cancel</tt>&nbsp;parameters&nbsp;specify
+which buttons, if any, are activated by the standard keyboard
+equivalents,
+and take the values <tt>1</tt>, <tt>0</tt> or
+<tt>None</tt>.</dd>
+<dl>
+</dl>
+</dl>
+<dl>
+<dt><tt>alert3(kind, message, yes_label = "Yes", no_label
+= "No", <br>
+&nbsp; &nbsp; &nbsp; &nbsp;other_label = "Cancel", </tt><tt>default
+= 1,
+cancel = -1</tt><tt>)</tt></dt>
+<dd>Displays an alert box with three buttons. Returns 1 if the
+"yes" button
+is pressed, 0 if the "no" button is pressed, and -1 if the "other"
+button
+is pressed.&nbsp; The <tt>default</tt> and <tt>cancel</tt>
+parameters specify
+which buttons, if any, are activated by the standard keyboard
+equivalents,
+and take the values <tt>1</tt>, <tt>0</tt>, <tt>-1</tt>
+or <tt>None</tt>.</dd>
+<dl>
+</dl>
+</dl>
+In addition to the parameters listed above, these functions also accept
+the
+following optional parameters:<br>
+<blockquote>
+<dl>
+<dt><tt>width</tt></dt>
+<dd>The overall width of the alert box.</dd>
+</dl>
+<dl>
+<dt><tt>lines</tt></dt>
+<dd>The number of lines to allow for in the text area of the
+alert box.</dd>
+</dl>
+</blockquote>
+These parameters are hints only; platforms are free to
+ignore them and calculate the size of the alert box from the text
+provided.<br>
+<h3>High-level alert functions</h3>
+The following functions provide shorthands for calling the above
+functions
+with certain common combinations of parameters.<br>
+<dl>
+<dt><tt>note_alert(message,</tt> ...<tt>)</tt></dt>
+<dd>Equivalent to <tt>alert('note', message,</tt>
+...<tt>)</tt>.</dd>
+<dl>
+</dl>
+</dl>
+<dl>
+<dt><tt>stop_alert(message,</tt> ...<tt>)</tt></dt>
+<dd>Equivalent to <tt>alert('stop', message,</tt>
+...<tt>)</tt>.</dd>
+</dl>
+<dl>
+<dt><tt>ask(message,</tt> ...<tt>)</tt></dt>
+<dd>Equivalent to <tt>alert2('query', message,</tt>
+...<tt>)</tt>.</dd>
+<dl>
+</dl>
+</dl>
+<dl>
+<dt><tt>confirm(message,</tt> ...<tt>)</tt></dt>
+<dd>Equivalent to <tt>alert2('caution', message,</tt>
+...<tt>)</tt>.</dd>
+</dl>
+<dl>
+<dt><tt>ask_or_cancel(message,</tt> ...<tt>)</tt></dt>
+<dd>Equivalent to <tt>alert3('query', message,</tt>
+...<tt>)</tt>.</dd>
+</dl>
+<dl>
+<dt><tt>confirm_or_cancel(message,</tt> ...<tt>)</tt></dt>
+<dd>Equivalent to <tt>alert3('caution', message,</tt>
+...<tt>)</tt>.</dd>
+</dl>
+
+---<br>
+<br>
+</body></html>

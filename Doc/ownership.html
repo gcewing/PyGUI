@@ -1,0 +1,66 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html><head><title>PyGUI - Overview</title>
+  
+                <meta name="GENERATOR" content="Mozilla/3.01Gold (X11; I; SunOS 5.6 sun4u) [Netscape]"></head>
+
+<body>
+   <p><!-- Changed by: Greg Ewing, 11-Dec-1997 --></p>
+   <h1>Overview of the PyGUI Framework</h1>
+   <p>This section briefly describes the main classes making up the PyGUI application 
+framework and how they interact.</p>
+   <h2>Application class</h2>
+   <p>There is exactly one Application object which looks after everything that 
+is global to the application. If your application is very simple, you may 
+not even need to know about the Application class - an instance of it will 
+be created automatically when needed. If you want to make use of the Document-View 
+architecture, however, you will probably want to define a subclass of Application 
+and add your own code to it.</p>
+   <h2>Document class</h2>
+   <p>A&nbsp;Document object represents an application data structure which
+can be stored in a file. A&nbsp;Document is also a Model so that it can have 
+Views attached to it (see below). If the data structure is simple, it could 
+be contained entirely in the Document object. A more complex data structure 
+might be composed of many objects, with a Document object at the head. Some 
+or all of these sub-objects may be Models so that Views can be attached to 
+parts of the data structure.</p>
+   <h2>Window and Component classes</h2>
+   <p>A&nbsp;Window represents a top-level window on the screen. Windows serve
+ as containers for Components, which are all the usual user interface widgets
+ such as buttons, scroll bars, text fields, etc. Some kinds of Components
+are also Containers. A Container can contain other Components and clip them to its
+boundary. Window and View, for example, are subclasses of Container.</p>
+   <h2>View and Model classes</h2>
+   <p>A&nbsp;View is a general-purpose Component for displaying graphics and
+ handling input events. A View can be associated with a Model representing
+ the data structure that it is to display. There can be many Views attached
+ to each Model, and when the Model is changed, all of its Views are notified
+ so that they can update themselves.</p>
+   <h2>Ownership hierarchy</h2>
+   <p>There are ownership relationships between Application, Document, Window
+ and Component objects. The Application is at the top of the hierarchy, and 
+owns all of the&nbsp;Documents. Each Document can own some number of Windows, 
+each Window owns all of its contained Components, those Components which are Containers own all their contained Components, and so forth. There can also be
+Windows that do not belong to a&nbsp;Document and are owned directly by the
+Application.</p>
+   <p>The ownership hierarchy serves two purposes. It defines a path for handling
+ events (see <a href="event_handling.html">Event&nbsp;Handling</a>), and
+it allows a Document to be closed when all the Windows belonging to it have 
+been closed.</p>
+   <p>Figure 1 below illustrates the ownership relationships, and Figure 2 shows 
+some examples of how View-Model relationships might be set up.</p>
+   <p> </p>
+ <hr width="100%"> <p></p>
+   <p align="center"><img src="ownership.jpg" alt="" height="648" width="576">
+ </p>
+   <center> <p><b>Figure 1</b>  </p>
+ <hr width="100%"> <p></p>
+ </center>
+   <center> <p><img src="view-model.jpg" alt="" height="648" width="576">
+ </p>
+ </center>
+   <center> <p><b>Figure 2</b>  </p>
+ <hr width="100%"> <p></p>
+ </center>
+   <br>
+ <br>
+</body></html>

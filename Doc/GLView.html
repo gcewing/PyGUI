@@ -1,0 +1,102 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><title>PyGUI - GLView</title>
+
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+</head>
+<body>
+<h1>class <tt>GL.GLView(Component,</tt> <tt>ViewBase)</tt></h1>
+The <tt>GLView</tt> class of the <tt>GL</tt>
+submodule provides an area for displaying 3D graphics using OpenGL. It
+also provides model observation and input handling facilities via the <a href="ViewBase.html">ViewBase</a> class.<br>
+<h2>Constructors</h2>
+<blockquote>
+<dl>
+<dt><tt>GLView(config,</tt> <tt>share_group</tt>
+<tt>=</tt> <tt>None)</tt></dt>
+<span style="font-family: monospace;">GLView(</span><span style="font-style: italic;">config_attr</span> = <span style="font-style: italic;">value...</span><span style="font-family: monospace;">, share_group = None)</span><br>
+<dd>Creates a GLView having the given characteristics.
+In the first form of the constructor, the characteristics are specified
+by a <a href="GLConfig.html">GLConfig</a> instance.
+In the second form, attributes of the GLConfig
+class are specified as individual keyword arguments to the constructor.<br>
+</dd>
+<dt><br>
+</dt>
+<dd>If <span style="font-style: italic;">share_group</span>
+is specified, it should be a <a href="ShareGroup.html">ShareGroup</a>
+instance, and the GLView is added to that group.</dd>
+</dl>
+</blockquote>
+<h2>Abstract methods</h2>
+<blockquote>
+<dl>
+<dt><tt>init_context()</tt></dt>
+<dd>Immediately after the view's OpenGL context is created,
+it is made the current context and this method is called. You may use
+this method to establish any desired initial OpenGL state.<br>
+<br>
+</dd>
+<dt style="font-family: monospace;">init_projection()</dt>
+<dd>You may use this method to establish the desired
+projection matrix. It is called after <tt>init_context()</tt>
+during creation of the GLView, and again whenever the size of the view
+changes. When called, the view's OpenGL context is the current context,
+and its viewport has been set to (0, 0, <i>w</i>,<i>
+h</i>) where (<i>w</i>, <i>h</i>) is the
+new
+size of the view. Also, the projection matrix has been selected as the
+current matrix and loaded with an identity matrix. In most cases, you
+will simply need to call either gluPesrpective() or gluOrtho() to set
+up the projection.</dd>
+</dl>
+</blockquote>
+
+<blockquote>
+<dl>
+<dt><tt>render()</tt></dt>
+<dd>This method is called with the view's OpenGL context as
+the current context whenever the view needs to be redrawn. The
+modelview matrix has been selected and loaded with an identity matrix.
+On return, drawing will be flushed and buffers swapped as appropriate.<br>
+</dd>
+</dl>
+<dl>
+<dt><tt>viewport_changed()</tt></dt>
+<dd>This
+is a lower-level method that is called when the size of the view
+changes, after setting the viewport but before doing anything else. The
+default implementation calls <span style="font-family: monospace;">init_projection()</span>.
+You will not usually need to override this method.</dd>
+</dl>
+
+</blockquote>
+<h2>Methods</h2>
+<blockquote>
+<dl>
+<dt><tt>with_context(</tt><i>function</i><tt>,</tt>
+<tt>flush</tt> <tt>=</tt> <tt>True)</tt></dt>
+<dd>The&nbsp;<i>function</i> should be a
+callable object of no arguments. Calls&nbsp;<i>function</i>
+with the view's OpenGL context as the current context. If <span style="font-style: italic;">flush</span> is true, then
+after calling the function, a buffer flush or swap is performed as
+appropriate.<br>
+</dd>
+</dl>
+<dl>
+<dt><tt>invalidate()</tt></dt>
+<dd>Marks the whole view as needing to be redrawn.</dd>
+</dl>
+</blockquote>
+<blockquote>
+<dl>
+<dt><tt>update()</tt></dt>
+<dd>Causes the whole view to be redrawn immediately, without
+waiting
+for a return to the event loop.<br>
+</dd>
+</dl>
+</blockquote>
+---<br>
+<br>
+<br>
+</body></html>

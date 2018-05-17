@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><meta content="text/html; charset=ISO-8859-1" http-equiv="content-type"><title>PyGUI - class GL.ShareGroup</title></head>
+<body>
+<h1>class <span style="font-family: monospace;">GL.ShareGroup</span></h1>
+A ShareGroup represents a set of OpenGL contexts (<a href="GLView.html">GLViews</a> or <a href="GLPixmap.html">GLPixmaps</a>) that are sharing textures and display lists.<br>
+<br>
+To set up a group of shared OpenGL contexts, you first create a ShareGroup, then you pass it as the <span style="font-weight: bold;">share_group</span> parameter when constructing the GLViews and GLPixmaps that you want to be members of the group.<br>
+<br>
+You can iterate over the members of a ShareGroup, and you can use the
+<span style="font-family: monospace;">in</span> operator to test whether a given GLView or GLPixmap is a member of
+the group. However, you can't explicitly add or remove members. A
+member can only be added by creating in the manner described above, and
+it is automatically removed from the group when it is no longer
+referenced elsewhere.<br>
+<h2>Constructor</h2>
+<dl style="margin-left: 40px;">
+  <dt style="font-family: monospace;">ShareGroup()</dt>
+  <dd>Creates a new share group.</dd>
+</dl>
+<h2>Operations</h2>
+<dl style="margin-left: 40px;">
+  <dt><span style="font-family: monospace;">iter(</span><span style="font-style: italic;">share_group</span><span style="font-family: monospace;">)</span></dt>
+  <dd>Returns an iterator over the members of the group (GLViews or GLPixmaps).<br>
+    <br>
+  </dd>
+  <dt><span style="font-style: italic;">obj</span> <span style="font-family: monospace;">in</span> <span style="font-style: italic;">share_group</span></dt>
+  <dd>Tests whether <span style="font-style: italic;">obj</span> is a member of the share group.</dd>
+</dl>
+--<br>
+<br>
+<br>
+</body></html>

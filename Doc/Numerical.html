@@ -1,0 +1,9 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head><meta content="text/html; charset=ISO-8859-1" http-equiv="content-type"><title>Numerical module</title></head><body><h1>module Numerical</h1>The Numerical module provides some facilities for interfacing with <a href="http://numpy.scipy.org/">NumPy</a>.<br><h2>Functions</h2><dl><dt style="font-family: monospace;">image_from_ndarray(array, format, size = None)</dt><dd>Creates an <a href="Image.html">Image</a> from a NumPy array of type <span style="font-family: monospace;">uint8</span>. The <span style="font-family: monospace;">format</span> may be <span style="font-family: monospace;">'RGB'</span> or <span style="font-family: monospace;">'RGBA'</span>. If a <span style="font-family: monospace;">size</span> is specified, it should be a tuple (<span style="font-style: italic;">width</span>, <span style="font-style: italic;">height</span>),
+and the array will be implicitly reshaped to match the specified size
+and format. Otherwise the array must have 3 dimensions, the size is
+inferred from the first two dimensions of the array, and the third
+dimension must match the number of bytes required by the format.<br><br>If
+possible, the returned Image will share data with the original array,
+but this is not guaranteed. The effect of modifying the array after
+creating the image is undefined.</dd></dl>---</body></html>

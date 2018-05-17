@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><meta content="text/html; charset=ISO-8859-1" http-equiv="content-type"><title>PyGUI - Customising the Standard Menus</title></head>
+<body>
+<h1>Customising the Standard Menu Bar<br>
+</h1>
+By default, a PyGUI application comes with a standard set of menus
+containing all the commands that the PyGUI framework itself knows about
+- Open, Close, Save, Cut, Copy, Paste and so forth. It's likely that
+you won't use all of these commands in your application, will want to
+omit some of them. It's also likely that you will want to add new
+commands of your own. PyGUI offers a variety of mechanisms to do these
+things in a platform-independent way.<br><h2>Choosing standard menu items</h2>The <a href="StdMenus.html#basic_menus"><span style="font-family: monospace;">basic_menus()</span></a> function from the <a href="StdMenus.html"><span style="font-family: monospace;">StdMenus</span></a>
+module provides a starting point for building your application's main
+menu bar. Without any parameters, it returns a list of menus containing
+all of the standard commands, arranged according to platform
+conventions.<br><br>If you want to be more selective, there are a
+couple of ways to go about it. One is to start with all the standard
+items and take away the ones you don't want using the <span style="font-family: monospace;">exclude</span>
+parameter, which takes a sequence or set of command names. The StdMenus
+module exports a number of predefined command sets to make this easier.
+For example, the following creates a menu bar containing all the
+standard commands except those having to do with files or printing.<br><br><div style="margin-left: 40px;"><span style="font-family: monospace;">from GUI.StdMenus import basic_menus, file_cmds, print_cmds</span><br style="font-family: monospace;"><span style="font-family: monospace;">menus = basic_menus(exclude = file_cmds + print_cmds)</span><br></div><br>The menu bar is installed by assigning it to the <span style="font-family: monospace;">menus</span> property of the application.<br><br><div style="margin-left: 40px;"><span style="font-family: monospace;">app = MyApplication()<br>app.menus = menus<br></span></div>
+<br>The other way is to start with a minimal set of commands and add the extra ones that you want using the <span style="font-family: monospace;">include</span> parameter. When you specify a value for <span style="font-family: monospace;">include</span>, the menu bar will include only those items, plus the <span style="font-family: monospace;">fundamental_cmds</span> and <span style="font-family: monospace;">edit_cmds</span>,
+which are considered essential for most applications. The following
+creates a menu bar containing only the file-related commands and the
+"Preferences" command in addition to the essential ones.<br><br><div style="margin-left: 40px;"><span style="font-family: monospace;">menus = basic_menus(include = file_cmds + prefs_cmds)</span><br></div><br>You can use both <span style="font-family: monospace;">include</span> and <span style="font-family: monospace;">exclude</span>
+together; this is the only way to omit items from the essential set.
+The following includes all of the file-related commands except
+"Revert", and also omits the "Redo" command, which would otherwise be
+implicitly included because it is part of the <span style="font-family: monospace;">edit_cmds</span> set.<br><br><div style="margin-left: 40px;"><span style="font-family: monospace;">menus = basic_menus(include = file_cmds, exclude = ['revert_cmd', 'redo_cmd'])</span><br></div><br>Note,
+however, that it is generally a bad idea to exclude items from the
+essential set. On some platforms, for example, the editing commands
+need to be present in the menus in order for their keyboard equivalents
+to work in dialogs.<br><h2>Modifying standard menu items</h2>Sometimes
+you will want to give different titles or keyboard equivalents to
+standard menu commands. For example, in a game you might want the New,
+Open and Save commands to be called "New Game", "Load Game" and "Save
+Game", and give "Load Game" a keyboard equivalent of "L" instead of "O".<br><br>You can do this easily using the <span style="font-family: monospace;">substitutions</span> parameter to <span style="font-family: monospace;">basic_menus()</span>. It takes a dictionary whose keys are command names and values are replacement menu item strings. For example:<br><br><div style="margin-left: 40px;"><span style="font-family: monospace;">menus = basic_menus(substitutions = {</span><br style="font-family: monospace;"><span style="font-family: monospace;">&nbsp;&nbsp;&nbsp; 'new_cmd': &nbsp; &nbsp; "New Game",</span><br style="font-family: monospace;"><span style="font-family: monospace;">&nbsp;&nbsp;&nbsp; 'open_cmd': &nbsp; &nbsp;"Load Game.../L",</span><br style="font-family: monospace;"><span style="font-family: monospace;">&nbsp;&nbsp;&nbsp; 'save_cmd': &nbsp; &nbsp;"Save Game",</span><br style="font-family: monospace;"><span style="font-family: monospace;">&nbsp;&nbsp;&nbsp; 'save_as_cmd': "Save Game As..."})</span><br></div><br>Each
+replacement can override just the title, just the keyboard equivalent,
+or both. In the above example, the keyboard equivalent of <span style="font-family: monospace;">open_cmd</span> is overridden, but the other commands are left with their standard equivalents.<h2>Adding menus</h2>
+The simplest way to add new commands is to create one or more extra menus containing your
+commands, and add them to the end of the application's menu bar. Here's
+an example of how to do this.<br>
+<br>
+<div style="margin-left: 40px;"><span style="font-family: monospace;">menus = basic_menus()</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">my_menu = Menu("Widget", [("Swizzle", 'swiz_cmd'), ("Defibrillate", 'defib_cmd')])</span><span style="font-family: monospace;"></span><span style="font-family: monospace;"></span><span style="font-family: monospace;"></span><br style="font-family: monospace;">
+<span style="font-family: monospace;">menus.append(my_menu)</span><span style="font-family: monospace;"></span><br style="font-family: monospace;">
+<span style="font-family: monospace;">app.menus =&nbsp;menus</span><br>
+</div>
+<br>
+Note that the new menu is added to the menu list <span style="font-style: italic;">before</span> assigning the menu list to the application's <span style="font-family: monospace;">menus</span> property. This is important, to ensure that the menu bar is updated properly.<br>
+<h2>Adding commands to standard menus</h2>
+Adding your own menus is all well and good, but you may want more
+control than that. For example, if you have some editing-related
+commands, you might want to add them to the Edit menu instead of
+putting them in a menu of their own.<br>
+<br>
+The problem with this is finding the right menu to add them to. PyGUI
+tries to make as few assumptions as possible about the layout of the
+standard menus, and if you want your application to be portable, you
+should do the same. So you shouldn't assume, for example, that the Edit
+menu is the second menu in the menu bar. (On the Mac, it's not!) You
+shouldn't even assume that there will <span style="font-style: italic;">be</span> an Edit menu at all.<br>
+<br>
+Rather than a particular menu, it's better to think in terms of putting
+your commands near existing commands. PyGUI helps you out here by means
+of the <a href="MenuList.html">MenuList</a> class. A
+MenuList is just like an ordinary list, except that it also has a
+method that will take an internal command name and give you the menu
+which contains that command. So we can find the menu containing, say,
+the <span style="font-family: monospace;">'copy_cmd'</span> command,
+and be fairly sure that it's the Edit menu, or whatever passes for it,
+on the platform we're running on. Once we've found the menu, we can use
+its <span style="font-family: monospace;">append</span> or <span style="font-family: monospace;">extend</span> methods to add our commands to it.<br>
+<br>The <span style="font-family: monospace;">basic_menus()</span> function returns a MenuList, so here's how we can add some commands to the Edit menu:<br>
+<br>
+<div style="margin-left: 40px;"><span style="font-family: monospace;"></span><span style="font-family: monospace;">menus = basic_menus()</span><span style="font-family: monospace;"><br style="font-family: monospace;"></span>
+<span style="font-family: monospace;">edit_menu =&nbsp;menus.menu_with_command('copy_cmd')</span><span style="font-family: monospace;"><br style="font-family: monospace;">
+</span><span style="font-family: monospace;">edit_menu.extend(["-", ("Biggify", 'enlarge_cmd'), ("Smallify", 'reduce_cmd')])<br></span><span style="font-family: monospace;">app.menus =&nbsp;menus</span><br>
+</div>
+<h2>Future plans</h2>
+One further thing you might want to do is insert commands in the
+middle of a menu (to get them even closer to an existing command). This is
+not currently supported, but is planned for a future version.<br>
+<br>
+---<br>
+<br>
+</body></html>

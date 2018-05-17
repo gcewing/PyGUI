@@ -1,0 +1,106 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html><head><meta content="text/html;charset=ISO-8859-1" http-equiv="Content-Type"><title>View class</title>
+  
+                                                                  <meta name="GENERATOR" content="Mozilla/3.01Gold (X11; I; SunOS 5.6 sun4u) [Netscape]"></head>
+<body>
+             <h1>class <tt>View(<a href="Container.html">Container</a>,</tt> <tt><a href="ViewBase.html">ViewBase</a>, <a href="Printable.html">Printable</a>)</tt></h1>
+             <p>Class View is a general-purpose component
+    for displaying 2D graphics and handling mouse and keyboard input. It
+also provides special support
+   for being an observer of one or more <a href="Model.html">Models</a>.<br>
+ </p>
+ <p>This page documents properties and methods concerned with drawing. See 
+<a href="ViewBase.html">ViewBase</a> for information about input handling 
+and model observation.<br>
+        </p><h2>Abstract methods</h2>
+           <blockquote>               <dl>
+    <dt><tt>draw(</tt><i>canvas, update_rect</i><tt>)</tt></dt>
+    <dd>Called when some or all of the view needs to be drawn. The <i>canvas
+         </i>parameter   is an object of class <a href="Canvas.html">Canvas</a>
+upon which the drawing should be done. The <span style="font-style: italic;">update_rect</span> is the rectangle in the view's coordinate system that needs drawing.<br>
+      <br>
+You can use the update_rect to improve efficiency by only drawing parts
+of the view that lie within it, although this is optional. Drawing will
+be clipped to the update_rect in any case.<br><br>The <span style="font-family: monospace;">printing</span>
+property of the canvas can be used to determine whether to draw
+features, such as selection highlighting, that should only appear on
+the screen and not on a printed page.<br>
+      <br>
+      <span style="font-style: italic;">Note:</span> The canvas is only valid for the duration
+   of this call and should not be retained beyond it. To draw into the view
+  at other times, use the <tt>with_canvas</tt> method.</dd>
+    <dd><br>
+             </dd>
+    <dt><tt>resized((</tt><i>dw</i><tt>,</tt> <i>dh</i><tt>))</tt></dt>
+    <dd>Called whenever the size of the view changes as a result of the user 
+resizing the containing window.</dd>
+    <dd><br>
+              </dd>
+    <dt><tt>container_resized((</tt><i>dw</i><tt>,</tt> <i>dh</i><tt>))</tt></dt>
+    <dd>Called whenever the view's container changes size as a result of the
+user resizing the containing window. The default   implementation of this
+method adjusts the position and size of this component   according to the
+settings of its resizing attributes.</dd>
+  </dl>
+      </blockquote>
+      <dl>
+  <h2>Methods</h2>
+</dl>
+      <blockquote>               <dl>
+    <dt><tt>viewed_rect()</tt></dt>
+    <dd>Returns the viewed rectangle, i.e. the rectangle in local coordinates 
+  that is currently visible in the view.<br>
+         </dd>
+    <dd><br>
+          </dd>
+    <dt><tt>invalidate()</tt></dt>
+    <dd>Marks the whole viewed rectangle as needing to be redrawn.</dd>
+    <dd>&nbsp;</dd>
+    <dt><tt>invalidate_rect(</tt><i>rect</i><tt>)</tt></dt>
+    <dd>Mark the given rectangle, in local coordinates, as needing to be
+redrawn.</dd>
+  </dl>
+  <dl>
+    <dt><tt>update()</tt></dt>
+    <dd>Causes invalidated areas to be redrawn immediately, without waiting
+for a return to the event loop.<br>
+    </dd>
+    <dd><br>
+      </dd>
+    <dt><tt>with_canvas(</tt><i>function</i>)</dt>
+    <dd>The function should be a callable object expecting one parameter.
+   The function is called with a <a href="Canvas.html">Canvas</a> instance
+ for  drawing in the view. The canvas is only valid for the duration of the
+ call  and should not be retained beyond it.</dd>
+    <dd>&nbsp;</dd><dt><tt>local_to_global(</tt><i>p</i><tt>)</tt></dt>
+    <dd>Transforms the given point from the view's local coordinate system
+   to screen  coordinates.</dd>
+    <dd><br>
+             </dd>
+    <dt><tt>global_to_local(</tt><i>p</i><tt>)</tt></dt>
+    <dd>Transforms the given point from screen coordinates to the view's local
+coordinate system.</dd>
+    <dd><br>
+             </dd>
+    <dt><tt>local_to_container(</tt><i>p</i><tt>)</tt></dt>
+    <dd>Transforms the given point from the view's local coordinate system
+   to its  container's local coordinate system.</dd>
+    <dd><br>
+             </dd>
+    <dt><tt>container_to_local(</tt><i>p</i><tt>)</tt></dt>
+    <dd>Transforms the given point from the view's container's local coordinate 
+    system to the view's local coordinate system.</dd>
+    <dd><br>
+         </dd></dl>
+      </blockquote>
+      <dl>
+---<br>
+  <br>
+</dl>
+      <br>
+     <br>
+    <br>
+   <br>
+  <br>
+ <br>
+</body></html>

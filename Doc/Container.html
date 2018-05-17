@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html><head><meta content="text/html;charset=ISO-8859-1" http-equiv="Content-Type"><title>Container</title>
+  
+                                                                <meta name="GENERATOR" content="Mozilla/3.01Gold (X11; I; SunOS 5.6 sun4u) [Netscape]"></head>
+<body>
+ <!-- Changed by: Greg Ewing,  9-Dec-1997 -->                   <h1>class <tt>Container(<a href="Component.html">Component</a>)</tt></h1>
+                <p>Container is an abstract base class for components which can contain other components. The contained
+   components are clipped to the boundary of their container.</p>
+                <p>The Container class provides a flexible placement facility for laying out
+its contents  and specifying how the contents behave when the container is resized.<br>
+</p>
+<p>You should not derive directly from Container. Custom components should be based on <a href="View.html">View</a> or <a href="Frame.html">Frame</a>.</p>
+
+                <h2>Properties</h2>
+          <blockquote>                   <dl>
+    <dt><tt>contents</tt></dt>
+    <dd>List of contained Components. <br>
+      <br>
+</dd>
+    <dd><i>Do not modify the contents of this list directly.</i> Use the
+placement methods, or the <tt>add</tt> and <tt>remove</tt> methods, to modify
+the containment hierarchy.<br><br></dd><dt style="font-family: monospace;">content_width<br>content_height<br>content_size</dt><dd>The
+size of the content area of the container. The content area is the area
+available to subcomponents, excluding any borders, scrollbars or other
+decorations that the component may have.<br><br></dd><dt style="font-family: monospace;"><a name="auto_layout"></a>auto_layout</dt><dd>A
+boolean controlling whether the layout of subcomponents is
+automatically adjusted when the container changes size. Defaults to
+true.</dd>
+  </dl>
+      </blockquote>
+          <h2>Methods</h2>
+                  <blockquote>     <dl>
+    <dt><tt>add(</tt><i>component</i><tt>)</tt></dt>
+    <dd>Adds the given component to this container.</dd>
+    <dd><br>
+     </dd>
+    <dt><tt>remove(</tt><i>component</i><tt>)</tt></dt>
+    <dd>If the given component is among the contents of this container, removes 
+    it.</dd>
+    <dd><br>
+     </dd>
+    <dt><tt>place(item,<br>
+        &nbsp; left = None, right = None, top = None, bottom = None,<br>
+        &nbsp; sticky = 'nw', scrolling = '', border = None)<br>
+       <br>
+       </tt></dt>
+    <dt><tt><a name="place_row"></a>place_row(items,<br>
+        &nbsp; left = None, right = None, top = None, bottom = None,<br>
+        &nbsp; sticky = 'nw', scrolling = '',border =&nbsp;</tt><tt>None</tt><tt>)<br>
+       <br>
+       </tt></dt>
+    <dt><tt><a name="place_column"></a>place_column(items,<br>
+      </tt><tt>&nbsp; left = None, right = None, top = None, bottom = None,<br>
+      </tt><tt>&nbsp; sticky = 'nw', scrolling = '', border =&nbsp;</tt><tt>None</tt><tt>)<br>
+       <br>
+       </tt></dt>
+    <dd>These methods add a component or list of components to the container with
+the specified     placement options. See <a href="place.html">Placement Methods</a>.</dd>
+  </dl>
+ </blockquote>
+                    <blockquote>
+  <dl>
+    <dt><tt>shrink_wrap(padding</tt> <tt>=</tt> <tt>None</tt><tt>)</tt></dt>
+    <dd>Changes
+the size of the container so that it neatly encloses its contents. By
+default it leaves the same amount of space at the right and bottom of
+the contents as there is at the left and top. This can be overridden by
+specifying a tuple (<span style="font-style: italic;">right</span>, <span style="font-style: italic;">bottom</span>) for <span style="font-family: monospace;">padding</span>. If the container is empty, its size is not changed.</dd>
+  </dl></blockquote><blockquote>     
+  <dl><dt><tt>resize(</tt><i>geometry_property</i> <tt>=</tt> <i>value</i><tt>,</tt>
+...<tt>, auto_layout = False)</tt></dt><dd>This
+method allows the size of the container to be changed without affecting
+the layout of subcomponents. It is equivalent to assigning the given
+values to the specified geometry properties, except that the <a href="#auto_layout"><span style="font-family: monospace;">auto_layout</span></a> property setting is temporarily overridden by the given parameter.</dd></dl></blockquote><h2>Callbacks</h2><dl style="margin-left: 40px;"><dt><span style="font-family: monospace;"><a name="resized"></a>resized(</span><span style="font-style: italic;">delta</span><span style="font-family: monospace;">)</span></dt><dd>Called when the size of the container changes for any reason while the <a href="#auto_layout"><span style="font-family: monospace;">auto_layout</span></a> property is true. The <span style="font-style: italic;">delta</span> parameter is a tuple <span style="font-style: italic;">(dx, dy)</span> representing the amount by which the size has changed. The default implementation calls <a href="Component.html#container_resized"><span style="font-family: monospace;">container_resized()</span></a> on each of the subcomponents.</dd></dl>
+
+
+
+
+<h2>Destructor</h2>
+                <dl>
+  <dl>
+    <dt><tt>destroy()</tt></dt>
+    <dd>Destroys the container and all its contained subcomponents.</dd>
+  </dl>
+</dl>
+                <p>---</p>
+          <br>
+        <br>
+          <br>
+</body></html>

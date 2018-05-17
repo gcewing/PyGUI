@@ -1,0 +1,122 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html><head>
+<meta content="text/html;charset=ISO-8859-1" http-equiv="Content-Type"><title>Document class</title>
+  
+                       <meta name="GENERATOR" content="Mozilla/3.01Gold (X11; I; SunOS 5.6 sun4u) [Netscape]"></head><body>
+     <h1>class <tt>Document(<a href="Model.html">Model</a>,</tt> <tt><a href="MessageHandler.html">MessageHandler</a>)</tt></h1>
+     <p>A Document represents an application data structure that can be stored 
+ in a file. It implements standard functionality such as asking the user for
+file names and opening and closing files.</p>
+     <p>Each Document can have one or more windows associated with it. When the
+ last window belonging to a document is closed, the document itself is closed.</p>
+     <p>A&nbsp;Document provides support for keeping track of whether it has been
+ edited, and asking the user whether to save changes when it is closed.</p>
+     <h2>Properties</h2>
+     <blockquote>       <dl>
+    <dt><tt>needs_saving</tt></dt>
+    <dd>A boolean indicating that the document has been edited and needs
+to be saved.</dd>
+  </dl>
+        <dl>
+    <dt><tt>file</tt></dt>
+    <dd>A <a href="FileRef.html">FileRef</a> identifying the file that the document was read from  or 
+last written to, or None.</dd>
+  </dl>
+        <dl>
+    <dt style="font-family: monospace;">file_type</dt><dd>A <a href="FileType.html">FileType</a>
+specifying the type of file read and written by the document. This may
+be None if the document does not deal with files or does not care about
+file types.<br><br>
+    </dd>
+    <dt><tt>title</tt></dt>
+
+    <dd>Document title to be displayed in window headers. The default value 
+of this property is derived from the last pathname component of the associated 
+file, or if the document is not associated with a file, a title such as "Untitled-<i>n</i>" 
+is constructed. Assigning to this property will cause all associated windows 
+to update their titles accordingly. &nbsp;</dd>
+  </dl>
+        <dl>
+    <dt><tt>windows</tt></dt>
+    <dd><i>Read-only.</i> List of windows associated with this document.<br><br></dd><dt style="font-family: monospace;">page_setup</dt><dd>A <a href="PageSetup.html">PageSetup</a> instance to be used by views having this document attached as a model.</dd>
+  </dl>
+    </blockquote>
+ <h2>Attributes</h2>
+ <blockquote>     <dl>
+    <dt><tt>binary</tt></dt>
+    <dd>Determines the mode in which the file object passed to the <span style="font-family: monospace;">read_contents</span> and <span style="font-family: monospace;">write_contents</span>
+methods is opened. If true, the file is opened in binary mode for
+reading or writing. If false, the file is opened in text mode for
+writing, and universal newlines mode for reading.<br>
+</dd><dd><br>
+    </dd>
+    <dd>This attribute may be specified as a class attribute. The default value is <span style="font-style: italic;">true</span>.<br><br></dd><dt style="font-family: monospace;">pickle_as_parent_model</dt><dd><span style="font-style: italic;">(Read only)</span> This is set to <span style="font-family: monospace;">False</span> as a class attribute, and you should <span style="font-style: italic;">not</span> override it. Its purpose is to prevent the Document from being pickled along with a Model, as <a href="Model.html#pickle_parent">described here</a>.</dd></dl>
+ </blockquote>
+ 
+        <h2>Abstract Methods</h2>
+     <blockquote>     <dl>
+    <dt><tt>new_contents()</tt></dt>
+    <dd>Should initialise the document to the appropriate state following
+ a <b>New </b>command.</dd>
+  </dl>
+     <dl></dl>
+     <dl>
+    <dt><tt>write_contents(file)</tt></dt>
+    <dd>Should write the document's contents to the given file, which is an already-open file object.</dd>
+  </dl>
+     <dl>
+    <dt><tt>read_contents(file)</tt></dt><dd>Should initialise the document's contents by reading it from the
+given file, which is an already-open file object.<br><br>If you restore the contents by unpickling a previously-pickled <a href="Model.html">Model</a> whose <span style="font-family: monospace;">parent</span> attribute referred to the Document, you will need to re-set the parent here.<br><br></dd><dt><tt>destroy_contents()</tt></dt>
+    <dd>Called when the contents of the document are about to be discarded. 
+ If the contents contains any Model objects, they should be destroyed.<br><br></dd><dt style="font-family: monospace;">get_default_save_directory()</dt><dd>Called
+when the user is about to be asked for a location in which to save a
+document that has not been saved before, to find a defaultdirectory for  <a href="file_dialogs.html#request_new_file"><span style="font-family: monospace;">request_new_file()</span></a>. Should return a <a href="DirRef.html">DirRef</a> or <a href="FileRef.html">FileRef</a>, or <span style="font-family: monospace;">None</span> if there is no particular preferred location. The default implementation returns <span style="font-family: monospace;">None</span>.<br><br></dd><dt style="font-family: monospace;">get_default_save_filename()</dt><dd>Called
+when the user is about to be asked for a location in which to save a
+document that has not been saved before, to find a default file name
+for <a style="font-family: monospace;" href="file_dialogs.html#request_new_file">request_new_file()</a>.
+Should return a suggested file name, or an empty string to require the
+user to enter a file name. The default implementation returns an empty
+string.</dd>
+  </dl>
+ </blockquote>
+                 <h2>Methods</h2>
+     <blockquote>     <dl>
+    <dt><tt>changed()</tt></dt>
+    <dd>Mark the document as needing to be saved. Equivalent to setting the       <tt>needs_saving</tt> property to true.</dd>
+  </dl>
+     <dl>
+    <dt><tt>save_changes()</tt></dt>
+    <dd>If the document has been edited, ask the user whether to save changes 
+ and do so if requested.</dd>
+  </dl>
+     <dl>
+    <dt><tt>save_cmd()</tt></dt>
+    <dd>Implements the standard <b>Save</b> command. Writes the document
+to its associated file, asking the user for one first if necessary.</dd>
+  </dl>
+     <dl>
+    <dt><tt>save_as_cmd()</tt></dt>
+    <dd>Implements the standard <b>Save As...</b> command. Asks the user
+for a new file and writes the document to it.</dd>
+  </dl>
+     <dl>
+    <dt><tt>revert_cmd()</tt></dt>
+    <dd>Implements the standard <b>Revert </b>command. Discards the current 
+ contents of the document and re-reads it from the associated file.</dd>
+  </dl>
+     <dl>
+    <dt><tt>close_cmd()</tt></dt>
+    <dd>Implements the standard <b>Close </b>command. Asks whether to save 
+ any changes, then destroys any associated windows.<br><br></dd><dt style="font-family: monospace;">page_setup_cmd()</dt><dd>Default implementation of the <span style="font-weight: bold;">Page Setup...</span> command. Edits the <a href="PageSetup.html">PageSetup</a> instance referred to by the page_setup attribute. If it is None, a new PageSetup instance is created.</dd>
+  </dl>
+ </blockquote>
+                                 <h2>Destructor</h2>
+     <blockquote>     <dl>
+    <dt><tt>destroy()</tt></dt>
+    <dd>Destroys any associated Windows, then destroys the Document.</dd>
+  </dl>
+ </blockquote>
+     <p>---</p>
+    <br>
+  <br>
+</body></html>

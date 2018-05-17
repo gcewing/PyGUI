@@ -1,0 +1,904 @@
+2.5.4
+-----
+
+Enhancements:
+
+  - Added editable property to TextField.
+  - Added tab_action and text_changed_action properties to TextField.
+  
+Bug fixes:
+
+  - Fixes for differing set behaviour in Python 3.
+  - Fixed buttons not working on Windows in Python 3.
+  - An import statement in GUI/py2exe.py was being mistranslated
+    by 2to3 when installing under Python 3.
+
+Modifications:
+
+  - TextField now defaults to passing Escape and (for single-line) Enter
+    key events to the next handler if no actions are specified for these.
+  
+  - Reinstated the default_button and cancel_button properties of Dialog,
+    allowing visual feedback for these buttons to be provided when activated
+    by keyboard events.
+
+  - Moved targeted() and untargeted() callbacks from ViewBase to Component.
+
+Experimental features:
+
+  - Added a preliminary TableView class. Only implemented for Cocoa so far.
+
+2.5.3
+-----
+
+Enhancements:
+
+  - Cocoa: Reading and writing the clipboard is now implemented.
+
+Bug fixes:
+
+  - Cocoa: Prevented spurious changes of input focus due to clicking
+    on a view.
+  
+  - Cocoa: Put in fudge factor to correct text positioning when using
+    Courier New.
+  
+  - Cocoa: Prevented burning 100% CPU time during a modal event loop.
+
+  - Win32: Was unable to save a document over an existing file.
+  
+  - Win32: Reading an empty clipboard did not work.
+
+
+2.5.2
+-----
+
+Bug fixes:
+
+  - Win32: When run from a command shell, application would exit when
+    focus switched to another process.
+
+
+2.5.1
+-----
+
+Bug fixes:
+
+  - The file distutils_extensions.py was missing from the distribution.
+
+
+2.5
+---
+
+Modifications:
+
+  - The old autoloading system has been removed and replaced with
+    something that will hopefully be friendlier towards py2exe and
+    py2app. There have been some minor changes to the API as a
+    result:
+    
+    - Any class or function not explicitly documented as being in
+      a submodule *MUST* now be imported directly from the GUI
+      package, not from the submodule that it resides in.
+    
+    - Importing is mandatory. You must do either 'from GUI import
+      Foo' or 'import GUI.Foo' for every class Foo that you use,
+      not just 'import GUI' and then refer to GUI.Foo.
+    
+    - Some classes and functions that were previously available
+      directly from the GUI package are now in submodules and must
+      be imported from there:
+      
+      - All the alert functions are now in GUI.Alerts
+      - All the file dialog functions are now in GUI.FileDialogs
+      - FileType, FileRef and DirRef are now in GUI.Files
+      - DefaultButton and CancelButton are now in GUI.StdButtons
+    
+    Note that for best results, PyGUI should be installed using
+    'python setup.py install' before using it with py2exe or py2app.
+    These tools will not be able to automatically find submodules of
+    a PyGUI that is used directly from the source directory.
+
+  New features:
+
+    - Improved facilities for customising menus when building a menu bar
+      with StdMenus.basic_menus().
+    
+    - Functions for creating PyGUI Images from PIL images and numpy arrays.
+    
+    - Resource cacheing (see Resources.get_resource()).
+    
+    - ListButton control providing a pop-up or pull-down menu of choices.
+    
+    - GridView - a user-defined view consisting of a regular grid of cells.
+    
+    - PaletteView - a GridView specialised for implementing tool palettes.
+      
+  Enhancements:
+  
+    - Added get_default_save_directory() and get_default_save_filename()
+      methods to Document, and get_default_open_directory() to Application.
+     
+    - Setting both 'content_size' and 'scrolling' using keyword args to
+      the ScrollableView constructor now works as expected.
+    
+    - Padding may now be specified around the contents of a Row, Column
+      or Grid.
+     
+    - ScrollableView now has a background_color property specifying a color
+      to automatically fill areas outside the extent.
+    
+  Bug fixes:
+  
+    - Cocoa: Setting the border property of a TextField did not work.
+    
+    - Cocoa: Setting the content_size of a ScrollableView did not work.
+    
+    - Cocoa: Current point was not advanced correctly when drawing text.
+    
+    - Cocoa: Worked around a memory leak in PyObjC 2.3 affecting
+      Canvas.lines() and related methods.
+    
+    - Gtk: Canvas.gsave()/grestore() did not work properly.
+    
+    - Gtk: 'style' argument to Window constructor was not handled properly.
+    
+    - Gtk, Windows: The mechanism for quitting the application when there are
+      no visible windows left has been made more reliable.
+     
+    - Windows: Application was not initially brought to the foreground when
+      launched.
+    
+    - Windows: Initial filename argument to request_new_file did not work.
+    
+    - Setting the save_file_type property of an Application did not work.
+    
+    - Relative filenames passed as command line arguments caused problems.
+    
+    - Setting content_width and content_height properties did not work properly.
+
+    - NumPy arrays did not work as parameters to Canvas methods taking
+      sequences of points.
+  
+
+2.4.1
+-----
+
+Enhancements:
+
+  - On MacOSX, the unmodified character corresponding to a key event
+    with Option pressed is now put into the 'key' attribute. On all
+    platforms, 'key' now mirrors 'char' if there is no other particular
+    value for it to have.
+  
+  - Key events now have a 'unichars' attribute on all platforms.
+  
+  - Return key on main keyboard now sets 'key' to 'return' instead of
+    an empty string.
+
+
+2.4
+---
+
+Enhancements:
+
+  - Classifiers for PyPi upload added to setup.py. [Vernon Cole]
+  
+  - Automatically detect Python 3 and convert syntax while installing.
+    [Vernon Cole]
+  
+  - Code modifications for Python 3 compatibility. All tests now pass
+    using Python 3.1 on MacOSX and Windows.
+
+
+Bug fixes:
+
+  - Win32: Invoking the last command in the last menu in the menu bar
+    with the mouse did not work.
+  
+  - Win32: ScrollableView re-implemented without using the MFC View class.
+    This eliminates several problems that were plaguing the old implementation.
+   
+  - Win32: Font sizes were too small when using some pywin32 builds.
+
+
+2.3.3
+-----
+
+Bug fixes:
+
+  - Previous fix for Pixmap coordinates in Cocoa did not work on
+    some MacOSX versions.
+
+
+2.3.2
+-----
+
+Bug fixes:
+
+  - Canvas docs incorrectly stated that the current path was cleared after
+    filling or stroking.
+  
+  - Cocoa: Coordinate system for drawing in a Pixmap was upside down.
+
+
+2.3.1
+-----
+
+Bug fixes:
+
+  - Win32: Fixed a bug in the previous ScrollableView fix.
+  
+  - Win32: If a modal dialog was dismissed by pressing the Enter key,
+    the subsequent key-up event could spuriously trigger a button
+    in another window.
+  
+
+2.3
+---
+
+Enhancements:
+
+  - GLView selects modelview matrix and sets it to identity before
+    calling render().
+ 
+  - Added init_projection() method to GLView, called from default
+    implementation of viewport_changed() with projection matrix
+    selected and set to identity.
+  
+  - Texture.gl_id() method returns the texture ID for the current
+    context without binding it.
+  
+  - Texture.gl_tex_image_2D() method loads texture data from an Image.
+
+  - Updated to work on Snow Leopard with PyObjC 2.3.
+  
+
+Bug fixes:
+
+  - Filename case error in setup.py causing cursor resources not to
+    be installed.
+   
+  - Crash on closing a window containing a GLView due to attempting
+    to call glViewport for an invalid GL context.
+  
+  - Fixed some problems with Images and Pixmaps in Cocoa.
+
+  - Win32: Fixed crash concerning ScrollableView with pywin32 build
+    213 and later.
+
+
+2.2
+---
+
+New features:
+
+  - TextEditor component with scroll bars and uniform tab stops
+    for editing large amounts of text.
+  
+  - Row, Column and Grid layout classes.
+  
+  - Printing support.
+
+
+Enhancements:
+
+  - Component add() and remove() methods now accept a sequence of
+    items as well as a single item.
+   
+  - All Controls now uniformly have a 'value' property.
+  
+  - RadioGroup add() and remove() methods replaced with add_item(),
+    remove_item(), add_items() and remove_items() to avoid name clash
+    when mixing a RadioGroup with a Component.
+
+Bug fixes:
+
+  - Unicode strings as menu item titles did not work properly.
+  
+  - Win32: Misnamed function in GDI+ interface (GdipAddPathLine2).
+
+
+2.1.1
+-----
+
+Enhancements:
+
+  - CheckBox now has a 'mixed' property that can be changed
+    after creation.
+
+Bug fixes:
+
+  - Cocoa: Text fields had the wrong border style.
+  
+  - Gtk: Window show/hide was broken in 2.1.
+  
+  - Windows: File dialogs did not set initial directory properly.
+
+
+2.1
+---
+
+Enhancements:
+
+  - All menus can now be removed by assigning an empty list to
+    the menus property of the application.
+    
+  - Cocoa: Hide, Hide Others and Show All now enabled in the
+    application menu.
+   
+  - Win32: Added more standard cursors.
+
+Bug fixes:
+
+  - Gtk: Removed spurious 'self' in TextField.set_selection().
+  
+  - Win32: Can run PyGUI apps using pythonw now.
+  
+  - Win32: Fixed coordinate transformation problems in ScrollableView.
+
+
+2.0.7
+-----
+
+Bug fixes:
+
+  - Cocoa: Canvas.lines and Canvas.poly did not work.
+
+
+2.0.6
+-----
+
+Enhancements:
+
+  - Cocoa: Redesigned handling of standard editing commands for
+    builtin components to make them overridable and to cooperate
+    better with custom components.
+
+
+2.0.5
+-----
+
+Bug fixes:
+
+  - Win32: Removed experimental mouse leave event handling that
+    was causing problems on some systems.
+   
+  - Win32: Trying native backend before gtk in case gtk is
+    installed.
+  
+  - Cocoa: Custom view objects could not be targeted.
+  
+  - Cocoa: Canvas.rect() did not work.
+  
+  - Gtk: Mouse move events were being reported as mouse drags.
+
+Enhancements:
+
+  - Win32: hand and fist cursors improved.
+  
+  - Added selection_forecolor and selection_backcolor to the
+    StdColors submodule.
+
+API changes:
+
+  - Removed mouse_enter and mouse_leave events from the official
+    API for the time being, since they are not easy to implement
+    consistently across all platforms.
+
+
+2.0.4
+-----
+
+Bug fixes:
+
+  - BlobEdit demo: Reduced flickering on Windows.
+
+  - Win32: Full menu list of a window sometimes not updated
+    properly, leading to '_all_menus' attribute error.
+  
+  - Win32: Disabled customization of Control colour for now,
+    since it doesn't seem to work properly on XP.
+  
+  - Win32: Tab key with no control focused did not tab to the
+    first control.
+   
+  - Win32: Return/Enter now activates a focused control as
+    well as space.
+  
+  - Win32: Error in printed instructions for test 29.
+  
+  - Win32: Changed the way window background colour is handled
+    to prevent flickering when resizing.
+  
+  - Win32: Fixed problem with 'pitch_and_family' when creating
+    a font.
+  
+  - Canvas was missing fill_frame_rect() on some platforms.
+  
+  - Canvas.frame_rect() was not starting a new path on some
+    platforms.
+   
+  - Pressing Tab in a window with no subcomponents caused crash.
+
+
+2.0.3
+-----
+
+Bug fixes:
+
+  - BlobEdit demo:
+    - clear background before drawing.
+    - Win32 - attribute error on startup.
+  
+
+
+2.0.2
+-----
+
+Bug fixes:
+
+  - Fixed problem on Windows resulting in "This module should
+    not be imported" error.
+  
+  - Cocoa: Canvas was using fillcolor instead of textcolor
+    for drawing text.
+
+
+2.0.1
+-----
+
+Bug fixes:
+
+  - Fixed problems in setup.py affecting installation on
+    Linux and Windows.
+
+2.0
+---
+
+API changes:
+
+  - The 'extent' property of ScrollableView is now just a size
+    rather than a rectangle.
+   
+  - By default, containers now re-layout their contents when their
+    size changes for any reason, not just when the user resizes the
+    window. There is a new property auto_layout controlling this
+    behaviour. Conversely, the default behaviour of the resize()
+    method is now *not* to re-layout the contents, with an option
+    to do so.
+
+New features:
+
+  - Major additions made to the Canvas class. Full set of Postscript
+    style path construction operators now implemented on all platforms,
+    and a wide variety of new high-level functions have been added.
+  
+  - Added a keeps_document_open attribute to Window to allow for
+    windows that do not keep their associated document open.
+  
+  - Added 'fullscreen' window style.
+  
+  - Added 'invisible' cursor to StdCursors.
+  
+  - Added delta attribute to mouse_move and mouse_drag events
+    (currently MacOSX only).
+
+  - Added leading, cap_height, x_height properties to Font.
+  
+  - Added enter-key and escape-key actions to TextField.
+
+Enhancements:
+
+  - Mouse and keyboard event handling can now be overridden for
+    all component classes, not just user-defined views.
+
+  - Cocoa: Change dot is set in window title bar when the
+    window's associated document needs saving.
+  
+  - When saving a document, data is written to a temporary file
+    which is then renamed, to avoid destroying the original file
+    if the write fails.
+  
+  - Container.shrink_wrap() will figure out a reasonable padding if
+    you don't specify one.
+  
+  - Setup script only installs relevant backend for platform.
+  
+Modifications:
+
+  - Renamed 'tabbable' property to 'tab_stop'. Provided a mechanism
+    for the user to express a preferences as to whether non-textfield
+    controls are tabbed into, defaulting to platform conventions.
+  
+  - Canvas now has separate pen, fill and text colour properties. The
+    'forecolor' property is write-only and sets all three to the same
+    colour. Erasing operations replace image with background colour,
+    other operations blend.
+
+Bug fixes:
+
+  - Cocoa: Default and cancel buttons in dialogs were being
+    activated twice when Enter or Escape pressed.
+  
+  - Crash occurred when closing a Window that was not attached
+    to a Document.
+  
+  - Exceptions.InternalError had nonexistent base class.
+    
+
+1.7.3
+-----
+
+Enhancements:
+
+  - Cocoa: Tasks continue to run while menus and controls are
+    being manipulated.
+  
+  - Cocoa: Using more reliable method of handling command line
+    arguments in non-py2app environments. Should address
+    problems with IDLE.
+
+
+1.7.2
+-----
+
+New features:
+
+  - New events and event handling facilities:
+
+    - Support for multiple mouse buttons. The mouse_down and
+      mouse_up events now have a 'button' attribute.
+  
+    - Views can define methods to handle mouse_drag and mouse_up
+      events as an alternative to using track_mouse().
+    
+    - New mouse events: mouse_enter, mouse_leave.
+    
+    See "Mouse Events" under the "Event Handling" topic for a
+    discussion of the new event features.
+  
+  - Improved alignment of different control types when they
+    are laid out by place_row().
+  
+  - New file dialog functions for requesting multiple files
+    and requesting old and new directories.
+  
+  - New Application properties: open_file_types, save_file_type,
+      file_type
+
+Enhancements:
+
+  - Changed Gtk implementation of file dialogs to use newer
+    widgets, and implemented file type filtering.
+  
+  - Tidied up the APIs of FileRef and DirRef, and made them
+    immutable.
+  
+  - Cocoa: Slider in discrete mode now only calls action when
+    the value changes, instead of whenever the mouse is dragged.
+  
+  - Cocoa: Undo and Redo supported in TextFields.
+  
+  - Cocoa: File open requests sent to a running application
+    from the Finder are handled.
+  
+  - Cocoa: Expanded BlobEdit example to demonstrate
+      - resource handling
+      - building an application using py2app, with file and
+        application icons and launching from the Finder by
+        opening an associated file.
+
+API changes:
+
+  - Application.make_new_document() and make_file_document()
+    abstract methods collapsed into a single make_document()
+    method.
+  
+  - You should no longer call new_cmd() from your application's
+    __init__. Instead, do this in your implementation of
+    Application.open_app() if needed.
+
+Bug fixes:
+
+  - Frames did not work.
+
+  - Error in the installation instructions in the README file
+    corrected.
+  
+  - Cocoa: Attempting to create a Font with an unsupported
+    combination of attributes now results in fallback to the
+    application font instead of a crash.
+  
+  - Cocoa, Gtk: Canvas.xxx_arc() methods did not work.
+  
+  - Gtk: Stroking an unclosed path did not work.
+  
+  - Cocoa: Return/Enter in single-line text field was not
+    propagated to containing components.
+  
+  - Setup.py did not install the standard cursor resources.
+  
+  - Documentation of alert functions adjusted (caution_alert
+    removed, stop_alert added).
+  
+  - Cocoa: Drawing text with a foreground colour other than
+    black did not work.
+  
+  - Gtk: Fixed glitches in selection handling when switching
+    focus between TextFields.
+  
+  - Gtk: Text can no longer be copied out of a password
+    entry field.
+  
+  - Cocoa: Edit menu commands did not work in a Cocoa-defined
+    dialog (e.g. save file dialog).
+  
+  - Cocoa: Custom cursor of a ScrollableView now appears only in
+    the content area, instead of over the scroll bars as well.
+  
+  - Cocoa: Update the window change dot when document need saving.
+
+
+1.7.1
+-----
+
+New features:
+
+  - Slider control.
+  
+  - run() convenience function, equivalent to application().run().
+
+  - Geometry.rects_intersect() function.
+
+Enhancements:
+
+  - Files given on the command line will be opened when run() is
+    called.
+  
+  - BlobEdit example application now demonstrates use of the
+    update_rect parameter to View.draw().
+
+Bug fixes:
+
+  - Disabled a debugging statement that was inadvertently left on
+    in Cursor.__init__.
+
+  - Changed the package name in setup.py to something more meaningful
+    than 'foo'.
+
+
+1.7
+---
+
+New features:
+
+  - OpenGL: DisplayList class for managing display lists,
+    analogous to the Texture class.
+  
+  - Cursor class and 'cursor' property of Views.
+  
+  - Facilities for locating resource files associated with the
+    application.
+
+Modifications:
+
+  - Cocoa: More informative error message produced when an application
+    is run with python instead of pythonw.
+  
+  - Cocoa: View.track_mouse() now allows Tasks to run while the mouse is
+    being tracked.
+  
+  - Cocoa: Exceptions occurring during the firing of a Task are propagated
+    to the main event loop for handling.
+  
+  - Documentation added for class Task.
+  
+  - OpenGL: API for context sharing has been changed. Instead of passing one
+    GLView or GLPixmap as the 'share' argument to the constructor of another,
+    there is now a class GL.ShareGroup which is passed to a GLView or GLPixmap
+    constructor as 'share_group'.
+  
+  - GL.Texture instances now deallocate associated OpenGL resources
+    when they are no longer referenced.
+  
+  - The 'binary' attribute of class Document now defaults to true. If false,
+    the document's file is opened for reading in universal newlines mode.
+  
+  - Cocoa: Setting the Macintosh creator and type code of a file using a
+    FileRef and FileType is now implemented.
+  
+  - RadioGroups are now iterable, so they can be used directly in the
+    place_row() and place_column() methods of a Container.
+
+Bug fixes:
+
+  - Cocoa: Getting the extent property of a ScrollableView did not work.
+  
+  - Cocoa: Worked around a PyObjC bug that was causing Tasks to leak memory.
+  
+  - Cocoa: Request New File dialog with a file type having a Macintosh
+    type code did not work.
+
+1.6.1
+-----
+
+Bug fixes:
+
+  - Mouse down event in a GLView caused a crash.
+  
+  - Canvas methods fill_poly() and stroke_poly() didn't work. Added
+    a test for these.
+
+
+1.6
+---
+
+Implementation changes:
+
+  - The Macintosh implementation has been completely rewritten to
+    use Cocoa instead of Carbon. The Carbon version is no longer
+    supported.
+
+API changes:
+
+  There are some backward-incompatible changes to the API in this
+  version. Apologies if this causes inconvenience, but I feel it's
+  important to get the API right while there's still a chance.
+
+  - A ScrollableView class has been introduced which encapsulates all
+    details of scrolling. The View class is no longer scrollable.
+    The ScrollFrame class has been removed.
+  
+  - View.draw() is now passed a second parameter indicating the
+    rectangle needing to be drawn.
+  
+  - Canvas.frame_arc() and Canvas.fill_arc() only support circular
+    arcs, and take a centre and radius instead of a rectangle.
+  
+  - Menu constructor now takes a single parameter containing a list
+    of item descriptors, instead of taking each descriptor as a
+    separate argument.
+  
+  - The Application.std_menu_bar property has been removed. Use the new
+    StdMenus.basic_menus() function instead.
+  
+  - The visible property and the show() and hide() methods are now
+    only defined for Windows, not Components in general.
+
+Behaviour changes:
+
+  - ModalDialog.dismiss() also hides the dialog.
+  
+  - Setting TextField.selection also makes the text field the target.
+  
+  - TextField.select_all() also makes the text field the target.
+
+New features:
+
+  - FileType class for platform-specific file type metadata
+  
+  - Window.auto_position property
+  
+  - Alpha channel support added to API (not fully implemented
+    on all platforms yet).
+  
+  - New Canvas methods: stroke_rect(), stroke_arc(), stroke_oval(),
+    stroke_poly()
+  
+  - New OpenGL-related classes: GLConfig, GLPixmap, Texture
+  
+  - Key names for function keys added
+  
+  - Frame class (general-purpose plain vanilla Container)
+  
+  - Enhanced facilities for creating and modifying menus (still under
+    development):
+  
+    - StdMenus module to hold stuff related to standard menus
+    
+    - MenuList class with facilities for finding menus by command
+    
+    - Menu class can have items added to it after construction
+    
+    See the new doc section "Customising the Standard Menu Bar" for
+    more information.
+  
+  - The BlobEdit example application has been improved. You can now
+    get rid of unwanted blobs by shift-clicking on them.
+
+
+1.5.3 (not released)
+-----
+
+Bug fixes:
+
+  - Modal dialogs can now be dismissed with None as the return value.
+  
+  - Mouse events in a GLView were being reported in the coordinate
+    system of the view's container rather than the view itself.
+  
+  - Menu items were not being disabled and unchecked before menu
+    setup.
+   
+  - The list of objects observing a Model is now kept outside of
+    the model object, to make pickling of models easier.
+  
+  - Mac: Shift & option menu command key modifiers did not work.
+  
+  - Mac: Setting the width or height of a view's extent to zero caused a
+    crash when calculating scroll bar values.
+  
+  - Mac: Reading the font property of a Canvas did not work.
+  
+  - Mac: Setting the selection of a TextField did not work.
+  
+  - Mac: Font, colour and justification settings of controls interacted
+    in strange ways.
+
+Enhancements:
+
+  - update() method added to View and GLView for immediate redrawing.
+  
+  - ModalDialog.dismiss() now hides the dialog.
+
+
+1.5.2 (not released)
+-----
+
+Modifications:
+
+  - GLView.with_context() now returns the return value of the supplied
+    function.
+  
+  - Application.quit_cmd() now destroys all windows before exiting
+    the event loop (previously only those belonging to a document
+    were destroyed).
+
+
+1.5.1
+-----
+
+Bug fixes:
+
+  - Menu item groups did not work.
+  
+  - Mac: Labels were not updated properly on changing the text property.
+  
+  - Mac: Setup script failed when Pyrex was not available.
+
+New examples:
+
+  - Tests/08-menu.py now includes an example of using a menu item group.
+
+1.5
+---
+
+New features:
+
+  - OpenGL view component added.
+
+
+1.4
+---
+
+New features:
+
+  - Image class for loading and drawing RGB images.
+  
+  - Pixmap class for offscreen drawing.
+  
+  - Containers now have a shrink_wrap() method to facilitate
+    bottom-up component layout strategies. See class Frame.
+
+Bug fixes:
+
+  - Access to 'text' property of TextField in password mode didn't work.
+  
+  - TextField not refreshed properly when 'text' property changed.
+  
+  - Distutils script did not install subdirectories of the GUI package.
+
+API changes:
+
+  - 'password' property of TextField is now initialize-only.
